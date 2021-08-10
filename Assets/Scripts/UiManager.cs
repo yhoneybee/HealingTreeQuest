@@ -9,6 +9,8 @@ public class UiManager : MonoBehaviour
     public readonly List<UiObj> ui_objs = new List<UiObj>();
     public bool UiCustomMode { get; set; } = false;
 
+    public Vector2 MousePos { get; set; }
+
     private void Awake()
     {
         Instance = this;
@@ -16,14 +18,11 @@ public class UiManager : MonoBehaviour
 
     private void Start()
     {
-        ui_objs.AddRange(GetComponents<UiObj>());
+        ui_objs.AddRange(FindObjectsOfType<UiObj>());
     }
 
-    public void Preview()
+    private void Update()
     {
-        foreach (var ui in ui_objs)
-        {
-            ui.Preview = !ui.Preview;
-        }
+        MousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
     }
 }

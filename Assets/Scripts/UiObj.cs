@@ -4,9 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UiObj : MonoBehaviour, IDragHandler, IDropHandler, IPointerDownHandler, IPointerUpHandler
+public class UiObj : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler
 {
+    Image Image;
+    Coroutine c_preview = null;
+    public static UiObj DraggingUi;
+
     bool preview = false;
+    public bool compositable = false;
+
     public bool Preview
     {
         get
@@ -16,31 +22,65 @@ public class UiObj : MonoBehaviour, IDragHandler, IDropHandler, IPointerDownHand
         set
         {
             preview = value;
-            gameObject.SetActive(!preview);
+            if (c_preview != null) StopCoroutine(c_preview);
+            c_preview = StartCoroutine(CPreview());
         }
+    }
+
+    IEnumerator CPreview()
+    {
+        if (preview)
+        {
+            while (Image.color.a > 0)
+            {
+                Image.color = new Color(Image.color.r, Image.color.g, Image.color.b, Image.color.a - 0.05f);
+                yield return new WaitForSeconds(0.05f);
+            }
+            Image.enabled = !preview;
+        }
+        else
+        {
+            Image.enabled = !preview;
+            while (1 > Image.color.a)
+            {
+                Image.color = new Color(Image.color.r, Image.color.g, Image.color.b, Image.color.a + 0.05f);
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+
+        yield return null;
+    }
+
+    private void Start()
+    {
+        Image = GetComponent<Image>();
     }
 
     // Ui를 드레그 중일 때 ( UiManager에 있는 UiCustomMode가 true일 때만 가능하다 )
     public void OnDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (UiManager.Instance.UiCustomMode && DraggingUi)
+        {
+            DraggingUi.transform.position = new Vector3(UiManager.Instance.MousePos.x * 10, UiManager.Instance.MousePos.y * 10, DraggingUi.transform.position.z);
+        }
     }
 
     // Ui 모음집에 Drop했을 때에 
     public void OnDrop(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (DraggingUi)
+            DraggingUi.transform.SetParent(transform);
     }
 
-    // 필요 없을지도 모름
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        DraggingUi = this;
+        if (compositable) GetComponent<Image>().raycastTarget = false;
     }
 
-    // 필요 없을지도 모름
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        DraggingUi = null;
+        if (compositable) GetComponent<Image>().raycastTarget = true;
     }
 }
