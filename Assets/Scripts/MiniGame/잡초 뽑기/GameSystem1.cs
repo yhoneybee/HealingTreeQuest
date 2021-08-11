@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// ¿‚√  ªÃ±‚
 public class GameSystem1 : MonoBehaviour
 {
     List<Weeds> weeds = new List<Weeds>();
+
     Text scoreText;
     Text timeText;
+
     Sprite[] sprites;
+
     GameObject[] spawnPoints;
+
     ScoreSystem scoreSystem;
     TimerSystem timeSystem;
 
@@ -49,10 +54,9 @@ public class GameSystem1 : MonoBehaviour
         }
 
         timeSystem.SetTimeText(ref timeText);
-        if (timeSystem.GetTime() <= 0)
+        if (timeSystem.timeUp)
         {
             gameFinish = true;
-            timeSystem.CancelInvoke("CountDown");
             StopCoroutine(RandomSpawn());
         }
         else if (timeSystem.GetTime() <= 20)

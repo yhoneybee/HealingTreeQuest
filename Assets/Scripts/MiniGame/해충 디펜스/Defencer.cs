@@ -4,40 +4,57 @@ using UnityEngine;
 
 public class Defencer : MonoBehaviour
 {
-    public enum Direction
-    {
-        Left,
-        Right,
-        Up,
-        Down
-    }
-    Direction direction;
+    GameSystem2 gameSystem;
+    public Direction direction;
 
     void Start()
     {
-        direction = Direction.Up;
+        gameSystem = Tools<GameSystem2>.GetTool("GameSystem");
+        SetDir(Direction.Up);
     }
 
     void Update()
     {
     }
 
-    public void SetDirection(GameObject obj)
+    public void SetDir(Direction dir)
     {
-        switch (obj.name)
+        direction = dir;
+
+        switch (direction)
         {
-            case "Left":
-                direction = Direction.Left;
+            case Direction.Left:
+                transform.rotation = Quaternion.AngleAxis(90, Vector3.forward);
                 break;
-            case "Right":
-                direction = Direction.Right;
+            case Direction.Right:
+                transform.rotation = Quaternion.AngleAxis(270, Vector3.forward);
                 break;
-            case "Up":
-                direction = Direction.Up;
+            case Direction.Up:
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
                 break;
-            case "Down":
-                direction = Direction.Down;
+            case Direction.Down:
+                transform.rotation = Quaternion.AngleAxis(180, Vector3.forward);
                 break;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            gameSystem.scoreSystem.ScoreMinus(50);
+            gameSystem.scoreText.text = gameSystem.scoreSystem.GetScore().ToString();
+            gameSystem.enemyPool.ReleaseEnemy(collision.GetComponent<Enemy>());
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            gameSystem.scoreSystem.ScorePlus(100);
+            gameSystem.scoreText.text = gameSystem.scoreSystem.GetScore().ToString();
+            gameSystem.enemyPool.ReleaseEnemy(collision.gameObject.GetComponent<Enemy>());
         }
     }
 }
