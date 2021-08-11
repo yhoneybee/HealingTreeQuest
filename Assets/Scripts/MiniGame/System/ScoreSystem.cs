@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreSystem : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class ScoreSystem : MonoBehaviour
     public void SetScore(int score)
     {
         this.score = score;
+    }
+
+    public void SetScoreText(ref Text text)
+    {
+        text.text = $"Score : {GetScore()}";
     }
 
     public int GetScore()

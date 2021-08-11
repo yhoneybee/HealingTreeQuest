@@ -43,7 +43,6 @@ public class Defencer : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             gameSystem.scoreSystem.ScoreMinus(50);
-            gameSystem.scoreText.text = gameSystem.scoreSystem.GetScore().ToString();
             gameSystem.enemyPool.ReleaseEnemy(collision.GetComponent<Enemy>());
         }
     }
@@ -53,7 +52,6 @@ public class Defencer : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             gameSystem.scoreSystem.ScorePlus(100);
-            gameSystem.scoreText.text = gameSystem.scoreSystem.GetScore().ToString();
             gameSystem.enemyPool.ReleaseEnemy(collision.gameObject.GetComponent<Enemy>());
         }
     }
