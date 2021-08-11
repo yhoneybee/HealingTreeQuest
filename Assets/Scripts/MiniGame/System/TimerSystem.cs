@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TimerSystem : MonoBehaviour
 {
     private int time;
+    public bool timeUp = false;
 
     public void TimerStart(int time)
     {
@@ -15,6 +16,13 @@ public class TimerSystem : MonoBehaviour
 
     private void CountDown()
     {
+        if (time <= 0)
+        {
+            timeUp = true;
+            CancelInvoke("CountDown");
+            return;
+        }
+
         time--;
     }
 
