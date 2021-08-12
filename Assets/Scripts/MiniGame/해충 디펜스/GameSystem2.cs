@@ -55,7 +55,7 @@ public class GameSystem2 : MonoBehaviour
         DragScreen();
 
         timerSystem.SetTimeText(ref timeText);
-        scoreSystem.SetScoreText(ref timeText);
+        scoreSystem.SetScoreText(ref scoreText);
     }
 
     void DragScreen()
