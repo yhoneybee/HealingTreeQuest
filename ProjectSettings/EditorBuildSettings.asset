@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Ingame.unity
     guid: e9deeffa7e3ba2d46afa5e76c9aa6504
+  - enabled: 1
+    path: "Assets/Scenes/Minigame/\uACFC\uC77C \uC218\uD655.unity"
+    guid: ba2e07b6559f9fb4f809d005f4aac146
+  - enabled: 1
+    path: "Assets/Scenes/Minigame/\uC7A1\uCD08 \uBF51\uAE30.unity"
+    guid: f00fe4ccbc0492343bb342ee31b56fb5
+  - enabled: 1
+    path: "Assets/Scenes/Minigame/\uD574\uCDA9 \uB514\uD39C\uC2A4.unity"
+    guid: dccd96428c99db441a8c56770b3a0c02
   m_configObjects: {}

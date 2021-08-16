@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6603497165731064147}
   - component: {fileID: 1601970947340922903}
   - component: {fileID: 3544418178218705545}
+  - component: {fileID: 8189423841528335401}
   m_Layer: 5
   m_Name: DeilyQuest
-  m_TagString: Untagged
+  m_TagString: Daily
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +82,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8189423841528335401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954420147944638409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f59954611707b784592b01c76f229800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameName: {fileID: 6362408554491776375}
+  Number: 0
+  isClear: 0
+  GoMiniGameObj: {fileID: 3746953201293992594}
+  GiveGiftObj: {fileID: 2516535513628442239}
 --- !u!1 &2026280576466894894
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +299,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6348020109679669231}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8189423841528335401}
+        m_TargetAssemblyTypeName: MiniGameProp, Assembly-CSharp
+        m_MethodName: GiveGift
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2820593605179900595
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +511,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9052602677624827656}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8189423841528335401}
+        m_TargetAssemblyTypeName: MiniGameProp, Assembly-CSharp
+        m_MethodName: GoMiniGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3818027699798805457
 GameObject:
   m_ObjectHideFlags: 0
