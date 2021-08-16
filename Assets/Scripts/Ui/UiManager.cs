@@ -24,4 +24,14 @@ public class UiManager : MonoBehaviour
     {
         Instance = this;
     }
+
+    public void SwitchRaycastTargetMode(bool value)
+    {
+        UiObj child;
+        for (int i = 0; i < Menu.RectTransform.childCount; i++)
+        {
+            child = Menu.RectTransform.GetChild(i).GetComponent<UiObj>();
+            child.Image.raycastTarget = value;
+        }
+    }
 }

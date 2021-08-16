@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler
 {
     public static RectTransform Dragging = null;
 
@@ -27,13 +27,25 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         get { return hide; }
         set
-        { 
+        {
             hide = value;
             if (CSwitchingHide != null) StopCoroutine(CSwitchingHide);
             CSwitchingHide = StartCoroutine(ESwitchingHide());
         }
     }
+    private bool preview;
+    public bool Preview
+    {
+        get { return preview; }
+        set
+        {
+            preview = value;
+            if (CPreview != null) StopCoroutine(CPreview);
+            CPreview = StartCoroutine(EPreview());
+        }
+    }
 
+    public bool Moveable;
     float cell_size = 0, spacing = 0, padding = 0;
 
     void Start()
@@ -43,10 +55,33 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             cell_size = GridLayoutGroup.cellSize.x;
             spacing = GridLayoutGroup.spacing.y;
             padding = 150;
-            RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, (cell_size + spacing) + padding);
+            RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, (cell_size + spacing) * transform.childCount + padding);
         }
     }
 
+    IEnumerator EPreview()
+    {
+        if (preview)
+        {
+            while (Image.color.a > 0)
+            {
+                Image.color = new Color(Image.color.r, Image.color.g, Image.color.b, Image.color.a - 0.05f);
+                yield return new WaitForSeconds(0.05f);
+            }
+            Image.enabled = !preview;
+        }
+        else
+        {
+            Image.enabled = !preview;
+            while (1 > Image.color.a)
+            {
+                Image.color = new Color(Image.color.r, Image.color.g, Image.color.b, Image.color.a + 0.05f);
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+
+        yield return null;
+    }
     IEnumerator ESwitchingHide()
     {
         int to = Hide ? (RectTransform.anchorMin.x == 1 ? 0 : 1) : (RectTransform.anchorMin.x == 1 ? 1 : 0);
@@ -83,42 +118,96 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Dragging = RectTransform;
-        BeginMousePos = MousePos;
-        UiPos = Dragging.position;
-        Image.raycastTarget = false;
+        if (UI.CustomMode)
+        {
+            Dragging = RectTransform;
+            BeginMousePos = MousePos;
+            UiPos = Dragging.position;
+            Image.raycastTarget = false;
+        }
     }
     public void OnDrag(PointerEventData eventData)
     {
-        Vector2 delta = MousePos - BeginMousePos;
+        if (UI.CustomMode && Moveable)
+        {
+            Vector2 delta = MousePos - BeginMousePos;
 
-        delta += UiPos;
+            delta += UiPos;
 
-        Dragging.position = new Vector3(delta.x, delta.y, Dragging.position.z);
+            Dragging.position = new Vector3(delta.x, delta.y, Dragging.position.z);
+        }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        Vector2 new_anchor = new Vector2(0.5f, 0.5f);
-
-        if (Dragging.position.x > 0)
+        if (UI.CustomMode && GridLayoutGroup)
         {
-            new_anchor = new Vector2(1, new_anchor.y);
-            GridLayoutGroup.childAlignment = TextAnchor.MiddleRight;
-            RectTransform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
-            RectTransform.pivot = new_anchor;
-        }
-        else
-        {
-            new_anchor = new Vector2(0, new_anchor.y);
-            GridLayoutGroup.childAlignment = TextAnchor.MiddleLeft;
-            RectTransform.rotation = Quaternion.AngleAxis(180, Vector3.forward);
-            RectTransform.pivot = new Vector2(1, new_anchor.y);
-        }
+            Vector2 new_anchor = new Vector2(0.5f, 0.5f);
+            UiObj button = RectTransform.GetChild(0).GetComponent<UiObj>();
 
-        RectTransform.anchorMin = RectTransform.anchorMax = new_anchor;
-        RectTransform.anchoredPosition = new Vector2(0, RectTransform.anchoredPosition.y);
+            if (Dragging.position.x > 0)
+            {
+                new_anchor = new Vector2(1, new_anchor.y);
+                button.RectTransform.anchorMin = new Vector2(0, button.RectTransform.anchorMin.y);
+                button.RectTransform.anchorMax = new Vector2(0, button.RectTransform.anchorMax.y);
+                button.RectTransform.anchoredPosition = new Vector2(-button.RectTransform.sizeDelta.x, button.RectTransform.anchoredPosition.y);
+            }
+            else
+            {
+                new_anchor = new Vector2(0, new_anchor.y);
+                button.RectTransform.anchorMin = new Vector2(1, button.RectTransform.anchorMin.y);
+                button.RectTransform.anchorMax = new Vector2(1, button.RectTransform.anchorMax.y);
+                button.RectTransform.anchoredPosition = new Vector2(0, button.RectTransform.anchoredPosition.y);
+            }
+
+            RectTransform.anchorMin = RectTransform.anchorMax = RectTransform.pivot = new_anchor;
+            RectTransform.anchoredPosition = new Vector2(0, RectTransform.anchoredPosition.y);
+        }
 
         Image.raycastTarget = true;
         Dragging = null;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (UI.CustomMode && Dragging)
+        {
+            UiObj drag = Dragging.GetComponent<UiObj>();
+            if ((drag && !drag.GridLayoutGroup))
+            {
+                if (!Moveable)
+                    Dragging.SetParent(UI.Canvas.transform);
+                if (GridLayoutGroup && !Hide)
+                {
+                    if (CScalingForChild != null)
+                        StopCoroutine(CScalingForChild);
+                    CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount + 1));
+                }
+            }
+        }
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (UI.CustomMode && Dragging)
+        {
+            UiObj drag = Dragging.GetComponent<UiObj>();
+            if ((drag && !drag.GridLayoutGroup) && GridLayoutGroup && !Hide)
+            {
+                if (CScalingForChild != null)
+                    StopCoroutine(CScalingForChild);
+                if (GetComponent<RectTransform>().childCount > 1)
+                    CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount - 1));
+            }
+        }
+    }
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (UI.CustomMode && Dragging)
+        {
+            if ((GridLayoutGroup && !Hide) || Moveable)
+                Dragging.SetParent(UI.Menu.RectTransform.GetChild(1).GetComponent<UiObj>().transform);
+            else
+                Dragging.SetParent(UI.Canvas.transform);
+            UI.Menu.GridLayoutGroup.enabled = false;
+            UI.Menu.GridLayoutGroup.enabled = true;
+        }
     }
 }
