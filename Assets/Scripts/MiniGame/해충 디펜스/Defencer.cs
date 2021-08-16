@@ -44,6 +44,7 @@ public class Defencer : MonoBehaviour
         {
             gameSystem.scoreSystem.ScoreMinus(50);
             gameSystem.enemyPool.ReleaseEnemy(collision.GetComponent<Enemy>());
+            gameSystem.directorSystem.cameraSystem.ShakeCam(1, 0.1f);
         }
     }
 

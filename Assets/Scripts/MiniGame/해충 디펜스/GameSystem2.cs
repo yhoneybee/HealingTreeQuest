@@ -14,7 +14,9 @@ public enum Direction
 // ÇØÃæ µðÆæ½º
 public class GameSystem2 : MonoBehaviour
 {
+    [HideInInspector]
     public ScoreSystem scoreSystem;
+    public DirectorSystem directorSystem;
     TimerSystem timerSystem;
 
     public EnemyPool enemyPool;
@@ -31,6 +33,7 @@ public class GameSystem2 : MonoBehaviour
     {
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
+        directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
 
         enemyPool = Tools<EnemyPool>.GetTool("EnemyPool");
 

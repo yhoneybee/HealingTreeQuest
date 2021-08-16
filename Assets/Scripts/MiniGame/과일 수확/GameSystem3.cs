@@ -7,6 +7,7 @@ public class GameSystem3 : MonoBehaviour
 {
     public ScoreSystem scoreSystem;
     TimerSystem timerSystem;
+    DirectorSystem directorSystem;
 
     Text scoreText;
     Text timeText;
@@ -18,6 +19,7 @@ public class GameSystem3 : MonoBehaviour
     {
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
+        directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
@@ -60,6 +62,7 @@ public class GameSystem3 : MonoBehaviour
         {
             scoreSystem.ScoreMinus(50);
             Destroy(collision.gameObject);
+            directorSystem.cameraSystem.ShakeCam(1, 0.1f);
         }
     }
 }
