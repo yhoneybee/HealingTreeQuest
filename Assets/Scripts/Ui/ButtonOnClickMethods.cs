@@ -10,4 +10,17 @@ public class ButtonOnClickMethods : MonoBehaviour
     {
         UI.CustomMode = !UI.CustomMode;
     }
+
+    public void PreviewMode()
+    {
+        foreach (var item in UI.UiObjs)
+        {
+            item.Preview = !item.Preview;
+        }
+    }
+
+    public void CustomMode()
+    {
+        UI.CustomMode = !UI.CustomMode;
+    }
 }
