@@ -9,6 +9,7 @@ public class UiManager : MonoBehaviour
 
     public List<UiObj> UiObjs = new List<UiObj>();
     public RectTransform Canvas;
+    public UiObj Menu;
 
     private bool custom_mode = false;
     public bool CustomMode
@@ -17,7 +18,7 @@ public class UiManager : MonoBehaviour
         set { custom_mode = value; }
     }
 
-    public float MiddlePivot = 0.5f;
+    public bool Preview = false;
 
     private void Awake()
     {
