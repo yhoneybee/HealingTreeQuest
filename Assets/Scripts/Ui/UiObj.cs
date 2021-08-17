@@ -181,7 +181,8 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 {
                     if (CScalingForChild != null)
                         StopCoroutine(CScalingForChild);
-                    CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount + 1));
+                    Dragging.SetParent(UI.Menu.RectTransform.GetChild(1).GetComponent<UiObj>().transform);
+                    CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));
                 }
             }
         }
@@ -195,6 +196,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             {
                 if (CScalingForChild != null)
                     StopCoroutine(CScalingForChild);
+                Dragging.SetParent(UI.Canvas.transform);
                 CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));
             }
         }
@@ -203,10 +205,6 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         if (UI.CustomMode && Dragging)
         {
-            if ((GridLayoutGroup && !Hide) || Moveable)
-                Dragging.SetParent(UI.Menu.RectTransform.GetChild(1).GetComponent<UiObj>().transform);
-            else
-                Dragging.SetParent(UI.Canvas.transform);
             UI.Menu.GridLayoutGroup.enabled = false;
             UI.Menu.GridLayoutGroup.enabled = true;
         }
