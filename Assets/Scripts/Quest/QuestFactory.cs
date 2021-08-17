@@ -7,5 +7,5 @@ public class QuestFactory : MonoBehaviour
 {
     public List<QuestData> QuestDatas = new List<QuestData>();
 
-    public QuestData GetRandomQuest() => QuestDatas[Random.Range(0, QuestDatas.Count + 1)];
+    public QuestData GetRandomQuest() => QuestDatas[Random.Range(0, QuestDatas.Count)];
 }
