@@ -26,7 +26,7 @@ public class GameSystem3 : MonoBehaviour
 
         moveBar = Tools<Slider>.GetTool("MoveBar");
 
-        fruit = Resources.Load<GameObject>("Prefabs/MiniGame/과일 수확/fruit");
+        fruit = Tools<GameObject>.GetResource("Prefabs/MiniGame/과일 수확/fruit");
 
         timerSystem.TimerStart(60);
 

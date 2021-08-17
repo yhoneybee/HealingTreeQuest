@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class TimerSystem : MonoBehaviour
 {
-    private int time;
+    [HideInInspector]
     public bool timeUp = false;
+    private int time;
 
     public void TimerStart(int time)
     {

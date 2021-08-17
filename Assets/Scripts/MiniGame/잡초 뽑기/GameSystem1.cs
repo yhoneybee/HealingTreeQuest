@@ -27,7 +27,7 @@ public class GameSystem1 : MonoBehaviour
         timeSystem = Tools<TimerSystem>.GetTool("TimeSystem");
 
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/잡초 뽑기/잡초");
+        sprites = Tools<Sprite>.GetResourceAll("Sprites/MiniGame/잡초 뽑기/잡초");
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
