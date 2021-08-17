@@ -52,6 +52,8 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         if (GridLayoutGroup)
         {
+            Hide = true;
+
             cell_size = GridLayoutGroup.cellSize.x;
             spacing = GridLayoutGroup.spacing.y;
             padding = 150;
