@@ -10,6 +10,7 @@ public class GameSystem1 : MonoBehaviour
 
     Text scoreText;
     Text timeText;
+    Button OKButton;
 
     Sprite[] sprites;
 
@@ -17,6 +18,7 @@ public class GameSystem1 : MonoBehaviour
 
     ScoreSystem scoreSystem;
     TimerSystem timeSystem;
+    DirectorSystem directorSystem;
 
     float spawnTime = 1f;
     bool gameFinish = false;
@@ -25,12 +27,15 @@ public class GameSystem1 : MonoBehaviour
     {
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timeSystem = Tools<TimerSystem>.GetTool("TimeSystem");
+        directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
 
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        sprites = Tools<Sprite>.GetResourceAll("Sprites/MiniGame/잡초 뽑기/잡초");
+        sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/잡초 뽑기/잡초");
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
+        OKButton = Tools<Button>.GetTool("OKButton");
+        OKButton.onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
 
         timeSystem.TimerStart(60);
 
@@ -58,6 +63,7 @@ public class GameSystem1 : MonoBehaviour
         {
             gameFinish = true;
             StopCoroutine(RandomSpawn());
+            directorSystem.visualSystem.ResultAnimation();
         }
         else if (timeSystem.GetTime() <= 20)
         {

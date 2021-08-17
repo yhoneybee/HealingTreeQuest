@@ -8,7 +8,7 @@ public class EnemyPool : MonoBehaviour
     Queue<Enemy> enemys = new Queue<Enemy>();
     private void Start()
     {
-        enemyPrefab = Tools<Enemy>.GetResource("Prefabs/MiniGame/해충 디펜스/Enemy");
+        enemyPrefab = Resources.Load<Enemy>("Prefabs/MiniGame/해충 디펜스/Enemy");
 
         Enemy enemy;
         for (int i = 0; i < 5; i++)

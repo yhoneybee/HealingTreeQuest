@@ -16,7 +16,7 @@ public class Weeds : MonoBehaviour
 
     public void Init(GameObject obj)
     {
-        Slider tempSlider = Tools<Slider>.GetResource("Prefabs/Minigame/¿‚√  ªÃ±‚/Guage");
+        Slider tempSlider = Resources.Load<Slider>("Prefabs/Minigame/¿‚√  ªÃ±‚/Guage");
         slider = Instantiate(tempSlider, obj.transform);
         slider.transform.localPosition = new Vector2(0, 150);
         isSpawned = true;

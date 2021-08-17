@@ -11,6 +11,7 @@ public class GameSystem3 : MonoBehaviour
 
     Text scoreText;
     Text timeText;
+    Button OKButton;
 
     public Slider moveBar;
 
@@ -23,10 +24,12 @@ public class GameSystem3 : MonoBehaviour
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
+        OKButton = Tools<Button>.GetTool("OKButton");
+        OKButton.onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
 
         moveBar = Tools<Slider>.GetTool("MoveBar");
 
-        fruit = Tools<GameObject>.GetResource("Prefabs/MiniGame/과일 수확/fruit");
+        fruit = Resources.Load<GameObject>("Prefabs/MiniGame/과일 수확/Fruit");
 
         timerSystem.TimerStart(60);
 
@@ -45,7 +48,11 @@ public class GameSystem3 : MonoBehaviour
         while (true)
         {
             if (timerSystem.timeUp)
+            {
+                directorSystem.visualSystem.ResultAnimation();
                 yield break;
+            }
+
             else if (timerSystem.GetTime() <= 20)
                 spawnTime = 0.1f;
             else if (timerSystem.GetTime() <= 40)

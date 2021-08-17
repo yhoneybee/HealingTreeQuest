@@ -14,7 +14,7 @@ public class MiniGameProp : MonoBehaviour
 
     void Start()
     {
-        ClearNumber = DonDestroyOnLoadObj.instance.ClearList[Number];
+        ClearNumber = DDOLObj.Instance.ClearList[Number];
 
         if (ClearNumber == 1)
         {
@@ -32,17 +32,17 @@ public class MiniGameProp : MonoBehaviour
 
     public void GoMiniGame()
     {
-        DonDestroyOnLoadObj.instance.SelectMiniGame = Number;
+        DDOLObj.Instance.SelectMiniGame = Number;
         SceneManager.LoadScene(GameName.text);
     }
 
     public void GiveGift()
     {
-        if (DonDestroyOnLoadObj.instance.ClearList[Number] == 1)
+        if (DDOLObj.Instance.ClearList[Number] == 1)
         {
             GiveGiftObj.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
             GameObject.Find("Tree").GetComponent<Tree>().Exp += 3000;
-            DonDestroyOnLoadObj.instance.ClearList[Number] = 2;
+            DDOLObj.Instance.ClearList[Number] = 2;
         }
     }
 }

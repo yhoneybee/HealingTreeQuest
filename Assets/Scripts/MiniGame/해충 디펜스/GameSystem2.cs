@@ -16,6 +16,7 @@ public class GameSystem2 : MonoBehaviour
 {
     [HideInInspector]
     public ScoreSystem scoreSystem;
+    [HideInInspector]
     public DirectorSystem directorSystem;
     TimerSystem timerSystem;
 
@@ -23,6 +24,7 @@ public class GameSystem2 : MonoBehaviour
 
     public Text scoreText;
     public Text timeText;
+    Button OKButton;
 
     Transform[] spawnPoints = new Transform[4];
 
@@ -39,6 +41,8 @@ public class GameSystem2 : MonoBehaviour
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
+        OKButton = Tools<Button>.GetTool("OKButton");
+        OKButton.onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
 
         defencer = Tools<Defencer>.GetTool("Defencer");
 
@@ -99,12 +103,16 @@ public class GameSystem2 : MonoBehaviour
         float spawnTime = 2f;
         while (true)
         {
-            if (timerSystem.timeUp) yield break;
-            else if (timerSystem.GetTime() <= 40)
+            if (timerSystem.timeUp)
+            {
+                directorSystem.visualSystem.ResultAnimation();
+                yield break;
+            }
+            else if (timerSystem.GetTime() <= 20)
             {
                 spawnTime = 1f;
             }
-            else if (timerSystem.GetTime() <= 20)
+            else if (timerSystem.GetTime() <= 40)
             {
                 spawnTime = 0.5f;
             }

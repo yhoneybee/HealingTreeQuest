@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 
-public class DonDestroyOnLoadObj : MonoBehaviour
+public class DDOLObj : MonoBehaviour
 {
-    public static DonDestroyOnLoadObj instance;
+    public static DDOLObj Instance { get; private set; } = null;
     public int[] ClearList = new int[3];
     public int SelectMiniGame;
     DateTime time;
@@ -16,10 +16,10 @@ public class DonDestroyOnLoadObj : MonoBehaviour
         if (time.Year <= 1)
             time = DateTime.Now;
 
-        var obj = FindObjectsOfType<DonDestroyOnLoadObj>();
+        var obj = FindObjectsOfType<DDOLObj>();
         if (obj.Length == 1)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -35,13 +35,6 @@ public class DonDestroyOnLoadObj : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))    // 클리어 판정
-        {
-            if (ClearList[SelectMiniGame] < 1)
-                ClearList[SelectMiniGame] = 1;
-            SceneManager.LoadScene("Ingame");
-        }
-
         if (time.Day != DateTime.Now.Day)   // 날이 바뀌면 일퀘 초기화
         {
             time = DateTime.Now;
@@ -61,6 +54,12 @@ public class DonDestroyOnLoadObj : MonoBehaviour
                 }
             }
         }
+    }
 
+    public void GameClear() // 미니게임 클리어 시 불리는 함수
+    {
+        if (ClearList[SelectMiniGame] < 1)
+            ClearList[SelectMiniGame] = 1;
+        SceneManager.LoadScene("Ingame");
     }
 }
