@@ -57,7 +57,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             cell_size = GridLayoutGroup.cellSize.x;
             spacing = GridLayoutGroup.spacing.y;
             padding = 150;
-            RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, (cell_size + spacing) * transform.childCount + padding);
+            RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, (cell_size + spacing) + padding);
         }
     }
 
@@ -195,8 +195,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             {
                 if (CScalingForChild != null)
                     StopCoroutine(CScalingForChild);
-                if (GetComponent<RectTransform>().childCount > 1)
-                    CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount - 1));
+                CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));
             }
         }
     }
