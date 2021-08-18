@@ -7,12 +7,14 @@ using UnityEngine.EventSystems;
 public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler
 {
     public static RectTransform Dragging = null;
+    public static UiObj Overring = null;
 
     public UiManager UI => UiManager.Instance;
 
     public Image Image = null;
-    public Coroutine CSwitchingHide = null;
+    public Coroutine CMoving = null;
     public Coroutine CPreview = null;
+    public Coroutine CSwitchingHide = null;
     public Coroutine CScalingForChild = null;
     public RectTransform RectTransform = null;
     public GridLayoutGroup GridLayoutGroup = null;
@@ -61,6 +63,25 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         }
     }
 
+    IEnumerator EMoving()
+    {
+        if (GridLayoutGroup)
+        {
+            float half = RectTransform.sizeDelta.y / 2, canvas_half = UI.Canvas.sizeDelta.y / 2;
+            while (RectTransform.anchoredPosition.y > canvas_half - half + 0.05f)//À§
+            {
+                RectTransform.anchoredPosition = Vector2.Lerp(RectTransform.anchoredPosition, new Vector2(RectTransform.anchoredPosition.x, canvas_half - half), Time.deltaTime * 10);
+                yield return new WaitForSeconds(0.001f);
+            }
+            while (RectTransform.anchoredPosition.y < -canvas_half + half - 0.05f)//¹Ø
+            {
+                RectTransform.anchoredPosition = Vector2.Lerp(RectTransform.anchoredPosition, new Vector2(RectTransform.anchoredPosition.x, -canvas_half + half), Time.deltaTime * 10);
+                yield return new WaitForSeconds(0.001f);
+            }
+        }
+
+        yield return null;
+    }
     IEnumerator EPreview()
     {
         if (preview)
@@ -130,13 +151,22 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     }
     public void OnDrag(PointerEventData eventData)
     {
-        if (UI.CustomMode && Moveable)
+        if (UI.CustomMode)
         {
             Vector2 delta = MousePos - BeginMousePos;
 
             delta += UiPos;
 
             Dragging.position = new Vector3(delta.x, delta.y, Dragging.position.z);
+
+            if (Overring)
+            {
+                if (Overring.RectTransform.position.y > Dragging.position.y)
+                    Dragging.SetSiblingIndex(Overring.RectTransform.GetSiblingIndex());
+                else
+                    Dragging.SetSiblingIndex(Overring.RectTransform.GetSiblingIndex() + 1);
+                Overring = null;
+            }
         }
     }
     public void OnEndDrag(PointerEventData eventData)
@@ -165,6 +195,12 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             RectTransform.anchoredPosition = new Vector2(0, RectTransform.anchoredPosition.y);
         }
 
+        if (CMoving != null) StopCoroutine(CMoving);
+        CMoving = StartCoroutine(EMoving());
+
+        if (Dragging != null && Dragging.parent == UI.Canvas && Dragging != UI.Menu.RectTransform)
+            Dragging.SetAsLastSibling();
+
         Image.raycastTarget = true;
         Dragging = null;
     }
@@ -173,15 +209,15 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         if (UI.CustomMode && Dragging)
         {
             UiObj drag = Dragging.GetComponent<UiObj>();
-            if ((drag && !drag.GridLayoutGroup))
+            if (drag && !drag.GridLayoutGroup)
             {
-                if (!Moveable)
-                    Dragging.SetParent(UI.Canvas.transform);
-                if (GridLayoutGroup && !Hide)
+                Overring = this;
+
+                if (drag.Moveable && GridLayoutGroup && !Hide)
                 {
-                    if (CScalingForChild != null)
-                        StopCoroutine(CScalingForChild);
                     Dragging.SetParent(UI.Menu.RectTransform.GetChild(1).GetComponent<UiObj>().transform);
+
+                    if (CScalingForChild != null) StopCoroutine(CScalingForChild);
                     CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));
                 }
             }
@@ -192,11 +228,12 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         if (UI.CustomMode && Dragging)
         {
             UiObj drag = Dragging.GetComponent<UiObj>();
-            if ((drag && !drag.GridLayoutGroup) && GridLayoutGroup && !Hide)
+
+            if (drag && !drag.GridLayoutGroup && drag.Moveable && GridLayoutGroup && !Hide)
             {
-                if (CScalingForChild != null)
-                    StopCoroutine(CScalingForChild);
                 Dragging.SetParent(UI.Canvas.transform);
+
+                if (CScalingForChild != null) StopCoroutine(CScalingForChild);
                 CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));
             }
         }
@@ -207,6 +244,11 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         {
             UI.Menu.GridLayoutGroup.enabled = false;
             UI.Menu.GridLayoutGroup.enabled = true;
+
+            if (CMoving != null) StopCoroutine(CMoving);
+            CMoving = StartCoroutine(EMoving());
+            if (CScalingForChild != null) StopCoroutine(CScalingForChild);
+            CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));
         }
     }
 }
