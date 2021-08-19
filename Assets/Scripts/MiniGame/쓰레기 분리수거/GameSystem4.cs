@@ -30,6 +30,8 @@ public class GameSystem4 : MonoBehaviour
 
         timerSystem.TimerStart(60);
 
+        directorSystem.visualSystem.StartAnimation();
+
         StartCoroutine(Spawn());
     }
 
@@ -41,6 +43,7 @@ public class GameSystem4 : MonoBehaviour
 
     IEnumerator Spawn()
     {
+        yield return new WaitForSeconds(5);
         int spawnCount = 1;
         float spawnDelay = 2f;
         float destroyTime = 5f;
