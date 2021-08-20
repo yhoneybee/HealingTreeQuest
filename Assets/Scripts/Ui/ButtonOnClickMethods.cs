@@ -17,6 +17,7 @@ public class ButtonOnClickMethods : MonoBehaviour
         {
             item.Preview = !item.Preview;
         }
+        UI.Preview = !UI.Preview;
     }
 
     public void SwitchCustomMode()

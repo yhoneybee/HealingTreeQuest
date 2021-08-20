@@ -19,7 +19,8 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     public RectTransform RectTransform = null;
     public GridLayoutGroup GridLayoutGroup = null;
 
-    public Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    public Vector2 MousePos => Input.mousePosition;
+    //public Vector2 MousePos => Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
     public Vector2 BeginMousePos;
     public Vector2 UiPos;
@@ -61,6 +62,9 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             padding = 150;
             RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, (cell_size + spacing) + padding);
         }
+    }
+    void Update()
+    {
     }
 
     IEnumerator EMoving()
