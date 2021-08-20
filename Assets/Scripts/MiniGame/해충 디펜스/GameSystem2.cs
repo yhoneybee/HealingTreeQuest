@@ -24,7 +24,6 @@ public class GameSystem2 : MonoBehaviour
 
     public Text scoreText;
     public Text timeText;
-    Button OKButton;
 
     Transform[] spawnPoints = new Transform[4];
 
@@ -41,8 +40,6 @@ public class GameSystem2 : MonoBehaviour
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
-        OKButton = Tools<Button>.GetTool("OKButton");
-        OKButton.onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
 
         defencer = Tools<Defencer>.GetTool("Defencer");
 

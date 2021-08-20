@@ -14,7 +14,6 @@ public class GameSystem4 : MonoBehaviour
     public Transform[] spawnPoints;
     Text scoreText;
     Text timeText;
-    Button OKButton;
     Trash trash;
     void Start()
     {
@@ -24,8 +23,6 @@ public class GameSystem4 : MonoBehaviour
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
-        OKButton = Tools<Button>.GetTool("OKButton");
-        OKButton.onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
 
         trash = Resources.Load<Trash>("Prefabs/MiniGame/쓰레기 분리수거/Trash");
 

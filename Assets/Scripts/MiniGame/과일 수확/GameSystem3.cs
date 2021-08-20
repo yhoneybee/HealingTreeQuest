@@ -12,7 +12,6 @@ public class GameSystem3 : MonoBehaviour
 
     Text scoreText;
     Text timeText;
-    Button OKButton;
 
     public Slider moveBar;
 
@@ -25,8 +24,6 @@ public class GameSystem3 : MonoBehaviour
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
-        OKButton = Tools<Button>.GetTool("OKButton");
-        OKButton.onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
 
         moveBar = Tools<Slider>.GetTool("MoveBar");
 

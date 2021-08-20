@@ -26,12 +26,15 @@ public class VisualSystem : MonoBehaviour
 
     public void ResultAnimation(int score, int[] scoreChart)
     {
+        resultWindow[0].title[0].transform.parent.gameObject.SetActive(true);
         List<GameObject> titles = resultWindow[0].title;
         List<GameObject> backgrounds = resultWindow[0].background;
         List<GameObject> contents = resultWindow[0].content;
 
+        contents[0].GetComponent<Button>().onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
+
         contents[1].GetComponent<Text>().text =
-            $"Score : {score}\n\nBest: {scoreChart[0]}\n\n1 : {scoreChart[0]}\n2 : {scoreChart[1]}\n3 : {scoreChart[2]}";
+            $"Score : {score}\nBest: {scoreChart[0]}\n\n1 : {scoreChart[0]}\n2 : {scoreChart[1]}\n3 : {scoreChart[2]}";
 
         for (int i = 0; i < titles.Count; i++)
         {
