@@ -24,29 +24,6 @@ public class VisualSystem : MonoBehaviour
 
     }
 
-    public void StartAnimation()
-    {
-        StartCoroutine(_StartAnimation());
-    }
-    private IEnumerator _StartAnimation()
-    {
-        Text text =
-            Instantiate(Resources.Load<Text>("Prefabs/MiniGame/Public/StartText"), GameObject.Find("Canvas").transform);
-
-        for (int i = 3; i >= 0; i--)
-        {
-            text.transform.localPosition = new Vector2(-1000, 0);
-
-            text.text = i.ToString();
-            if (i == 0)
-                text.text = "Game Start!";
-            ObjMove(text.gameObject, Vector2.zero);
-
-            yield return new WaitForSeconds(1);
-        }
-
-        text.gameObject.SetActive(false);
-    }
     public void ResultAnimation()
     {
         List<GameObject> titles = resultWindow[0].title;

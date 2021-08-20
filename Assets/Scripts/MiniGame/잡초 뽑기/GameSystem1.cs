@@ -39,8 +39,6 @@ public class GameSystem1 : MonoBehaviour
 
         timeSystem.TimerStart(60);
 
-        directorSystem.visualSystem.StartAnimation();
-
         StartCoroutine(RandomSpawn());
     }
 
@@ -79,7 +77,6 @@ public class GameSystem1 : MonoBehaviour
 
     IEnumerator RandomSpawn()
     {
-        yield return new WaitForSeconds(5);
         while (true)
         {
             yield return new WaitForSeconds(spawnTime);
