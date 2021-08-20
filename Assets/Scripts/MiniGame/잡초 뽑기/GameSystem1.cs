@@ -10,7 +10,6 @@ public class GameSystem1 : MonoBehaviour
 
     Text scoreText;
     Text timeText;
-    Button OKButton;
 
     Sprite[] sprites;
 
@@ -34,8 +33,6 @@ public class GameSystem1 : MonoBehaviour
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
-        OKButton = Tools<Button>.GetTool("OKButton");
-        OKButton.onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
 
         timeSystem.TimerStart(60);
 
