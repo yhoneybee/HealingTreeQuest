@@ -7,14 +7,22 @@ public class UiManager : MonoBehaviour
 {
     public static UiManager Instance { get; private set; } = null;
 
+    public Camera Cam => Camera.main;
+    public Transform CamTf => Cam.transform;
+
     public List<UiObj> UiObjs = new List<UiObj>();
     public RectTransform Canvas;
     public UiObj Menu;
 
+    public Vector3 MouseCenterPos => Cam.ScreenToViewportPoint(Input.mousePosition);
+
+    public Vector3 WoodPos = new Vector3(0, 4.5f, 0);
+
     Vector2 Now;
     Vector2 Prev;
 
-    float force = 0;
+    public float Distance = 10;
+    float zoom = 60;
 
     private bool custom_mode = false;
     public bool CustomMode
@@ -33,20 +41,26 @@ public class UiManager : MonoBehaviour
     {
         if (Preview)
         {
-            if (Input.GetMouseButtonDown(0))
-                Now = Prev = Input.mousePosition;
-            if (Input.GetMouseButton(0))
-                Now = Input.mousePosition;
-
-            Camera.main.transform.RotateAround(new Vector3(0, 4.5f, 0), Vector3.up, (Now.x - Prev.x) * Time.deltaTime * 10);
-        }
-    }
-    private void LateUpdate()
-    {
-        if (Preview)
-        {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0)) Prev = MouseCenterPos;
+            else if (Input.GetMouseButton(0))
             {
+                Now = MouseCenterPos;
+                Vector3 dir = Prev - Now;
+
+                Vector2 xy_axis = new Vector2(-dir.x * 100, dir.y * 100);
+
+                CamTf.transform.position = WoodPos;
+
+                CamTf.Rotate(Vector3.up, xy_axis.x, Space.World);
+                CamTf.Rotate(Vector3.right, xy_axis.y);
+
+                if (CamTf.localEulerAngles.x > 300)
+                    CamTf.localEulerAngles = new Vector3(0, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
+                else if (CamTf.localEulerAngles.x > 30)
+                    CamTf.localEulerAngles = new Vector3(30, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
+
+                CamTf.Translate(new Vector3(0, 0, -Distance));
+
                 Prev = Now;
             }
         }
