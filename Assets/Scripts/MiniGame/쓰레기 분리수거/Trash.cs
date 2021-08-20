@@ -43,6 +43,7 @@ public class Trash : MonoBehaviour, IDragHandler
     void Destroy()
     {
         Destroy(gameObject);
+        gameSystem.scoreSystem.ScoreMinus(50);
     }
 
     public void OnDrag(PointerEventData eventData)

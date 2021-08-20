@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraSystem : MonoBehaviour
 {
-    Camera camera;
+    new Camera camera;
 
     void Start()
     {

@@ -24,11 +24,14 @@ public class VisualSystem : MonoBehaviour
 
     }
 
-    public void ResultAnimation()
+    public void ResultAnimation(int score, int[] scoreChart)
     {
         List<GameObject> titles = resultWindow[0].title;
         List<GameObject> backgrounds = resultWindow[0].background;
         List<GameObject> contents = resultWindow[0].content;
+
+        contents[1].GetComponent<Text>().text =
+            $"Score : {score}\n\nBest: {scoreChart[0]}\n\n1 : {scoreChart[0]}\n2 : {scoreChart[1]}\n3 : {scoreChart[2]}";
 
         for (int i = 0; i < titles.Count; i++)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 쓰레기 분리수거
 public class GameSystem4 : MonoBehaviour
 {
     [HideInInspector]
@@ -24,7 +25,7 @@ public class GameSystem4 : MonoBehaviour
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
         OKButton = Tools<Button>.GetTool("OKButton");
-        OKButton.onClick.AddListener(()=> { DDOLObj.Instance.GameClear(); });
+        OKButton.onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
 
         trash = Resources.Load<Trash>("Prefabs/MiniGame/쓰레기 분리수거/Trash");
 
@@ -64,7 +65,8 @@ public class GameSystem4 : MonoBehaviour
 
             if (timerSystem.timeUp)
             {
-                directorSystem.visualSystem.ResultAnimation();
+                int[] scoreChart = scoreSystem.GetScoreChart(3);
+                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
                 yield break;
             }
             else if (timerSystem.GetTime() <= 20)

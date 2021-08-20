@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 과일 수확
 public class GameSystem3 : MonoBehaviour
 {
     public ScoreSystem scoreSystem;
@@ -49,7 +50,8 @@ public class GameSystem3 : MonoBehaviour
         {
             if (timerSystem.timeUp)
             {
-                directorSystem.visualSystem.ResultAnimation();
+                int[] scoreChart = scoreSystem.GetScoreChart(2);
+                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
                 yield break;
             }
 

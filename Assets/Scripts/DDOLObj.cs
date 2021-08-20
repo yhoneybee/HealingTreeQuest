@@ -4,12 +4,32 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 
+class TempClass // 충돌 안나게 하려고 만든 클래스! 수정하지말아주세요 히히
+{
+    public TempClass()
+    {
+        DDOLObj.Instance.ScoreInit = () =>
+        {
+            for (int i = 0; i < DDOLObj.Instance.miniGameCount; i++)
+            {
+                PlayerPrefs.SetInt($"{i}_First", PlayerPrefs.GetInt($"{i}_First"));
+                PlayerPrefs.SetInt($"{i}_Second", PlayerPrefs.GetInt($"{i}_Second"));
+                PlayerPrefs.SetInt($"{i}_Third", PlayerPrefs.GetInt($"{i}_Third"));
+            }
+        };
+    }
+}
+
 public class DDOLObj : MonoBehaviour
 {
     public static DDOLObj Instance { get; private set; } = null;
     public int[] ClearList = new int[3];
     public int SelectMiniGame;
+    public int miniGameCount = 4;
     DateTime time;
+
+    public delegate void Init();
+    public Init ScoreInit = null;
 
     private void Awake()
     {
@@ -21,6 +41,9 @@ public class DDOLObj : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            TempClass tc = new TempClass();
+
+            ScoreInit();
         }
         else
         {

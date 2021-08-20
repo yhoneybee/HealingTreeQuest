@@ -63,7 +63,9 @@ public class GameSystem1 : MonoBehaviour
         {
             gameFinish = true;
             StopCoroutine(RandomSpawn());
-            directorSystem.visualSystem.ResultAnimation();
+
+            int[] scoreChart = scoreSystem.GetScoreChart(0);
+            directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
         }
         else if (timeSystem.GetTime() <= 20)
         {
