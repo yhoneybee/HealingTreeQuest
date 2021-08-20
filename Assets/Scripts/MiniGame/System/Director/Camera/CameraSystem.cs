@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class CameraSystem : MonoBehaviour
 {
-    new Camera camera;
+    Camera Camera => Camera.main;
 
     void Start()
     {
-        camera = Camera.main;
     }
 
     void Update()
@@ -23,15 +22,15 @@ public class CameraSystem : MonoBehaviour
 
     private IEnumerator _ShakeCam(float power, float time)
     {
-        float curTime = Time.time, shakePower = power * (camera.orthographicSize / 30);
+        float curTime = Time.time, shakePower = power * (Camera.orthographicSize / 30);
         Vector2 randomPos;
 
         while (Time.time - curTime < time)
         {
             randomPos = new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)) * shakePower;
-            camera.transform.Translate(randomPos);
+            Camera.transform.Translate(randomPos);
             yield return new WaitForSeconds(0.01f);
-            camera.transform.Translate(-randomPos);
+            Camera.transform.Translate(-randomPos);
         }
     }
 }
