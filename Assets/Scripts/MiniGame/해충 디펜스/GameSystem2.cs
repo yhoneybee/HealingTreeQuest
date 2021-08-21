@@ -35,6 +35,7 @@ public class GameSystem2 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
+        directorSystem.visualSystem.Tutorial = Tutorial;
 
         enemyPool = Tools<EnemyPool>.GetTool("EnemyPool");
 
@@ -61,7 +62,10 @@ public class GameSystem2 : MonoBehaviour
         timerSystem.SetTimeText(ref timeText);
         scoreSystem.SetScoreText(ref scoreText);
     }
-
+    void Tutorial()
+    {
+        
+    }
     void DragScreen()
     {
         if (Input.GetMouseButtonDown(0))

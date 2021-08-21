@@ -15,13 +15,19 @@ public class VisualSystem : MonoBehaviour
     [SerializeField]
     private ResultWindow[] resultWindow;
 
+    bool isTutorial = true;
+    public delegate void Tutorials();
+    public Tutorials Tutorial;
+
     void Start()
     {
+        
     }
 
     void Update()
     {
-
+        if (isTutorial)
+            Tutorial();
     }
 
     public void ResultAnimation(int score, int[] scoreChart)

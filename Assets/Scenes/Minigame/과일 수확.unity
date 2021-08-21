@@ -1931,6 +1931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ClearList: 000000000000000000000000
   SelectMiniGame: 0
+  miniGameCount: 4
 --- !u!4 &1720769685
 Transform:
   m_ObjectHideFlags: 0

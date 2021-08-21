@@ -27,6 +27,7 @@ public class GameSystem1 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timeSystem = Tools<TimerSystem>.GetTool("TimeSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
+        directorSystem.visualSystem.Tutorial = Tutorial;
 
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/잡초 뽑기/잡초");
@@ -72,6 +73,11 @@ public class GameSystem1 : MonoBehaviour
         {
             spawnTime = 0.5f;
         }
+    }
+
+    void Tutorial()
+    {
+
     }
 
     IEnumerator RandomSpawn()

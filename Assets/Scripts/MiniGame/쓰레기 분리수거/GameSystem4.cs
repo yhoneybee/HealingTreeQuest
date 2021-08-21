@@ -20,6 +20,7 @@ public class GameSystem4 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
+        directorSystem.visualSystem.Tutorial = Tutorial;
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
@@ -36,7 +37,10 @@ public class GameSystem4 : MonoBehaviour
         scoreSystem.SetScoreText(ref scoreText);
         timerSystem.SetTimeText(ref timeText);
     }
+    void Tutorial()
+    {
 
+    }
     IEnumerator Spawn()
     {
         int spawnCount = 1;
