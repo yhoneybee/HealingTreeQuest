@@ -15,8 +15,6 @@ public class GameSystem1 : MonoBehaviour
     Sprite[] sprites;
 
     GameObject[] spawnPoints;
-    public GameObject[] tutorialTexts;
-    int tutorialIndex = 0;
 
     ScoreSystem scoreSystem;
     TimerSystem timeSystem;
@@ -30,20 +28,13 @@ public class GameSystem1 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timeSystem = Tools<TimerSystem>.GetTool("TimeSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
-        directorSystem.visualSystem.Tutorial = Tutorial;
 
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/잡초 뽑기/잡초");
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
-
-        timeSystem.TimerStart(60);
-
-        StartCoroutine(RandomSpawn());
-
-        directorSystem.visualSystem.FadeOut(GameObject.Find("Fade"), 0.5f);
-        tutorialTexts[tutorialIndex].SetActive(true);
+        directorSystem.visualSystem.AfterTutorial = () => { timeSystem.TimerStart(60); StartCoroutine(RandomSpawn()); };
     }
 
     void Update()
@@ -82,20 +73,10 @@ public class GameSystem1 : MonoBehaviour
         }
     }
 
-    void Tutorial()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            tutorialTexts[tutorialIndex].SetActive(false);
-            tutorialIndex++;
-        }
-    }
-
     IEnumerator RandomSpawn()
     {
         while (true)
         {
-            if (directorSystem.visualSystem.isTutorial) continue;
             yield return new WaitForSeconds(spawnTime);
             int random = 0;
             Image image = null;
@@ -106,7 +87,6 @@ public class GameSystem1 : MonoBehaviour
                 if (spawnPoints[i].GetComponent<Image>().enabled)
                     count++;
             }
-
             do
             {
                 if (count >= spawnPoints.Length) break;
@@ -117,6 +97,7 @@ public class GameSystem1 : MonoBehaviour
             if (!(count >= spawnPoints.Length))
             {
                 Weeds weed = spawnPoints[random].GetComponent<Weeds>();
+                weed.GetComponent<RectTransform>().transform.localScale = new Vector2(0.5f, 0.5f);
                 weed.Init(spawnPoints[random]);
                 image.sprite = sprites[0];
                 weeds.Add(weed);

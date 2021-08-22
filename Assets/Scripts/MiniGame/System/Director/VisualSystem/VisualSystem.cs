@@ -17,11 +17,16 @@ public class VisualSystem : MonoBehaviour
 
     public bool isTutorial = true;
     public delegate void Tutorials();
-    public Tutorials Tutorial;
+    public Tutorials AfterTutorial;
+
+    public GameObject[] tutorialTexts;
+    int tutorialIndex = 0;
 
     void Start()
     {
-        
+        FadeIn(GameObject.Find("Fade"), 0.5f);
+        tutorialTexts[tutorialIndex].SetActive(true);
+        FadeIn(tutorialTexts[tutorialIndex], 1);
     }
 
     void Update()
@@ -29,7 +34,23 @@ public class VisualSystem : MonoBehaviour
         if (isTutorial)
             Tutorial();
     }
-
+    void Tutorial()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            tutorialTexts[tutorialIndex].SetActive(false);
+            tutorialIndex++;
+            if (tutorialIndex >= tutorialTexts.Length)
+            {
+                isTutorial = false;
+                FadeOut(GameObject.Find("Fade"), 0);
+                AfterTutorial();
+                return;
+            }
+            FadeIn(tutorialTexts[tutorialIndex], 1);
+            tutorialTexts[tutorialIndex].SetActive(true);
+        }
+    }
     public void ResultAnimation(int score, int[] scoreChart)
     {
         resultWindow[0].title[0].transform.parent.gameObject.SetActive(true);
@@ -100,7 +121,7 @@ public class VisualSystem : MonoBehaviour
         while (true)
         {
             c.a += 0.01f;
-            if (c.a >= alpha) yield break;
+            if (c.a >= alpha) break;
 
             if (sr)
                 sr.color = c;
@@ -136,7 +157,7 @@ public class VisualSystem : MonoBehaviour
         while (true)
         {
             c.a -= 0.01f;
-            if (c.a <= alpha) yield break;
+            if (c.a <= alpha) break;
 
             if (sr)
                 sr.color = c;
@@ -145,6 +166,48 @@ public class VisualSystem : MonoBehaviour
             else if (txt)
                 txt.color = c;
 
+            yield return new WaitForSeconds(0.01f);
+        }
+        obj.SetActive(false);
+    }
+
+    public void SizeEffect(GameObject obj)
+    {
+        StartCoroutine(_SizeEffect(obj));
+    }
+
+    IEnumerator _SizeEffect(GameObject obj)
+    {
+        while (true)
+        {
+            if (obj.transform.localScale.x <= 0.81)
+            {
+                obj.transform.localScale = new Vector2(0.8f, 0.8f);
+                break;
+            }
+            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, new Vector2(0.8f, 0.8f), 0.6f);
+            yield return new WaitForSeconds(0.005f);
+        }
+
+        while (true)
+        {
+            if (obj.transform.localScale.x >= 1.19f)
+            {
+                obj.transform.localScale = new Vector2(1.2f, 1.2f);
+                break;
+            }
+            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, new Vector2(1.2f, 1.2f), 0.6f);
+            yield return new WaitForSeconds(0.005f);
+        }
+
+        while (true)
+        {
+            if (obj.transform.localScale.x <= 1.01f)
+            {
+                obj.transform.localScale = Vector2.one;
+                break;
+            }
+            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, Vector2.one, 0.6f);
             yield return new WaitForSeconds(0.01f);
         }
     }

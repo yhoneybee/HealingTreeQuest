@@ -9,7 +9,7 @@ public class GameSystem4 : MonoBehaviour
     [HideInInspector]
     public ScoreSystem scoreSystem;
     TimerSystem timerSystem;
-    DirectorSystem directorSystem;
+    public DirectorSystem directorSystem;
 
     public Transform[] spawnPoints;
     Text scoreText;
@@ -20,26 +20,19 @@ public class GameSystem4 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
-        directorSystem.visualSystem.Tutorial = Tutorial;
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
 
         trash = Resources.Load<Trash>("Prefabs/MiniGame/쓰레기 분리수거/Trash");
 
-        timerSystem.TimerStart(60);
-
-        StartCoroutine(Spawn());
+        directorSystem.visualSystem.AfterTutorial = () => { timerSystem.TimerStart(60); StartCoroutine(Spawn()); };
     }
 
     void Update()
     {
         scoreSystem.SetScoreText(ref scoreText);
         timerSystem.SetTimeText(ref timeText);
-    }
-    void Tutorial()
-    {
-
     }
     IEnumerator Spawn()
     {

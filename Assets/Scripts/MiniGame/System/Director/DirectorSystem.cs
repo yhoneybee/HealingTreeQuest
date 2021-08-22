@@ -7,7 +7,8 @@ public class DirectorSystem : MonoBehaviour
     [HideInInspector]
     public CameraSystem cameraSystem;
     public VisualSystem visualSystem;
-    void Start()
+    public delegate void Func();
+    void Awake()
     {
         cameraSystem = GetComponent<CameraSystem>();
         visualSystem = GetComponent<VisualSystem>();

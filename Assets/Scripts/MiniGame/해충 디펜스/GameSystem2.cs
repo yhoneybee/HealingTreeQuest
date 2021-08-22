@@ -35,7 +35,6 @@ public class GameSystem2 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
-        directorSystem.visualSystem.Tutorial = Tutorial;
 
         enemyPool = Tools<EnemyPool>.GetTool("EnemyPool");
 
@@ -50,9 +49,7 @@ public class GameSystem2 : MonoBehaviour
             spawnPoints[i] = PointsParent.transform.GetChild(i);
         }
 
-        timerSystem.TimerStart(60);
-
-        StartCoroutine(RandomSpawn());
+        directorSystem.visualSystem.AfterTutorial = () => { timerSystem.TimerStart(60); StartCoroutine(RandomSpawn()); };
     }
 
     void Update()
@@ -61,10 +58,6 @@ public class GameSystem2 : MonoBehaviour
 
         timerSystem.SetTimeText(ref timeText);
         scoreSystem.SetScoreText(ref scoreText);
-    }
-    void Tutorial()
-    {
-        
     }
     void DragScreen()
     {

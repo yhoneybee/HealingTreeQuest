@@ -21,8 +21,22 @@ public class Weeds : MonoBehaviour
         slider.transform.localPosition = new Vector2(0, 150);
         isSpawned = true;
         GetComponent<Image>().enabled = true;
+        StartCoroutine(SizeUp());
     }
-
+    IEnumerator SizeUp()
+    {
+        RectTransform transform = GetComponent<RectTransform>();
+        while(true)
+        {
+            if(transform.localScale.x >= 0.99f)
+            {
+                transform.localScale = Vector2.one;
+                yield break;
+            }
+            transform.localScale = Vector2.Lerp(transform.localScale, Vector2.one, 0.5f);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
     public void Release()
     {
         if (!isSpawned)

@@ -23,45 +23,11 @@ public class Basket : MonoBehaviour
     {
         if (collision.CompareTag("Fruit"))
         {
-            StartCoroutine(SizeEffect());
+            gameSystem.directorSystem.visualSystem.SizeEffect(gameObject);
             gameSystem.scoreSystem.ScorePlus(100);
             Destroy(collision.gameObject);
         }
     }
 
-    IEnumerator SizeEffect()
-    {
-        while (true)
-        {
-            if (transform.localScale.x <= 0.81)
-            {
-                transform.localScale = new Vector2(0.8f, 0.8f);
-                break;
-            }
-            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(0.8f, 0.8f), 0.6f);
-            yield return new WaitForSeconds(0.005f);
-        }
 
-        while (true)
-        {
-            if (transform.localScale.x >= 1.19f)
-            {
-                transform.localScale = new Vector2(1.2f, 1.2f);
-                break;
-            }
-            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(1.2f, 1.2f), 0.6f);
-            yield return new WaitForSeconds(0.005f);
-        }
-
-        while (true)
-        {
-            if (transform.localScale.x <= 1.01f)
-            {
-                transform.localScale = Vector2.one;
-                break;
-            }
-            transform.localScale = Vector2.Lerp(transform.localScale, Vector2.one, 0.6f);
-            yield return new WaitForSeconds(0.01f);
-        }
-    }
 }
