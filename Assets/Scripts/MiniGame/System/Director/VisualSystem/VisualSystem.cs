@@ -15,7 +15,7 @@ public class VisualSystem : MonoBehaviour
     [SerializeField]
     private ResultWindow[] resultWindow;
 
-    bool isTutorial = true;
+    public bool isTutorial = true;
     public delegate void Tutorials();
     public Tutorials Tutorial;
 
@@ -54,7 +54,7 @@ public class VisualSystem : MonoBehaviour
 
         for (int i = 0; i < contents.Count; i++)
         {
-            FadeIn(resultWindow[0].content[i]);
+            FadeIn(resultWindow[0].content[i], 1);
         }
     }
 
@@ -78,11 +78,11 @@ public class VisualSystem : MonoBehaviour
         }
     }
 
-    public void FadeIn(GameObject obj)
+    public void FadeIn(GameObject obj, float alpha)
     {
-        StartCoroutine(_FadeIn(obj));
+        StartCoroutine(_FadeIn(obj, alpha));
     }
-    IEnumerator _FadeIn(GameObject obj)
+    IEnumerator _FadeIn(GameObject obj, float alpha)
     {
         SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
         Image img = obj.GetComponent<Image>();
@@ -100,6 +100,7 @@ public class VisualSystem : MonoBehaviour
         while (true)
         {
             c.a += 0.01f;
+            if (c.a >= alpha) yield break;
 
             if (sr)
                 sr.color = c;
@@ -112,12 +113,12 @@ public class VisualSystem : MonoBehaviour
         }
     }
 
-    public void FadeOut(GameObject obj)
+    public void FadeOut(GameObject obj, float alpha)
     {
-        StartCoroutine(_FadeOut(obj));
+        StartCoroutine(_FadeOut(obj, alpha));
     }
 
-    IEnumerator _FadeOut(GameObject obj)
+    IEnumerator _FadeOut(GameObject obj, float alpha)
     {
         SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
         Image img = obj.GetComponent<Image>();
@@ -135,6 +136,7 @@ public class VisualSystem : MonoBehaviour
         while (true)
         {
             c.a -= 0.01f;
+            if (c.a <= alpha) yield break;
 
             if (sr)
                 sr.color = c;

@@ -11,9 +11,12 @@ public class GameSystem1 : MonoBehaviour
     Text scoreText;
     Text timeText;
 
+
     Sprite[] sprites;
 
     GameObject[] spawnPoints;
+    public GameObject[] tutorialTexts;
+    int tutorialIndex = 0;
 
     ScoreSystem scoreSystem;
     TimerSystem timeSystem;
@@ -38,10 +41,14 @@ public class GameSystem1 : MonoBehaviour
         timeSystem.TimerStart(60);
 
         StartCoroutine(RandomSpawn());
+
+        directorSystem.visualSystem.FadeOut(GameObject.Find("Fade"), 0.5f);
+        tutorialTexts[tutorialIndex].SetActive(true);
     }
 
     void Update()
     {
+        if (directorSystem.visualSystem.isTutorial) return;
         for (int i = 0; i < weeds.Count; i++)
         {
             if (weeds[i].slider.value >= 4f)
@@ -77,13 +84,18 @@ public class GameSystem1 : MonoBehaviour
 
     void Tutorial()
     {
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            tutorialTexts[tutorialIndex].SetActive(false);
+            tutorialIndex++;
+        }
     }
 
     IEnumerator RandomSpawn()
     {
         while (true)
         {
+            if (directorSystem.visualSystem.isTutorial) continue;
             yield return new WaitForSeconds(spawnTime);
             int random = 0;
             Image image = null;
