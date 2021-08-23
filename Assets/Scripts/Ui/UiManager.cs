@@ -14,15 +14,20 @@ public class UiManager : MonoBehaviour
     public RectTransform Canvas;
     public UiObj Menu;
 
+    Coroutine CRotate = null;
+
     public Vector3 MouseCenterPos => Cam.ScreenToViewportPoint(Input.mousePosition);
 
     public Vector3 WoodPos = new Vector3(0, 4.5f, 0);
 
     Vector2 Now;
     Vector2 Prev;
+    Vector2 xy_axis;
+    Vector2 touch_1, touch_2;
 
     public float Distance = 10;
-    float zoom = 60;
+    float max_x = 0;
+    float touch_distance = 0;
 
     private bool custom_mode = false;
     public bool CustomMode
@@ -41,27 +46,57 @@ public class UiManager : MonoBehaviour
     {
         if (Preview)
         {
-            if (Input.GetMouseButtonDown(0)) Prev = MouseCenterPos;
+            if (Input.GetMouseButtonDown(0))
+            {
+                Prev = MouseCenterPos;
+            }
             else if (Input.GetMouseButton(0))
             {
-                Now = MouseCenterPos;
-                Vector3 dir = Prev - Now;
+                if (Input.touchCount == 1)
+                {
+                    touch_1 = Input.GetTouch(0).position;
 
-                Vector2 xy_axis = new Vector2(-dir.x * 100, dir.y * 100);
+                    Now = MouseCenterPos;
+                    Vector3 dir = Prev - Now;
 
-                CamTf.transform.position = WoodPos;
+                    xy_axis = new Vector2(-dir.x * 100, dir.y * 100);
 
-                CamTf.Rotate(Vector3.up, xy_axis.x, Space.World);
-                CamTf.Rotate(Vector3.right, xy_axis.y);
+                    if (Mathf.Abs(max_x) < Mathf.Abs(xy_axis.x))
+                    {
+                        max_x = xy_axis.x;
+                        print(max_x);
+                    }
 
-                if (CamTf.localEulerAngles.x > 300)
-                    CamTf.localEulerAngles = new Vector3(0, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
-                else if (CamTf.localEulerAngles.x > 30)
-                    CamTf.localEulerAngles = new Vector3(30, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
+                    CamTf.transform.position = WoodPos;
 
-                CamTf.Translate(new Vector3(0, 0, -Distance));
+                    CamTf.Rotate(Vector3.up, xy_axis.x, Space.World);
+                    CamTf.Rotate(Vector3.right, xy_axis.y);
 
-                Prev = Now;
+                    if (CamTf.localEulerAngles.x > 300)
+                        CamTf.localEulerAngles = new Vector3(0, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
+                    else if (CamTf.localEulerAngles.x > 30)
+                        CamTf.localEulerAngles = new Vector3(30, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
+
+                    CamTf.Translate(new Vector3(0, 0, -Distance));
+
+                    Prev = Now;
+                }
+                else if (Input.touchCount == 2)
+                {
+                    touch_2 = Input.GetTouch(1).position;
+
+                    if (Vector2.Distance(touch_1, touch_2) < touch_distance && /*Cam.fieldOfView - 3 > 30 &&*/ Cam.fieldOfView + 3 < 130)
+                        Cam.fieldOfView += 3;
+                    else if (Vector2.Distance(touch_1, touch_2) > touch_distance && Cam.fieldOfView - 3 > 30 /*&& Cam.fieldOfView + 3 < 130*/)
+                        Cam.fieldOfView -= 3;
+
+                    touch_distance = Vector2.Distance(touch_1, touch_2);
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                if (CRotate != null) StopCoroutine(CRotate);
+                CRotate = StartCoroutine(ERotate());
             }
         }
     }
@@ -74,5 +109,22 @@ public class UiManager : MonoBehaviour
             child = Menu.RectTransform.GetChild(i).GetComponent<UiObj>();
             child.Image.raycastTarget = value;
         }
+    }
+
+    IEnumerator ERotate()
+    {
+        for (int i = 0; i < 200; i++)
+        {
+            CamTf.transform.position = WoodPos;
+
+            max_x = Mathf.Lerp(max_x, 0, Time.deltaTime);
+
+            CamTf.Rotate(Vector3.up, Time.deltaTime * max_x, Space.World);
+
+            CamTf.Translate(new Vector3(0, 0, -Distance));
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        yield return null;
     }
 }
