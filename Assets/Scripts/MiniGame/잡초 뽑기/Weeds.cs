@@ -6,14 +6,37 @@ using UnityEngine.UI;
 
 public class Weeds : MonoBehaviour
 {
+    GameSystem1 gameSystem;
     public bool isSpawned = false;
-    public Slider slider;
+    public bool isFlower = false;
+    public Sprite[] sprites;
+    Slider slider;
+    Image image;
 
     private void Start()
     {
-        GetComponent<Image>().enabled = false;
+        gameSystem = Tools<GameSystem1>.GetTool("GameSystem");
+        image = GetComponent<Image>();
+        image.enabled = false;
     }
+    void Update()
+    {
+        if (isSpawned)
+        {
+            slider.value += Time.deltaTime;
+            if (slider.value >= 4f)
+            {
+                Release();
+                if (isFlower)
+                    gameSystem.scoreSystem.ScorePlus(100);
+                else
+                    gameSystem.scoreSystem.ScoreMinus(50);
+            }
+            else
+                image.sprite = sprites[(int)slider.value];
+        }
 
+    }
     public void Init(GameObject obj)
     {
         Slider tempSlider = Resources.Load<Slider>("Prefabs/Minigame/¿‚√  ªÃ±‚/Guage");
@@ -26,9 +49,9 @@ public class Weeds : MonoBehaviour
     IEnumerator SizeUp()
     {
         RectTransform transform = GetComponent<RectTransform>();
-        while(true)
+        while (true)
         {
-            if(transform.localScale.x >= 0.99f)
+            if (transform.localScale.x >= 0.99f)
             {
                 transform.localScale = Vector2.one;
                 yield break;
@@ -48,11 +71,5 @@ public class Weeds : MonoBehaviour
         isSpawned = false;
         Destroy(transform.GetChild(0).gameObject);
         GetComponent<Image>().enabled = false;
-    }
-
-    void Update()
-    {
-        if (isSpawned)
-            slider.value += Time.deltaTime;
     }
 }

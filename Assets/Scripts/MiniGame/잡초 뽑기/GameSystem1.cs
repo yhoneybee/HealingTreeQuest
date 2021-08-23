@@ -6,17 +6,16 @@ using UnityEngine.UI;
 // ¿‚√  ªÃ±‚
 public class GameSystem1 : MonoBehaviour
 {
-    List<Weeds> weeds = new List<Weeds>();
-
     Text scoreText;
     Text timeText;
 
 
-    Sprite[] sprites;
+    Sprite[] w_sprites;
+    Sprite[] f_sprites;
 
     GameObject[] spawnPoints;
 
-    ScoreSystem scoreSystem;
+    public ScoreSystem scoreSystem;
     TimerSystem timeSystem;
     DirectorSystem directorSystem;
 
@@ -30,7 +29,8 @@ public class GameSystem1 : MonoBehaviour
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
 
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/¿‚√ ");
+        w_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/¿‚√ ");
+        f_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/≤…");
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
@@ -40,37 +40,9 @@ public class GameSystem1 : MonoBehaviour
     void Update()
     {
         if (directorSystem.visualSystem.isTutorial) return;
-        for (int i = 0; i < weeds.Count; i++)
-        {
-            if (weeds[i].slider.value >= 4f)
-            {
-                weeds[i].Release();
-                weeds.Remove(weeds[i]);
 
-                scoreSystem.ScoreMinus(50);
-                scoreText.text = scoreSystem.GetScore().ToString();
-                continue;
-            }
-            weeds[i].GetComponent<Image>().sprite = sprites[(int)weeds[i].slider.value];
-        }
-
+        scoreSystem.SetScoreText(ref scoreText);
         timeSystem.SetTimeText(ref timeText);
-        if (timeSystem.timeUp)
-        {
-            gameFinish = true;
-            StopCoroutine(RandomSpawn());
-
-            int[] scoreChart = scoreSystem.GetScoreChart(0);
-            directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
-        }
-        else if (timeSystem.GetTime() <= 20)
-        {
-            spawnTime = 0.2f;
-        }
-        else if (timeSystem.GetTime() <= 40)
-        {
-            spawnTime = 0.5f;
-        }
     }
 
     IEnumerator RandomSpawn()
@@ -78,6 +50,7 @@ public class GameSystem1 : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(spawnTime);
+
             int random = 0;
             Image image = null;
 
@@ -99,8 +72,31 @@ public class GameSystem1 : MonoBehaviour
                 Weeds weed = spawnPoints[random].GetComponent<Weeds>();
                 weed.GetComponent<RectTransform>().transform.localScale = new Vector2(0.5f, 0.5f);
                 weed.Init(spawnPoints[random]);
-                image.sprite = sprites[0];
-                weeds.Add(weed);
+                int randomValue = Random.Range(0, 5);
+                if (randomValue == 4)
+                {
+                    weed.sprites = f_sprites;
+                    weed.isFlower = true;
+                }
+                else
+                    weed.sprites = w_sprites;
+            }
+
+            if (timeSystem.timeUp)
+            {
+                gameFinish = true;
+
+                int[] scoreChart = scoreSystem.GetScoreChart(0);
+                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
+                yield break;
+            }
+            else if (timeSystem.GetTime() <= 20)
+            {
+                spawnTime = 0.2f;
+            }
+            else if (timeSystem.GetTime() <= 40)
+            {
+                spawnTime = 0.5f;
             }
         }
     }
@@ -112,7 +108,10 @@ public class GameSystem1 : MonoBehaviour
 
         weeds.Release();
 
-        scoreSystem.ScorePlus(100);
+        if (weeds.isFlower)
+            scoreSystem.ScoreMinus(50);
+        else
+            scoreSystem.ScorePlus(100);
         scoreText.text = scoreSystem.GetScore().ToString();
     }
 }

@@ -88,7 +88,7 @@ public class VisualSystem : MonoBehaviour
     {
         while (true)
         {
-            obj.transform.localPosition = Vector2.Lerp(obj.transform.localPosition, target, 0.2f);
+            obj.transform.localPosition = Vector2.Lerp(obj.transform.localPosition, target, 0.3f);
             yield return new WaitForSeconds(0.01f);
 
             if (Vector2.Distance(obj.transform.localPosition, target) <= 0.1f)
