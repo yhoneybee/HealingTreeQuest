@@ -15,13 +15,15 @@ public class GameSystem3 : MonoBehaviour
 
     public Slider moveBar;
 
+    public GameObject fadeA;
+    public GameObject fadeB;
     GameObject fruit;
 
     void Start()
-    {
+    {        
+        directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
-        directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
@@ -30,6 +32,10 @@ public class GameSystem3 : MonoBehaviour
 
         fruit = Resources.Load<GameObject>("Prefabs/MiniGame/과일 수확/Fruit");
 
+        directorSystem.visualSystem.TutorialOfIndex = new VisualSystem.Tutorials[directorSystem.visualSystem.tutorialTexts.Length];
+        directorSystem.visualSystem.TutorialOfIndex[2] = () => { fadeA.SetActive(true); directorSystem.visualSystem.FadeIn(fadeA, 0.5f); };
+        directorSystem.visualSystem.TutorialOfIndex[4] = () => { fadeA.SetActive(false); fadeB.SetActive(true); directorSystem.visualSystem.FadeIn(fadeB, 0.5f); };
+        directorSystem.visualSystem.TutorialOfIndex[5] = () => { fadeB.SetActive(false); };
         directorSystem.visualSystem.AfterTutorial = () => { timerSystem.TimerStart(60); StartCoroutine(RandomSpawn()); };
     }
 
@@ -38,7 +44,6 @@ public class GameSystem3 : MonoBehaviour
         timerSystem.SetTimeText(ref timeText);
         scoreSystem.SetScoreText(ref scoreText);
     }
-
     IEnumerator RandomSpawn()
     {
         float spawnTime = 2f;

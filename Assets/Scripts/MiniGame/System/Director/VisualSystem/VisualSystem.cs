@@ -18,6 +18,7 @@ public class VisualSystem : MonoBehaviour
     public bool isTutorial = true;
     public delegate void Tutorials();
     public Tutorials AfterTutorial;
+    public Tutorials[] TutorialOfIndex;
 
     public GameObject[] tutorialTexts;
     int tutorialIndex = 0;
@@ -25,6 +26,7 @@ public class VisualSystem : MonoBehaviour
     void Start()
     {
         FadeIn(GameObject.Find("Fade"), 0.5f);
+
         tutorialTexts[tutorialIndex].SetActive(true);
         FadeIn(tutorialTexts[tutorialIndex], 1);
     }
@@ -47,6 +49,10 @@ public class VisualSystem : MonoBehaviour
                 AfterTutorial();
                 return;
             }
+            if (TutorialOfIndex != null)
+                if (TutorialOfIndex[tutorialIndex] != null)
+                    TutorialOfIndex[tutorialIndex]();
+
             FadeIn(tutorialTexts[tutorialIndex], 1);
             tutorialTexts[tutorialIndex].SetActive(true);
         }

@@ -9,11 +9,13 @@ public class GameSystem1 : MonoBehaviour
     Text scoreText;
     Text timeText;
 
-
     Sprite[] w_sprites;
     Sprite[] f_sprites;
 
     GameObject[] spawnPoints;
+    public GameObject fadeObj;
+    public GameObject weedsUI;
+    public GameObject flowerUI;
 
     public ScoreSystem scoreSystem;
     TimerSystem timeSystem;
@@ -34,6 +36,25 @@ public class GameSystem1 : MonoBehaviour
 
         scoreText = Tools<Text>.GetTool("ScoreText");
         timeText = Tools<Text>.GetTool("TimeText");
+
+        directorSystem.visualSystem.TutorialOfIndex = new VisualSystem.Tutorials[directorSystem.visualSystem.tutorialTexts.Length];
+        directorSystem.visualSystem.TutorialOfIndex[2] = () => { fadeObj.SetActive(true); directorSystem.visualSystem.FadeIn(fadeObj, 0.5f); };
+        directorSystem.visualSystem.TutorialOfIndex[4] = () =>
+        {
+            fadeObj.SetActive(false);
+
+            weedsUI.SetActive(true);
+            directorSystem.visualSystem.FadeIn(weedsUI, 1);
+        };
+        directorSystem.visualSystem.TutorialOfIndex[5] = () =>
+        {
+            weedsUI.SetActive(false);
+
+            flowerUI.SetActive(true);
+            directorSystem.visualSystem.FadeIn(flowerUI, 1);
+        };
+        directorSystem.visualSystem.TutorialOfIndex[6] = () => { flowerUI.SetActive(false); };
+
         directorSystem.visualSystem.AfterTutorial = () => { timeSystem.TimerStart(60); StartCoroutine(RandomSpawn()); };
     }
 

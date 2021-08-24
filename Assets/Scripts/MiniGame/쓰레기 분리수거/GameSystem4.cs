@@ -12,6 +12,10 @@ public class GameSystem4 : MonoBehaviour
     public DirectorSystem directorSystem;
 
     public Transform[] spawnPoints;
+
+    public GameObject fadeA;
+    public GameObject fadeB;
+
     Text scoreText;
     Text timeText;
     Trash trash;
@@ -26,6 +30,11 @@ public class GameSystem4 : MonoBehaviour
 
         trash = Resources.Load<Trash>("Prefabs/MiniGame/쓰레기 분리수거/Trash");
 
+        directorSystem.visualSystem.TutorialOfIndex = new VisualSystem.Tutorials[directorSystem.visualSystem.tutorialTexts.Length];
+
+        directorSystem.visualSystem.TutorialOfIndex[2] = () => { fadeA.SetActive(true); directorSystem.visualSystem.FadeIn(fadeA, 0.5f); };
+        directorSystem.visualSystem.TutorialOfIndex[4] = () => { fadeA.SetActive(false); fadeB.SetActive(true); directorSystem.visualSystem.FadeIn(fadeB, 0.5f); };
+        directorSystem.visualSystem.TutorialOfIndex[7] = () => { fadeB.SetActive(false); directorSystem.visualSystem.FadeIn(fadeB, 0.5f); };
         directorSystem.visualSystem.AfterTutorial = () => { timerSystem.TimerStart(60); StartCoroutine(Spawn()); };
     }
 
