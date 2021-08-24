@@ -40,7 +40,7 @@ public class MiniGameProp : MonoBehaviour
     {
         if (DDOLObj.Instance.ClearList[Number] == 1)
         {
-            GiveGiftObj.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
+            GiveGiftObj.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f);
             GameObject.Find("Tree").GetComponent<Tree>().Exp += 3000;
             DDOLObj.Instance.ClearList[Number] = 2;
         }
