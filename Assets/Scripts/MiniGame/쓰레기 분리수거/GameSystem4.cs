@@ -13,8 +13,8 @@ public class GameSystem4 : MonoBehaviour
 
     public Transform[] spawnPoints;
 
-    public GameObject fadeA;
-    public GameObject fadeB;
+    [SerializeField] GameObject fadeA;
+    [SerializeField] GameObject fadeB;
 
     Text scoreText;
     Text timeText;

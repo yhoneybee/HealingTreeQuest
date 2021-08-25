@@ -1798,6 +1798,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreSystem: {fileID: 0}
   directorSystem: {fileID: 0}
+  fruits:
+  - {fileID: 21300000, guid: 9b3447597fc2d4847b1613424817786d, type: 3}
+  - {fileID: 21300000, guid: 5a50688dd935c5643a5a0ace16b708a5, type: 3}
+  - {fileID: 21300000, guid: 00314e210fd52de479ef26c1d3f6004d, type: 3}
   moveBar: {fileID: 0}
   fadeA: {fileID: 145803882}
   fadeB: {fileID: 1775230642}

@@ -13,10 +13,12 @@ public class GameSystem3 : MonoBehaviour
     Text scoreText;
     Text timeText;
 
+    [SerializeField] Sprite[] fruits;
+
     public Slider moveBar;
 
-    public GameObject fadeA;
-    public GameObject fadeB;
+    [SerializeField] GameObject fadeA;
+    [SerializeField] GameObject fadeB;
     GameObject fruit;
 
     void Start()
@@ -63,15 +65,16 @@ public class GameSystem3 : MonoBehaviour
 
             yield return new WaitForSeconds(spawnTime);
             GameObject obj = Instantiate(fruit, new Vector2(Random.Range(-2.2f, 2.2f), 4), Quaternion.identity);
+            obj.GetComponent<SpriteRenderer>().sprite = fruits[Random.Range(0, 3)];
             obj.transform.localScale = new Vector2(0.25f, 0.25f);
             obj.GetComponent<Rigidbody2D>().gravityScale = 0;
             while (true)
             {
-                obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, new Vector2(0.5f, 0.5f), 0.2f);
+                obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, Vector2.one, 0.2f);
                 yield return new WaitForSeconds(0.01f);
-                if (obj.transform.localScale.x >= 0.49f)
+                if (obj.transform.localScale.x >= 0.99f)
                 {
-                    obj.transform.localScale = new Vector2(0.5f, 0.5f);
+                    obj.transform.localScale = Vector2.one;
                     obj.GetComponent<Rigidbody2D>().gravityScale = 1;
                     break;
                 }
