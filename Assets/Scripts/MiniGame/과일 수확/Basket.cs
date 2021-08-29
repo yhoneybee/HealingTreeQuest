@@ -7,7 +7,7 @@ public class Basket : MonoBehaviour
     GameSystem3 gameSystem;
     float moveRange;
 
-    Vector2 targetPos = new Vector2(2.3f, -1.5f);
+    Vector2 targetPos = new Vector2(2.3f, -3.166f);
     void Start()
     {
         gameSystem = Tools<GameSystem3>.GetTool("GameSystem");
@@ -25,9 +25,14 @@ public class Basket : MonoBehaviour
         {
             gameSystem.directorSystem.visualSystem.SizeEffect(gameObject);
             gameSystem.scoreSystem.ScorePlus(100);
-            Destroy(collision.gameObject);
+            StartCoroutine(DestroyFruit(collision.gameObject));
         }
     }
-
-
+    IEnumerator DestroyFruit(GameObject obj)
+    {
+        obj.GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(obj.GetComponent<Rigidbody2D>());
+        yield return new WaitForSeconds(1f);
+        Destroy(obj);
+    }
 }

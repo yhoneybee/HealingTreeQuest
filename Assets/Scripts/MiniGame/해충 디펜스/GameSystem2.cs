@@ -100,7 +100,7 @@ public class GameSystem2 : MonoBehaviour
             if (timerSystem.timeUp)
             {
                 int[] scoreChart = scoreSystem.GetScoreChart(1);
-                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
+                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, true);
                 yield break;
             }
             else if (timerSystem.GetTime() <= 20)

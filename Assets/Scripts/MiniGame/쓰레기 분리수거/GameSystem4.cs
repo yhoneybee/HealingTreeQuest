@@ -68,8 +68,10 @@ public class GameSystem4 : MonoBehaviour
 
             if (timerSystem.timeUp)
             {
+                bool gameClear = scoreSystem.GetScore() >= 6000;
+
                 int[] scoreChart = scoreSystem.GetScoreChart(3);
-                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
+                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, gameClear);
                 yield break;
             }
             else if (timerSystem.GetTime() <= 20)

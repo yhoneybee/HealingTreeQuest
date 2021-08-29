@@ -8,7 +8,7 @@ public class Weeds : MonoBehaviour
 {
     GameSystem1 gameSystem;
     public bool isSpawned = false;
-    public bool isFlower = false;
+    public bool isFlower;
     public Sprite[] sprites;
     Slider slider;
     Image image;
@@ -30,7 +30,7 @@ public class Weeds : MonoBehaviour
                 if (isFlower)
                     gameSystem.scoreSystem.ScorePlus(100);
                 else
-                    gameSystem.scoreSystem.ScoreMinus(50);
+                    gameSystem.scoreSystem.ScoreMinus(100);
             }
             else
                 image.sprite = sprites[(int)slider.value];
