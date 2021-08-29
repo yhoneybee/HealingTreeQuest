@@ -100,15 +100,20 @@ public class GameSystem1 : MonoBehaviour
                     weed.isFlower = true;
                 }
                 else
+                {
                     weed.sprites = w_sprites;
+                    weed.isFlower = false;
+                }
             }
 
             if (timeSystem.timeUp)
             {
                 gameFinish = true;
 
+                bool gameClear = scoreSystem.GetScore() >= 3000;
+
                 int[] scoreChart = scoreSystem.GetScoreChart(0);
-                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
+                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, gameClear);
                 yield break;
             }
             else if (timeSystem.GetTime() <= 20)
@@ -130,7 +135,7 @@ public class GameSystem1 : MonoBehaviour
         weeds.Release();
 
         if (weeds.isFlower)
-            scoreSystem.ScoreMinus(50);
+            scoreSystem.ScoreMinus(100);
         else
             scoreSystem.ScorePlus(100);
         scoreText.text = scoreSystem.GetScore().ToString();

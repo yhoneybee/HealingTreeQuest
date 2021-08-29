@@ -13,13 +13,11 @@ public class GameSystem3 : MonoBehaviour
     Text scoreText;
     Text timeText;
 
-    [SerializeField] Sprite[] fruits;
-
     public Slider moveBar;
 
     [SerializeField] GameObject fadeA;
     [SerializeField] GameObject fadeB;
-    GameObject fruit;
+    GameObject[] fruit;
 
     void Start()
     {        
@@ -32,7 +30,7 @@ public class GameSystem3 : MonoBehaviour
 
         moveBar = Tools<Slider>.GetTool("MoveBar");
 
-        fruit = Resources.Load<GameObject>("Prefabs/MiniGame/과일 수확/Fruit");
+        fruit = Resources.LoadAll<GameObject>("Prefabs/MiniGame/과일 수확");
 
         directorSystem.visualSystem.TutorialOfIndex = new VisualSystem.Tutorials[directorSystem.visualSystem.tutorialTexts.Length];
         directorSystem.visualSystem.TutorialOfIndex[2] = () => { fadeA.SetActive(true); directorSystem.visualSystem.FadeIn(fadeA, 0.5f); };
@@ -53,8 +51,10 @@ public class GameSystem3 : MonoBehaviour
         {
             if (timerSystem.timeUp)
             {
+                bool gameClear = scoreSystem.GetScore() >= 8000;
+
                 int[] scoreChart = scoreSystem.GetScoreChart(2);
-                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart);
+                directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, gameClear);
                 yield break;
             }
 
@@ -64,8 +64,7 @@ public class GameSystem3 : MonoBehaviour
                 spawnTime = 0.5f;
 
             yield return new WaitForSeconds(spawnTime);
-            GameObject obj = Instantiate(fruit, new Vector2(Random.Range(-2.2f, 2.2f), 4), Quaternion.identity);
-            obj.GetComponent<SpriteRenderer>().sprite = fruits[Random.Range(0, 3)];
+            GameObject obj = Instantiate(fruit[Random.Range(0, 3)], new Vector2(Random.Range(-2.2f, 2.2f), 4), Quaternion.identity);
             obj.transform.localScale = new Vector2(0.25f, 0.25f);
             obj.GetComponent<Rigidbody2D>().gravityScale = 0;
             while (true)
@@ -87,7 +86,15 @@ public class GameSystem3 : MonoBehaviour
         if (collision.CompareTag("Fruit"))
         {
             scoreSystem.ScoreMinus(50);
-            Destroy(collision.gameObject);
+            StartCoroutine(DestroyFruit(collision.gameObject));
         }
+    }
+
+    IEnumerator DestroyFruit(GameObject obj)
+    {
+        obj.GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(obj.GetComponent<Rigidbody2D>());
+        yield return new WaitForSeconds(1f);
+        Destroy(obj);
     }
 }
