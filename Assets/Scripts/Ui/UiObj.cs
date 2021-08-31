@@ -145,7 +145,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (UI.CustomMode)
+        if (UI.CustomMode && Moveable)
         {
             Dragging = RectTransform;
             BeginMousePos = MousePos;
@@ -155,7 +155,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     }
     public void OnDrag(PointerEventData eventData)
     {
-        if (UI.CustomMode)
+        if (UI.CustomMode && Moveable)
         {
             Vector2 delta = MousePos - BeginMousePos;
 
@@ -175,12 +175,12 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (UI.CustomMode && GridLayoutGroup)
+        if (UI.CustomMode && GridLayoutGroup && Moveable)
         {
             Vector2 new_anchor = new Vector2(0.5f, 0.5f);
             UiObj button = RectTransform.GetChild(0).GetComponent<UiObj>();
 
-            if (Dragging.position.x > 0)
+            if (Dragging.position.x > 1080 / 2)
             {
                 new_anchor = new Vector2(1, new_anchor.y);
                 button.RectTransform.anchorMin = new Vector2(0, button.RectTransform.anchorMin.y);
