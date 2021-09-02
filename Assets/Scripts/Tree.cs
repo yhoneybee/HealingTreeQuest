@@ -31,6 +31,7 @@ public class Tree : MonoBehaviour
         if (Exp >= MaxExp)
         {
             Level++;
+            transform.localScale += new Vector3(1, 1, 1);
             Exp -= MaxExp;
             LevelText.text = Level.ToString();
 
