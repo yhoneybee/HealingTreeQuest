@@ -4165,8 +4165,9 @@ MonoBehaviour:
   - {fileID: -7084056868559125198, guid: c008100f706f52e418e127696b56fd64, type: 3}
   - {fileID: 9037420431681737890, guid: e66d5f1d0024e404da04946730c60bd1, type: 3}
   - {fileID: 8609839874328999678, guid: 6d39d7535b996a046a50998d9353b7fc, type: 3}
-  Level: 0
+  Level: 1
   Exp: 0
+  MaxExp: 10000
   LevelText: {fileID: 721586405}
   level_Sprites:
   - {fileID: 21300000, guid: 932a12d6f36abe34e9f62b2e48116db8, type: 3}
@@ -4174,6 +4175,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 84bd77e5c850e86459ac00e8a23b766a, type: 3}
   - {fileID: 21300000, guid: e2a1d4554a4d38949ae39c89f2cfe57c, type: 3}
   tree_Level_Image: {fileID: 1404486764}
+  particle_Scale: 0.25
+  levelUp_Particle: {fileID: 320890599050368057, guid: f2d323b26ce32f847a1a71aeefb5fe8c, type: 3}
 --- !u!1 &1534512254 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3408480701390522872, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}

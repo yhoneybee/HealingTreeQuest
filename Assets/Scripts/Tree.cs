@@ -11,12 +11,14 @@ public class Tree : MonoBehaviour
 
     public int Level;
     public int Exp;
-    private int MaxExp;
+    [SerializeField] int MaxExp;
 
-    public Text LevelText;
-    public List<Sprite> level_Sprites = new List<Sprite>();
-    public Image tree_Level_Image;
+    [SerializeField] Text LevelText;
+    [SerializeField] List<Sprite> level_Sprites = new List<Sprite>();
+    [SerializeField] Image tree_Level_Image;
     LeafUpgrade leaf;
+    [SerializeField] float particle_Scale;
+    [SerializeField] GameObject levelUp_Particle;
 
     void Start()
     {
@@ -31,7 +33,11 @@ public class Tree : MonoBehaviour
         if (Exp >= MaxExp)
         {
             Level++;
-            transform.localScale += new Vector3(1, 1, 1);
+            particle_Scale += 0.01f;
+
+            GameObject obj = Instantiate(levelUp_Particle, gameObject.transform);
+            obj.transform.localScale = particle_Scale * new Vector3(1, 1, 1);
+
             Exp -= MaxExp;
             LevelText.text = Level.ToString();
 
