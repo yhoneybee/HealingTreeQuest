@@ -6,7 +6,7 @@ public class 메모장 : MonoBehaviour
 {
     /* 
     - 대호 -
-    미니게임 튜토리얼 만들기!   
+    응애 발표준비 히히
 
     - 영훈 -
     
