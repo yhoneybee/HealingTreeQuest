@@ -8,7 +8,7 @@ public class TreeUpgrade_Particle : MonoBehaviour
     [SerializeField] float upSpeed;
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -19,7 +19,9 @@ public class TreeUpgrade_Particle : MonoBehaviour
 
         if (gameObject.GetComponent<ParticleSystem>().isStopped == true)
         {
-            GameObject.Find("Tree").transform.localScale += new Vector3(1, 1, 1);
+            Tree tree = GameObject.Find("Tree").GetComponent<Tree>();
+
+            //StartCoroutine(tree.TreeAnimation());
             Destroy(gameObject);
         }
     }

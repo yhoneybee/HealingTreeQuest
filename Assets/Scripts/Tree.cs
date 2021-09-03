@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Tree : MonoBehaviour
 {
+    [Header("나무 관련 사항")]
     public Mesh[] Trees;
 
     private MeshFilter meshFilter;
@@ -13,10 +14,16 @@ public class Tree : MonoBehaviour
     public int Exp;
     [SerializeField] int MaxExp;
 
-    [SerializeField] Text LevelText;
-    [SerializeField] List<Sprite> level_Sprites = new List<Sprite>();
+    [Header("레벨 관련 사항")]
+    [SerializeField] Slider levelSlider;
+    [SerializeField] Text levelText;
     [SerializeField] Image tree_Level_Image;
+    [Space(10)]
+    [SerializeField] List<Sprite> level_Sprites = new List<Sprite>();
+
     LeafUpgrade leaf;
+
+    [Header("파티클 관련 사항")]
     [SerializeField] float particle_Scale;
     [SerializeField] GameObject levelUp_Particle;
 
@@ -30,6 +37,7 @@ public class Tree : MonoBehaviour
     void Update()
     {
         //meshFilter.sharedMesh = Trees[0];
+        levelSlider.value = (float)Exp / MaxExp;
         if (Exp >= MaxExp)
         {
             Level++;
@@ -39,7 +47,7 @@ public class Tree : MonoBehaviour
             obj.transform.localScale = particle_Scale * new Vector3(1, 1, 1);
 
             Exp -= MaxExp;
-            LevelText.text = Level.ToString();
+            levelText.text = Level.ToString();
 
             if (Level > 30 && Level < 61)
                 MaxExp = 15000;
@@ -48,14 +56,7 @@ public class Tree : MonoBehaviour
             else
                 MaxExp = 10000;
 
-            int MeshCount = Level % 10;
-
-            if (MeshCount == 0)
-            {
-                meshFilter.sharedMesh = Trees[(Level / 10) - 1];
-                leaf.leafUpgrade(Level);
-            }
-
+            StartCoroutine(TreeAnimation());
 
             if (Level >= 40)
                 tree_Level_Image.sprite = level_Sprites[3];
@@ -71,6 +72,28 @@ public class Tree : MonoBehaviour
         {
             Exp += 3000;
         }
+    }
 
+    public IEnumerator TreeAnimation()
+    {
+        Vector3 targetScale = transform.localScale + new Vector3(20, 20, 20);
+        while (true)
+        {
+            if (Vector3.Distance(transform.localScale, targetScale) <= 1f)
+            {
+                transform.localScale = targetScale;
+
+                int MeshCount = Level % 10;
+
+                if (MeshCount == 0)
+                {
+                    meshFilter.sharedMesh = Trees[(Level / 10) - 1];
+                    leaf.leafUpgrade(Level);
+                }
+                yield break;
+            }
+            yield return new WaitForSeconds(0.01f);
+            transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * 4);
+        }
     }
 }
