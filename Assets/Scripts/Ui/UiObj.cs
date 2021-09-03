@@ -57,10 +57,10 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         {
             Hide = true;
 
-            cell_size = GridLayoutGroup.cellSize.x;
+            cell_size = GridLayoutGroup.cellSize.y;
             spacing = GridLayoutGroup.spacing.y;
             padding = 150;
-            RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, (cell_size + spacing) + padding);
+            RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, (cell_size + spacing) * GetComponent<RectTransform>().childCount + padding);
         }
     }
     void Update()
