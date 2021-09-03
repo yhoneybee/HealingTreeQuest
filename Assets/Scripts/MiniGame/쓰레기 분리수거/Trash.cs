@@ -57,7 +57,6 @@ public class Trash : MonoBehaviour, IDragHandler, IPointerUpHandler
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("備虞萩稽づちにい形ちだ博醤だで妃にづいし9ちだ");
         transform.localPosition = Vector2.zero;
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -66,7 +65,7 @@ public class Trash : MonoBehaviour, IDragHandler, IPointerUpHandler
         {
             if (ID == collision.GetComponent<TrashZone>().ID)
             {
-                gameSystem.directorSystem.visualSystem.SizeEffect(collision.gameObject);
+                gameSystem.directorSystem.visualSystem.SizeEffect(collision.gameObject, new Vector2(0.8f, 0.8f), new Vector2(1.3f, 1.3f));
                 gameSystem.scoreSystem.ScorePlus(100);
             }
             else

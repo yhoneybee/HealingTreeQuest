@@ -40,7 +40,7 @@ public class TimerSystem : MonoBehaviour
     private string GetTimeText()
     {
         string timeText;
-        timeText = $"{time / 60} : {time % 60}";
+        timeText = time.ToString();
         return timeText;
     }
 }

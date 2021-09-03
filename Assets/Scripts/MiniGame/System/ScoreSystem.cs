@@ -47,7 +47,7 @@ public class ScoreSystem : MonoBehaviour
 
     public void SetScoreText(ref Text text)
     {
-        text.text = $"Score : {GetScore()}";
+        text.text = GetScore().ToString();
     }
 
     public int GetScore()

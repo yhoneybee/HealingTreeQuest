@@ -179,43 +179,44 @@ public class VisualSystem : MonoBehaviour
         obj.SetActive(false);
     }
 
-    public void SizeEffect(GameObject obj)
+    public void SizeEffect(GameObject obj, Vector2 targetScale1, Vector2 targetScale2)
     {
-        StartCoroutine(_SizeEffect(obj));
+        Vector2 curScale = obj.transform.localScale;
+        StartCoroutine(_SizeEffect(obj, curScale, targetScale1, targetScale2));
     }
 
-    IEnumerator _SizeEffect(GameObject obj)
+    IEnumerator _SizeEffect(GameObject obj, Vector2 curScale, Vector2 targetScale1, Vector2 targetScale2)
     {
         while (true)
         {
-            if (obj.transform.localScale.x <= 0.81)
+            if (obj.transform.localScale.x <= targetScale1.x + 0.1f)
             {
-                obj.transform.localScale = new Vector2(0.8f, 0.8f);
+                obj.transform.localScale = targetScale1;
                 break;
             }
-            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, new Vector2(0.8f, 0.8f), 0.6f);
+            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, targetScale1, 0.6f);
             yield return new WaitForSeconds(0.005f);
         }
 
         while (true)
         {
-            if (obj.transform.localScale.x >= 1.19f)
+            if (obj.transform.localScale.x >= targetScale1.x - 0.1f)
             {
-                obj.transform.localScale = new Vector2(1.2f, 1.2f);
+                obj.transform.localScale = targetScale2;
                 break;
             }
-            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, new Vector2(1.2f, 1.2f), 0.6f);
+            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, targetScale2, 0.6f);
             yield return new WaitForSeconds(0.005f);
         }
 
         while (true)
         {
-            if (obj.transform.localScale.x <= 1.01f)
+            if (obj.transform.localScale.x <= curScale.x + 0.1f)
             {
-                obj.transform.localScale = Vector2.one;
+                obj.transform.localScale = curScale;
                 break;
             }
-            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, Vector2.one, 0.6f);
+            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, curScale, 0.6f);
             yield return new WaitForSeconds(0.01f);
         }
     }
