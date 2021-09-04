@@ -14,6 +14,9 @@ public class UiManager : MonoBehaviour
     public RectTransform Canvas;
     public UiObj Menu;
 
+    [SerializeField] Image previewImg;
+    [SerializeField] Sprite[] previewSprites;
+
     Coroutine CRotate = null;
 
     public Vector3 MouseCenterPos => Cam.ScreenToViewportPoint(Input.mousePosition);
@@ -36,12 +39,23 @@ public class UiManager : MonoBehaviour
         set { custom_mode = value; }
     }
 
-    public bool Preview = false;
+    bool preview = false;
+    public bool Preview
+    {
+        get => preview;
+        set
+        {
+            preview = value;
+    
+            previewImg.sprite = preview ? previewSprites[1] : previewSprites[0];
+        }
+    }
 
     private void Awake()
     {
         Instance = this;
     }
+
     private void Update()
     {
         if (Preview)
