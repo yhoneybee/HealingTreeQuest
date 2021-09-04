@@ -9,6 +9,7 @@ TagManager:
   - Fruit
   - Daily
   - Trash Zone
+  - Trash
   layers:
   - Default
   - TransparentFX

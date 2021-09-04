@@ -1680,6 +1680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraSystem: {fileID: 0}
   visualSystem: {fileID: 0}
+  isGameEnd: 0
 --- !u!1 &441674897
 GameObject:
   m_ObjectHideFlags: 0
@@ -4813,6 +4814,7 @@ MonoBehaviour:
   weedsUI: {fileID: 1854384661}
   flowerUI: {fileID: 782955577}
   scoreSystem: {fileID: 0}
+  directorSystem: {fileID: 0}
 --- !u!4 &1619513264
 Transform:
   m_ObjectHideFlags: 0
@@ -5628,7 +5630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

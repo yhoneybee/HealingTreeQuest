@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class 메모장 : MonoBehaviour
+public class 메모장
 {
     /* 
     - 대호 -
-    응애 발표준비 히히
+    발표준비
+    경험치 올라갔을 때 + 100 텍스트 표시
+    미니게임 점수 올랐을 때 + 100 텍스트 표시
+    게임 밸런스 파악
+    게임 목표 구체화 및 실현
+    디테일한 요소 점검
 
     - 영훈 -
     UI Bar에 UI를 넣으면 자동으로 스케일이 바뀌는 것 같던데 설정 버튼이나 Preview 버튼도 동일한 크기로 바뀌어버려서 비율이 엉망이 된다.
@@ -15,6 +16,7 @@ public class 메모장 : MonoBehaviour
 
     - 병운 -
     성장 시 카메라 축소좀 부탁해
+    물 속도 천천히
 
 */
 }

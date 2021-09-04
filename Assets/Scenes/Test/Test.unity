@@ -257,6 +257,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7219076460700332019, guid: 89f033396ac55c643a7b0d25ec76be12, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.96
+      objectReference: {fileID: 0}
+    - target: {fileID: -5894863403822994359, guid: 89f033396ac55c643a7b0d25ec76be12, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.456918
+      objectReference: {fileID: 0}
+    - target: {fileID: -2271502847731017999, guid: 89f033396ac55c643a7b0d25ec76be12, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.2810583
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 89f033396ac55c643a7b0d25ec76be12, type: 3}
       propertyPath: m_Name
       value: TREE

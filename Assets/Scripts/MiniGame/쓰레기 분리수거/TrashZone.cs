@@ -4,25 +4,7 @@ using UnityEngine;
 
 public class TrashZone : MonoBehaviour
 {
-    [SerializeField]
-    private int id;
-    public int ID {
-        get
-        {
-            return id;
-        }
-        set
-        {
-            id = value;
-        }
-    }
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    public int id;
+    public Sprite defaultSprite;
+    public Sprite openSprite;
 }

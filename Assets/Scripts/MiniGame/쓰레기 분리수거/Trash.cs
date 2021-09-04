@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Trash : MonoBehaviour, IDragHandler, IPointerUpHandler
+public class Trash : MonoBehaviour, IDragHandler, IPointerClickHandler
 {
     GameSystem4 gameSystem;
     new RectTransform transform;
-    public int ID { get; private set; }
+
+    public int id;
     public float destroyTime { get; set; }
+    bool mouseUp = false;
+    bool isCollision = false;
 
     void Start()
     {
         transform = GetComponent<RectTransform>();
         StartCoroutine(SpawnAni());
         gameSystem = Tools<GameSystem4>.GetTool("GameSystem");
-        ID = Random.Range(0, gameSystem.spawnPoints.Length);
-        var text = gameObject.GetComponentInChildren<UnityEngine.UI.Text>();
-        text.text = (ID + 1).ToString();
 
-        Invoke("Destroy", destroyTime);
+        Invoke("FallTrash", destroyTime);
     }
     void Update()
     {
-        if (Input.GetMouseButtonUp(0)) transform.localPosition = Vector3.zero;
-
         if (gameSystem.directorSystem.isGameEnd) Destroy(gameObject);
+
+        if (transform.localPosition.y <= -1375)
+        {
+            DestroyTrash(false);
+        }
     }
     IEnumerator SpawnAni()
     {
@@ -41,10 +44,14 @@ public class Trash : MonoBehaviour, IDragHandler, IPointerUpHandler
         }
         transform.localScale = Vector2.one;
     }
-    void Destroy()
+    void DestroyTrash(bool isPlus = false)
     {
         Destroy(gameObject);
-        gameSystem.scoreSystem.ScoreMinus(50);
+
+        if (isPlus)
+            gameSystem.scoreSystem.ScorePlus(100);
+        else
+            gameSystem.scoreSystem.ScoreMinus(50);
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -57,23 +64,49 @@ public class Trash : MonoBehaviour, IDragHandler, IPointerUpHandler
         if (transform.position.y >= 1920f) transform.position = new Vector2(transform.position.x, 1920f);
         else if (transform.position.y <= 0) transform.position = new Vector2(transform.position.x, 0);
     }
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        transform.localPosition = Vector2.zero;
+        mouseUp = true;
+        if (!isCollision) FallTrash();
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Trash Zone"))
+        if (transform.CompareTag("Trash") && collision.CompareTag("Trash Zone"))
         {
-            if (ID == collision.GetComponent<TrashZone>().ID)
-            {
-                gameSystem.directorSystem.visualSystem.SizeEffect(collision.gameObject, new Vector2(0.8f, 0.8f), new Vector2(1.3f, 1.3f));
-                gameSystem.scoreSystem.ScorePlus(100);
-            }
-            else
-                gameSystem.scoreSystem.ScoreMinus(50);
+            isCollision = true;
+            TrashZone trZone = collision.GetComponent<TrashZone>();
+            trZone.GetComponent<UnityEngine.UI.Image>().sprite = trZone.openSprite;
 
-            Destroy(gameObject);
+            if (mouseUp)
+            {
+                if (id == collision.GetComponent<TrashZone>().id)
+                    gameSystem.directorSystem.visualSystem.SizeEffect(collision.gameObject, new Vector2(0.8f, 0.8f), new Vector2(1.3f, 1.3f));
+
+                DestroyTrash(id == collision.GetComponent<TrashZone>().id);
+            }
         }
+        else
+        {
+            if (mouseUp)
+            {
+                FallTrash();
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (transform.CompareTag("Trash") && collision.CompareTag("Trash Zone"))
+        {
+            isCollision = false;
+            TrashZone trZone = collision.GetComponent<TrashZone>();
+            trZone.GetComponent<UnityEngine.UI.Image>().sprite = trZone.defaultSprite;
+        }
+    }
+
+    void FallTrash()
+    {
+        GetComponent<Rigidbody2D>().gravityScale = 500;
+        GetComponent<Collider2D>().enabled = false;
+        tag = "Untagged";
     }
 }

@@ -16,7 +16,7 @@ public class GameSystem4 : MonoBehaviour
     [SerializeField] GameObject fadeA;
     [SerializeField] GameObject fadeB;
 
-    Trash trash;
+    Trash[] trashs;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class GameSystem4 : MonoBehaviour
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
 
-        trash = Resources.Load<Trash>("Prefabs/MiniGame/쓰레기 분리수거/Trash");
+        trashs = Resources.LoadAll<Trash>("Prefabs/MiniGame/쓰레기 분리수거");
 
         directorSystem.visualSystem.TutorialOfIndex = new VisualSystem.Tutorials[directorSystem.visualSystem.tutorialTexts.Length];
         directorSystem.visualSystem.TutorialOfIndex[2] = () => { fadeA.SetActive(true); directorSystem.visualSystem.FadeIn(fadeA, 0.5f); };
@@ -51,7 +51,7 @@ public class GameSystem4 : MonoBehaviour
                     {
                         randomValue = Random.Range(0, spawnPoints.Length);
                     } while (spawnPoints[randomValue].childCount != 0);
-                    Trash trash = Instantiate(this.trash, spawnPoints[randomValue].transform);
+                    Trash trash = Instantiate(trashs[Random.Range(0, trashs.Length)], spawnPoints[randomValue].transform);
                     trash.destroyTime = destroyTime;
                 }
             }
