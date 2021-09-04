@@ -11,6 +11,9 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public UiManager UI => UiManager.Instance;
 
+    public Sprite OriginSprite;
+    public Sprite ChangeSprite;
+
     public Image Image = null;
     public Coroutine CMoving = null;
     public Coroutine CPreview = null;
@@ -128,6 +131,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     }
     IEnumerator EScalingForChild(int child)
     {
+        if (child == 0) yield break;
         while (true)
         {
             if (RectTransform.sizeDelta.y > (cell_size + spacing) * child + padding &&
@@ -185,7 +189,12 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 new_anchor = new Vector2(1, new_anchor.y);
                 button.RectTransform.anchorMin = new Vector2(0, button.RectTransform.anchorMin.y);
                 button.RectTransform.anchorMax = new Vector2(0, button.RectTransform.anchorMax.y);
-                button.RectTransform.anchoredPosition = new Vector2(-button.RectTransform.sizeDelta.x, button.RectTransform.anchoredPosition.y);
+                button.RectTransform.anchoredPosition = new Vector2(0, button.RectTransform.anchoredPosition.y);
+                if (OriginSprite && ChangeSprite)
+                {
+                    button.GetComponent<Image>().sprite = OriginSprite;
+                    Image.sprite = OriginSprite;
+                }
             }
             else
             {
@@ -193,8 +202,14 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 button.RectTransform.anchorMin = new Vector2(1, button.RectTransform.anchorMin.y);
                 button.RectTransform.anchorMax = new Vector2(1, button.RectTransform.anchorMax.y);
                 button.RectTransform.anchoredPosition = new Vector2(0, button.RectTransform.anchoredPosition.y);
+                if (OriginSprite && ChangeSprite)
+                {
+                    button.GetComponent<Image>().sprite = ChangeSprite;
+                    Image.sprite = ChangeSprite;
+                }
             }
 
+            button.RectTransform.pivot = new_anchor;
             RectTransform.anchorMin = RectTransform.anchorMax = RectTransform.pivot = new_anchor;
             RectTransform.anchoredPosition = new Vector2(0, RectTransform.anchoredPosition.y);
         }
@@ -251,8 +266,11 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
             if (CMoving != null) StopCoroutine(CMoving);
             CMoving = StartCoroutine(EMoving());
-            if (CScalingForChild != null) StopCoroutine(CScalingForChild);
-            CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));
+            if (GridLayoutGroup)
+            {
+                if (CScalingForChild != null) StopCoroutine(CScalingForChild);
+                CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));
+            }
         }
     }
 }
