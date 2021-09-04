@@ -21,6 +21,7 @@ public class Weeds : MonoBehaviour
     }
     void Update()
     {
+        if (gameSystem.directorSystem.isGameEnd) Destroy(gameObject);
         if (isSpawned)
         {
             slider.value += Time.deltaTime;

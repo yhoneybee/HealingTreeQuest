@@ -77,6 +77,23 @@ public class DDOLObj : MonoBehaviour
                 }
             }
         }
+
+        ScoreReset();
+    }
+
+    void ScoreReset()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            TempClass tc = new TempClass();
+
+            for (int i = 0; i < miniGameCount; i++)
+            {
+                PlayerPrefs.SetInt($"{i}_First", 0);
+                PlayerPrefs.SetInt($"{i}_Second", 0);
+                PlayerPrefs.SetInt($"{i}_Third", 0);
+            }
+        }
     }
 
     public void GameClear() // 미니게임 클리어 시 불리는 함수

@@ -6,9 +6,6 @@ using UnityEngine.UI;
 // ¿‚√  ªÃ±‚
 public class GameSystem1 : MonoBehaviour
 {
-    Text scoreText;
-    Text timeText;
-
     Sprite[] w_sprites;
     Sprite[] f_sprites;
 
@@ -17,9 +14,10 @@ public class GameSystem1 : MonoBehaviour
     public GameObject weedsUI;
     public GameObject flowerUI;
 
+    [HideInInspector]
     public ScoreSystem scoreSystem;
+    public DirectorSystem directorSystem;
     TimerSystem timeSystem;
-    DirectorSystem directorSystem;
 
     float spawnTime = 1f;
     bool gameFinish = false;
@@ -33,9 +31,6 @@ public class GameSystem1 : MonoBehaviour
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         w_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/¿‚√ ");
         f_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/≤…");
-
-        scoreText = Tools<Text>.GetTool("ScoreText");
-        timeText = Tools<Text>.GetTool("TimeText");
 
         directorSystem.visualSystem.TutorialOfIndex = new VisualSystem.Tutorials[directorSystem.visualSystem.tutorialTexts.Length];
         directorSystem.visualSystem.TutorialOfIndex[2] = () => { fadeObj.SetActive(true); directorSystem.visualSystem.FadeIn(fadeObj, 0.5f); };
@@ -56,14 +51,6 @@ public class GameSystem1 : MonoBehaviour
         directorSystem.visualSystem.TutorialOfIndex[6] = () => { flowerUI.SetActive(false); };
 
         directorSystem.visualSystem.AfterTutorial = () => { timeSystem.TimerStart(60); StartCoroutine(RandomSpawn()); };
-    }
-
-    void Update()
-    {
-        if (directorSystem.visualSystem.isTutorial) return;
-
-        scoreSystem.SetScoreText(ref scoreText);
-        timeSystem.SetTimeText(ref timeText);
     }
 
     IEnumerator RandomSpawn()
@@ -138,6 +125,5 @@ public class GameSystem1 : MonoBehaviour
             scoreSystem.ScoreMinus(100);
         else
             scoreSystem.ScorePlus(100);
-        scoreText.text = scoreSystem.GetScore().ToString();
     }
 }

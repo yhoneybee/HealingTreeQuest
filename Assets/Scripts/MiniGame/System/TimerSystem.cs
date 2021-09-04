@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TimerSystem : MonoBehaviour
 {
+    [SerializeField] Text timeText;
+
     [HideInInspector]
     public bool timeUp = false;
     private int time;
@@ -25,6 +27,7 @@ public class TimerSystem : MonoBehaviour
         }
 
         time--;
+        SetTimeText();
     }
 
     public int GetTime()
@@ -32,7 +35,7 @@ public class TimerSystem : MonoBehaviour
         return time;
     }
 
-    public void SetTimeText(ref Text timeText)
+    public void SetTimeText()
     {
         timeText.text = GetTimeText();
     }

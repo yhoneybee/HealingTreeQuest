@@ -24,6 +24,8 @@ public class Trash : MonoBehaviour, IDragHandler, IPointerUpHandler
     void Update()
     {
         if (Input.GetMouseButtonUp(0)) transform.localPosition = Vector3.zero;
+
+        if (gameSystem.directorSystem.isGameEnd) Destroy(gameObject);
     }
     IEnumerator SpawnAni()
     {

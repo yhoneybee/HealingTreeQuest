@@ -22,9 +22,6 @@ public class GameSystem2 : MonoBehaviour
 
     public EnemyPool enemyPool;
 
-    public Text scoreText;
-    public Text timeText;
-
     Transform[] spawnPoints = new Transform[4];
 
     Defencer defencer;
@@ -37,9 +34,6 @@ public class GameSystem2 : MonoBehaviour
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
 
         enemyPool = Tools<EnemyPool>.GetTool("EnemyPool");
-
-        scoreText = Tools<Text>.GetTool("ScoreText");
-        timeText = Tools<Text>.GetTool("TimeText");
 
         defencer = Tools<Defencer>.GetTool("Defencer");
 
@@ -55,10 +49,8 @@ public class GameSystem2 : MonoBehaviour
     void Update()
     {
         DragScreen();
-
-        timerSystem.SetTimeText(ref timeText);
-        scoreSystem.SetScoreText(ref scoreText);
     }
+
     void DragScreen()
     {
         if (Input.GetMouseButtonDown(0))
