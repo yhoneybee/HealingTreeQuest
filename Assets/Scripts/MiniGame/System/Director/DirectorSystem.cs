@@ -8,6 +8,9 @@ public class DirectorSystem : MonoBehaviour
     public CameraSystem cameraSystem;
     public VisualSystem visualSystem;
     public delegate void Func();
+
+    [HideInInspector]
+    public bool isGameEnd = false;
     void Awake()
     {
         cameraSystem = GetComponent<CameraSystem>();

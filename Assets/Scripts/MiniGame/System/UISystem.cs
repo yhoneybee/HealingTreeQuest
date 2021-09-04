@@ -5,15 +5,6 @@ using UnityEngine.UI;
 
 public class UISystem : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-    }
-
     public void ReTry()
     {
         Time.timeScale = 1;
@@ -22,7 +13,6 @@ public class UISystem : MonoBehaviour
 
     public void SetTimeScale(float scale)
     {
-        Debug.Log("¿¿æ÷");
         Time.timeScale = scale;
     }
 

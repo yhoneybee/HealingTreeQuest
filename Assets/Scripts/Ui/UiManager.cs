@@ -16,6 +16,9 @@ public class UiManager : MonoBehaviour
 
     [SerializeField] Image previewImg;
     [SerializeField] Sprite[] previewSprites;
+    [SerializeField] RectTransform circleTr;
+
+    Coroutine circleAnim;
 
     Coroutine CRotate = null;
 
@@ -46,8 +49,10 @@ public class UiManager : MonoBehaviour
         set
         {
             preview = value;
-    
+
             previewImg.sprite = preview ? previewSprites[1] : previewSprites[0];
+            if (circleAnim != null) StopCoroutine(circleAnim);
+            circleAnim = StartCoroutine(CircleAnim(preview));
         }
     }
 
@@ -140,5 +145,20 @@ public class UiManager : MonoBehaviour
         }
 
         yield return null;
+    }
+    IEnumerator CircleAnim(bool isOn)
+    {
+        Vector2 targetPos = new Vector2(-55, 0);
+        if (isOn) targetPos = new Vector2(55, 0);
+        while (true)
+        {
+            if (Vector2.Distance(circleTr.localPosition, targetPos) <= 0.1f)
+            {
+                circleTr.localPosition = targetPos;
+                yield break;
+            }
+            yield return new WaitForSeconds(0.01f);
+            circleTr.localPosition = Vector2.Lerp(circleTr.localPosition, targetPos, 0.5f);
+        }
     }
 }

@@ -10,9 +10,6 @@ public class GameSystem3 : MonoBehaviour
     TimerSystem timerSystem;
     public DirectorSystem directorSystem;
 
-    Text scoreText;
-    Text timeText;
-
     public Slider moveBar;
 
     [SerializeField] GameObject fadeA;
@@ -20,13 +17,10 @@ public class GameSystem3 : MonoBehaviour
     GameObject[] fruit;
 
     void Start()
-    {        
+    {
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
-
-        scoreText = Tools<Text>.GetTool("ScoreText");
-        timeText = Tools<Text>.GetTool("TimeText");
 
         moveBar = Tools<Slider>.GetTool("MoveBar");
 
@@ -39,11 +33,6 @@ public class GameSystem3 : MonoBehaviour
         directorSystem.visualSystem.AfterTutorial = () => { timerSystem.TimerStart(60); StartCoroutine(RandomSpawn()); };
     }
 
-    void Update()
-    {
-        timerSystem.SetTimeText(ref timeText);
-        scoreSystem.SetScoreText(ref scoreText);
-    }
     IEnumerator RandomSpawn()
     {
         float spawnTime = 2f;
@@ -55,6 +44,12 @@ public class GameSystem3 : MonoBehaviour
 
                 int[] scoreChart = scoreSystem.GetScoreChart(2);
                 directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, gameClear);
+
+                GameObject[] fruits = GameObject.FindGameObjectsWithTag("Fruit");
+                foreach (GameObject fruit in fruits)
+                {
+                    Destroy(fruit);
+                }
                 yield break;
             }
 

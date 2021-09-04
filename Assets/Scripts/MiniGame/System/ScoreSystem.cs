@@ -5,14 +5,23 @@ using UnityEngine.UI;
 
 public class ScoreSystem : MonoBehaviour
 {
+    [SerializeField] int miniGameIndex;
+
+    [SerializeField] Text scoreText;
+    [SerializeField] Text bestScoreText;
+
     List<int> firstScore = new List<int>();
     List<int> secondScore = new List<int>();
     List<int> thirdScore = new List<int>();
 
     int score = 0;
 
-    private void Start()
+    void Start()
     {
+        firstScore.Add(PlayerPrefs.GetInt("0_First"));
+        secondScore.Add(PlayerPrefs.GetInt("0_Second"));
+        thirdScore.Add(PlayerPrefs.GetInt("0_Third"));
+
         firstScore.Add(PlayerPrefs.GetInt("1_First"));
         secondScore.Add(PlayerPrefs.GetInt("1_Second"));
         thirdScore.Add(PlayerPrefs.GetInt("1_Third"));
@@ -25,29 +34,35 @@ public class ScoreSystem : MonoBehaviour
         secondScore.Add(PlayerPrefs.GetInt("3_Second"));
         thirdScore.Add(PlayerPrefs.GetInt("3_Third"));
 
-        firstScore.Add(PlayerPrefs.GetInt("4_First"));
-        secondScore.Add(PlayerPrefs.GetInt("4_Second"));
-        thirdScore.Add(PlayerPrefs.GetInt("4_Third"));
+        SetScore(0);
     }
 
     public void ScorePlus(int score)
     {
         this.score += score;
+        SetScoreText();
     }
 
     public void ScoreMinus(int score)
     {
         this.score -= score;
+        SetScoreText();
     }
 
     public void SetScore(int score)
     {
         this.score = score;
+        SetScoreText();
     }
 
-    public void SetScoreText(ref Text text)
+    public void SetScoreText()
     {
-        text.text = GetScore().ToString();
+        scoreText.text = score.ToString();
+
+        if (firstScore[miniGameIndex] < score)
+            bestScoreText.text = score.ToString();
+        else
+            bestScoreText.text = firstScore[miniGameIndex].ToString();
     }
 
     public int GetScore()
@@ -89,13 +104,5 @@ public class ScoreSystem : MonoBehaviour
         scoreChart[2] = PlayerPrefs.GetInt($"{index}_Third");
 
         return scoreChart;
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("과일 수확");
-        }
     }
 }
