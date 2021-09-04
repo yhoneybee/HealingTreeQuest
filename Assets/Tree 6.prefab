@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136698894}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.011400001}
+  m_LocalPosition: {x: 0.004, y: 0, z: 0.0538}
   m_LocalScale: {x: 0.02, y: 0.019999994, z: 0.019999994}
   m_Children: []
   m_Father: {fileID: 2334786155515882944}
@@ -40,9 +40,9 @@ WindZone:
   m_GameObject: {fileID: 2136698894}
   m_Enabled: 1
   m_Mode: 1
-  m_Radius: 1
+  m_Radius: 10
   m_WindMain: 0.001
-  m_WindTurbulence: 0.01
+  m_WindTurbulence: 0.005
   m_WindPulseMagnitude: 0.1
   m_WindPulseFrequency: 0.1
 --- !u!1 &3408480701390522872
@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 2835005934297041979}
   - component: {fileID: 7461183031767739251}
   - component: {fileID: 3190848662687985109}
+  - component: {fileID: 1534512258}
   m_Layer: 0
   m_Name: Tree 6
   m_TagString: Untagged
@@ -95,7 +96,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3408480701390522872}
-  m_Mesh: {fileID: -3999089259926646061, guid: c2b0bd29173ccaf43a9e4094f2b814c6, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!23 &3190848662687985109
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -137,6 +138,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1534512258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3408480701390522872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb38b2fcd50052f4ab9802cc7f142127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leafs:
+  - {fileID: -3999089259926646061, guid: c2b0bd29173ccaf43a9e4094f2b814c6, type: 3}
+  - {fileID: -7976001809576193062, guid: 0f615616c8e3e9a4583202edd794912b, type: 3}
+  - {fileID: 6608440108915591259, guid: 5e434cab138eea547b897291640ff151, type: 3}
+  - {fileID: -5646583677282312166, guid: 0036d502cd6353446aa401b8ee18e739, type: 3}
 --- !u!21 &-1593962444373780120
 Material:
   serializedVersion: 6

@@ -5533,29 +5533,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 84bd77e5c850e86459ac00e8a23b766a, type: 3}
   - {fileID: 21300000, guid: e2a1d4554a4d38949ae39c89f2cfe57c, type: 3}
   particle_Scale: 0.25
-  levelUp_Particle: {fileID: 320890599050368057, guid: f2d323b26ce32f847a1a71aeefb5fe8c, type: 3}
---- !u!1 &1534512254 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3408480701390522872, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-  m_PrefabInstance: {fileID: 5353386164477515734}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1534512258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534512254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb38b2fcd50052f4ab9802cc7f142127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leafs:
-  - {fileID: -3999089259926646061, guid: c2b0bd29173ccaf43a9e4094f2b814c6, type: 3}
-  - {fileID: -7976001809576193062, guid: 0f615616c8e3e9a4583202edd794912b, type: 3}
-  - {fileID: 6608440108915591259, guid: 5e434cab138eea547b897291640ff151, type: 3}
-  - {fileID: -5646583677282312166, guid: 0036d502cd6353446aa401b8ee18e739, type: 3}
+  levelUp_Particle: {fileID: 8680301634429973962, guid: ea7d10b0d6ab1ae44949d45d69e2c24f, type: 3}
+  MeshChange_Particle: {fileID: 8680301634429973962, guid: 30a7fd5420fc42745847b7e185e7ffb6, type: 3}
 --- !u!1 &1540068010
 GameObject:
   m_ObjectHideFlags: 0
@@ -7879,26 +7858,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1502084050}
     m_Modifications:
-    - target: {fileID: 2136698895, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-      propertyPath: m_Radius
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2136698895, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-      propertyPath: m_WindTurbulence
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 2136698896, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.004
-      objectReference: {fileID: 0}
-    - target: {fileID: 2136698896, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2136698896, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.0538
-      objectReference: {fileID: 0}
     - target: {fileID: 2334786155515882944, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -7943,21 +7902,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3190848662687985109, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3190848662687985109, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3408480701390522872, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
       propertyPath: m_Name
       value: OptimizedTree
-      objectReference: {fileID: 0}
-    - target: {fileID: 7461183031767739251, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8eaed1cd5b9e884c8a3a395dfc9475a, type: 3}

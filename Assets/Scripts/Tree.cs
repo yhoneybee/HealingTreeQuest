@@ -24,8 +24,9 @@ public class Tree : MonoBehaviour
     LeafUpgrade leaf;
 
     [Header("파티클 관련 사항")]
-    [SerializeField] float particle_Scale;
+    public float particle_Scale;
     [SerializeField] GameObject levelUp_Particle;
+    [SerializeField] GameObject MeshChange_Particle;
 
     void Start()
     {
@@ -41,10 +42,23 @@ public class Tree : MonoBehaviour
         if (Exp >= MaxExp)
         {
             Level++;
-            particle_Scale += 0.01f;
+            particle_Scale += 0.1f;
 
-            GameObject obj = Instantiate(levelUp_Particle, gameObject.transform);
-            obj.transform.localScale = particle_Scale * new Vector3(1, 1, 1);
+            int MeshCount = Level % 10;
+
+            if (MeshCount != 0)
+            {
+                GameObject obj = Instantiate(levelUp_Particle, gameObject.transform);
+                obj.transform.localScale = particle_Scale * new Vector3(1, 1, 1);
+            }
+            else
+            {
+                GameObject obj = Instantiate(MeshChange_Particle, gameObject.transform);
+                obj.transform.localScale = particle_Scale * 2 * new Vector3(1, 1, 1);
+                obj.transform.position = Vector3.up * particle_Scale * 4;
+                obj.GetComponent<TreeUpgrade_Particle>().notMove = true;
+            }
+
 
             Exp -= MaxExp;
             levelText.text = Level.ToString();
