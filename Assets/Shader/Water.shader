@@ -26,7 +26,7 @@ Shader "Custom/Water"
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            fixed4 c = tex2D (_MainTex,float2(IN.uv_MainTex.x, IN.uv_MainTex.y + _Time.y * _UVSpeed)) * _Color;
+            fixed4 c = tex2D(_MainTex, float2(IN.uv_MainTex.x, IN.uv_MainTex.y + _Time.y * _UVSpeed)) * _Color;
             o.Albedo = c.rgb;
             o.Alpha = c.a;
         }
