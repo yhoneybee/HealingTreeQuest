@@ -15,8 +15,9 @@ public class GameSystem1 : MonoBehaviour
     public GameObject flowerUI;
 
     [HideInInspector]
-    public ScoreSystem scoreSystem;
-    public DirectorSystem directorSystem;
+    public ScoreSystem scoreSystem { get; set; }
+    public DirectorSystem directorSystem { get; set; }
+    public UISystem uiSystem { get; set; }
     TimerSystem timeSystem;
 
     float spawnTime = 1f;
@@ -27,6 +28,7 @@ public class GameSystem1 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timeSystem = Tools<TimerSystem>.GetTool("TimeSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
+        uiSystem = Tools<UISystem>.GetTool("UISystem");
 
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         w_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/잡초 뽑기/잡초");
@@ -97,8 +99,9 @@ public class GameSystem1 : MonoBehaviour
             {
                 gameFinish = true;
 
-                bool gameClear = scoreSystem.GetScore() >= 3000;
+                bool gameClear = scoreSystem.GetScore() >= 15000;
 
+                directorSystem.isGameEnd = true;
                 int[] scoreChart = scoreSystem.GetScoreChart(0);
                 directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, gameClear);
                 yield break;
@@ -122,8 +125,14 @@ public class GameSystem1 : MonoBehaviour
         weeds.Release();
 
         if (weeds.isFlower)
+        {
             scoreSystem.ScoreMinus(100);
+            uiSystem.TextAnim("- 100");
+        }
         else
+        {
             scoreSystem.ScorePlus(100);
+            uiSystem.TextAnim("+ 100");
+        }
     }
 }

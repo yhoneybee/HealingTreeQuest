@@ -8,7 +8,6 @@ public class ScoreSystem : MonoBehaviour
     [SerializeField] int miniGameIndex;
 
     [SerializeField] Text scoreText;
-    [SerializeField] Text bestScoreText;
 
     List<int> firstScore = new List<int>();
     List<int> secondScore = new List<int>();
@@ -58,11 +57,6 @@ public class ScoreSystem : MonoBehaviour
     public void SetScoreText()
     {
         scoreText.text = score.ToString();
-
-        if (firstScore[miniGameIndex] < score)
-            bestScoreText.text = score.ToString();
-        else
-            bestScoreText.text = firstScore[miniGameIndex].ToString();
     }
 
     public int GetScore()

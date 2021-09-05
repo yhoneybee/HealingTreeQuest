@@ -25,6 +25,7 @@ public class Basket : MonoBehaviour
         {
             gameSystem.directorSystem.visualSystem.SizeEffect(gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.9f, 0.9f));
             gameSystem.scoreSystem.ScorePlus(100);
+            gameSystem.uiSystem.TextAnim("+ 100");
             StartCoroutine(DestroyFruit(collision.gameObject));
         }
     }

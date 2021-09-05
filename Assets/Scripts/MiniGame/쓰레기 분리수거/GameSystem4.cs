@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class GameSystem4 : MonoBehaviour
 {
     [HideInInspector]
-    public ScoreSystem scoreSystem;
+    public ScoreSystem scoreSystem { get; set; }
     TimerSystem timerSystem;
-    public DirectorSystem directorSystem;
+    public DirectorSystem directorSystem { get; set; }
+    public UISystem uiSystem { get; set; }
 
     public Transform[] spawnPoints;
 
@@ -23,6 +24,7 @@ public class GameSystem4 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
+        uiSystem = Tools<UISystem>.GetTool("UISystem");
 
         trashs = Resources.LoadAll<Trash>("Prefabs/MiniGame/쓰레기 분리수거");
 
@@ -61,6 +63,7 @@ public class GameSystem4 : MonoBehaviour
                 bool gameClear = scoreSystem.GetScore() >= 6000;
 
                 int[] scoreChart = scoreSystem.GetScoreChart(3);
+                directorSystem.isGameEnd = true;
                 directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, gameClear);
                 yield break;
             }

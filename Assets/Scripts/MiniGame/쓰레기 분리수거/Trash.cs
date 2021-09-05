@@ -49,9 +49,15 @@ public class Trash : MonoBehaviour, IDragHandler, IPointerClickHandler
         Destroy(gameObject);
 
         if (isPlus)
+        {
             gameSystem.scoreSystem.ScorePlus(100);
+            gameSystem.uiSystem.TextAnim("+ 100");
+        }
         else
+        {
             gameSystem.scoreSystem.ScoreMinus(50);
+            gameSystem.uiSystem.TextAnim("- 50");
+        }
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -107,6 +113,7 @@ public class Trash : MonoBehaviour, IDragHandler, IPointerClickHandler
     {
         GetComponent<Rigidbody2D>().gravityScale = 500;
         GetComponent<Collider2D>().enabled = false;
+        GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
         tag = "Untagged";
     }
 }

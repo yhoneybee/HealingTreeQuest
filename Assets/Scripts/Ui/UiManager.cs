@@ -17,9 +17,10 @@ public class UiManager : MonoBehaviour
     [SerializeField] Image previewImg;
     [SerializeField] Sprite[] previewSprites;
     [SerializeField] RectTransform circleTr;
+    [SerializeField] Text plusText;
 
     Coroutine circleAnim;
-
+    Coroutine textAnim;
     Coroutine CRotate = null;
 
     public Vector3 MouseCenterPos => Cam.ScreenToViewportPoint(Input.mousePosition);
@@ -129,6 +130,11 @@ public class UiManager : MonoBehaviour
             child.Image.raycastTarget = value;
         }
     }
+    public void TextAnim(int value)
+    {
+        if (textAnim != null) StopCoroutine(textAnim);
+        textAnim = StartCoroutine(_TextAnim(value));
+    }
 
     IEnumerator ERotate()
     {
@@ -160,5 +166,21 @@ public class UiManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             circleTr.localPosition = Vector2.Lerp(circleTr.localPosition, targetPos, 0.5f);
         }
+    }
+    IEnumerator _TextAnim(int value)
+    {
+        plusText.gameObject.SetActive(true);
+        plusText.text = $"+ {value}";
+
+        yield return new WaitForSeconds(1);
+        while (true)
+        {
+            if (plusText.color.a <= 0) break;
+            yield return new WaitForSeconds(0.01f);
+            plusText.color = new Color(plusText.color.r, plusText.color.g, plusText.color.b, plusText.color.a - 0.005f);
+        }
+
+        plusText.gameObject.SetActive(false);
+        plusText.color = plusText.color + new Color(0, 0, 0, 1);
     }
 }

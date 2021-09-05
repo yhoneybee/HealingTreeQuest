@@ -29,9 +29,15 @@ public class Weeds : MonoBehaviour
             {
                 Release();
                 if (isFlower)
+                {
                     gameSystem.scoreSystem.ScorePlus(100);
+                    gameSystem.uiSystem.TextAnim("+ 100");
+                }
                 else
+                {
                     gameSystem.scoreSystem.ScoreMinus(100);
+                    gameSystem.uiSystem.TextAnim("- 100");
+                }
             }
             else
                 image.sprite = sprites[(int)slider.value];

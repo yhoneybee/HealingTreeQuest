@@ -85,6 +85,7 @@ public class Tree : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Exp += 3000;
+            UiManager.Instance.TextAnim(3000);
         }
     }
 

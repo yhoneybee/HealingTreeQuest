@@ -42,6 +42,7 @@ public class MiniGameProp : MonoBehaviour
         {
             GiveGiftObj.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f);
             GameObject.Find("Tree").GetComponent<Tree>().Exp += 3000;
+            UiManager.Instance.TextAnim(3000);
             DDOLObj.Instance.ClearList[Number] = 2;
         }
     }

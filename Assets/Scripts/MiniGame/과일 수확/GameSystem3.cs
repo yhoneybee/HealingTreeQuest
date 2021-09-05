@@ -6,9 +6,10 @@ using UnityEngine.UI;
 // 과일 수확
 public class GameSystem3 : MonoBehaviour
 {
-    public ScoreSystem scoreSystem;
+    public ScoreSystem scoreSystem { get; set; }
     TimerSystem timerSystem;
-    public DirectorSystem directorSystem;
+    public DirectorSystem directorSystem { get; set; }
+    public UISystem uiSystem { get; set; }
 
     public Slider moveBar;
 
@@ -21,6 +22,7 @@ public class GameSystem3 : MonoBehaviour
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
+        uiSystem = Tools<UISystem>.GetTool("UISystem");
 
         moveBar = Tools<Slider>.GetTool("MoveBar");
 
@@ -43,6 +45,7 @@ public class GameSystem3 : MonoBehaviour
                 bool gameClear = scoreSystem.GetScore() >= 8000;
 
                 int[] scoreChart = scoreSystem.GetScoreChart(2);
+                directorSystem.isGameEnd = true;
                 directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, gameClear);
 
                 GameObject[] fruits = GameObject.FindGameObjectsWithTag("Fruit");
@@ -81,6 +84,7 @@ public class GameSystem3 : MonoBehaviour
         if (collision.CompareTag("Fruit"))
         {
             scoreSystem.ScoreMinus(50);
+            uiSystem.TextAnim("- 50");
             StartCoroutine(DestroyFruit(collision.gameObject));
         }
     }
