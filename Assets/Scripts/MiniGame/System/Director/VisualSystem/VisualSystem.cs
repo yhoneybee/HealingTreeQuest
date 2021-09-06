@@ -64,7 +64,15 @@ public class VisualSystem : MonoBehaviour
         List<GameObject> backgrounds = resultWindow[0].background;
         List<GameObject> contents = resultWindow[0].content;
 
-        contents[0].GetComponent<Button>().onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
+        if (gameClear)
+        {
+            contents[0].GetComponent<Button>().onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
+        }
+        else
+        {
+            contents[0].GetComponent<Button>().onClick.AddListener(() =>
+            { UnityEngine.SceneManagement.SceneManager.LoadScene("Ingame"); });
+        }
 
         contents[1].GetComponent<Text>().text =
             $"Score : {score}\nBest: {scoreChart[0]}\n\n1 : {scoreChart[0]}\n2 : {scoreChart[1]}\n3 : {scoreChart[2]}";
