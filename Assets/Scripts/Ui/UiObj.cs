@@ -52,6 +52,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     }
 
     public bool Moveable;
+    public bool Compositeable = true;
     float cell_size = 0, spacing = 0, padding = 0;
 
     void Start()
@@ -232,7 +233,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             {
                 Overring = this;
 
-                if (drag.Moveable && GridLayoutGroup && !Hide)
+                if (drag.Moveable && GridLayoutGroup && !Hide && drag.Compositeable)
                 {
                     Dragging.SetParent(UI.Menu.RectTransform.GetChild(1).GetComponent<UiObj>().transform);
 
@@ -248,7 +249,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         {
             UiObj drag = Dragging.GetComponent<UiObj>();
 
-            if (drag && !drag.GridLayoutGroup && drag.Moveable && GridLayoutGroup && !Hide)
+            if (drag && !drag.GridLayoutGroup && drag.Moveable && GridLayoutGroup && !Hide && drag.Compositeable)
             {
                 Dragging.SetParent(UI.Canvas.transform);
 
