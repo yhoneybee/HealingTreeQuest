@@ -65,6 +65,12 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
+        CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z);
+
+        Distance = Mathf.Lerp(Distance, 140 < Wood.localScale.x && Wood.localScale.x < 290 ? (Wood.localScale.x - 140) / 40 * 5 + 10 : (290 < Wood.localScale.x ? (Wood.localScale.x - 140) / 40 * 13 + 10 : 10), Time.deltaTime * 3);
+
+        CamTf.Translate(new Vector3(0, 0, -Distance));
+
         if (Preview)
         {
             if (Input.GetMouseButtonDown(0))
@@ -120,14 +126,6 @@ public class UiManager : MonoBehaviour
                 CRotate = StartCoroutine(ERotate());
             }
         }
-        else
-        {
-            CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z);
-
-            Distance = Mathf.Lerp(Distance, 140 < Wood.localScale.x && Wood.localScale.x < 290 ? (Wood.localScale.x - 140) / 40 * 5 + 10 : (290 < Wood.localScale.x ? (Wood.localScale.x - 140) / 40 * 13 + 10 : 10), Time.deltaTime * 3);
-
-            CamTf.Translate(new Vector3(0, 0, -Distance));
-        }
     }
 
     public void SwitchRaycastTargetMode(bool value)
@@ -149,7 +147,7 @@ public class UiManager : MonoBehaviour
     {
         for (int i = 0; i < 200; i++)
         {
-            CamTf.transform.position = Wood.position;
+            CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z);
 
             max_x = Mathf.Lerp(max_x, 0, Time.deltaTime);
 
