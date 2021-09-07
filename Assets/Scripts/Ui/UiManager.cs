@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UiManager : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class UiManager : MonoBehaviour
     public Transform CamTf => Cam.transform;
 
     public List<UiObj> UiObjs = new List<UiObj>();
+    public List<RectTransform> TutorialTargets = new List<RectTransform>();
+    public List<string> TutorialInfo = new List<string>();
+    public Image TutorialSelectImg;
+    public Image ClickBlockingImg;
     public RectTransform Canvas;
     public UiObj Menu;
 
@@ -62,7 +67,10 @@ public class UiManager : MonoBehaviour
     {
         Instance = this;
     }
-
+    private void Start()
+    {
+        StartCoroutine(ETutorialStart());
+    }
     private void Update()
     {
         CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z);
@@ -189,5 +197,49 @@ public class UiManager : MonoBehaviour
 
         plusText.gameObject.SetActive(false);
         plusText.color = plusText.color + new Color(0, 0, 0, 1);
+    }
+    IEnumerator ETutorialStart()
+    {
+        yield return new WaitForSeconds(1);
+
+        for (int i = 0; i < TutorialTargets.Count;)
+        {
+            print(i);
+            var rt = TutorialSelectImg.GetComponent<RectTransform>();
+
+            rt.sizeDelta = TutorialTargets[i].sizeDelta;
+            rt.anchorMin = TutorialTargets[i].anchorMin;
+            rt.anchorMax = TutorialTargets[i].anchorMax;
+            rt.pivot = TutorialTargets[i].pivot;
+            rt.position = TutorialTargets[i].position;
+
+            while (TutorialSelectImg.color.a < 0.45f)
+            {
+                TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 0, 0, 0.5f), Time.deltaTime * 3);
+                yield return new WaitForSeconds(0.001f);
+            }
+            ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TutorialInfo[i];
+            TutorialSelectImg.color = new Color(1, 0, 0, 0.5f);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+                while (TutorialSelectImg.color.a > 0.05f)
+                {
+                    TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 0, 0, 0), Time.deltaTime * 3);
+                    yield return new WaitForSeconds(0.001f);
+                }
+                TutorialSelectImg.color = new Color(1, 0, 0, 0);
+                i++;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+
+        ClickBlockingImg.gameObject.SetActive(false);
+
+        yield return null;
     }
 }
