@@ -7,8 +7,10 @@ public class Tree : MonoBehaviour
 {
     [Header("나무 관련 사항")]
     public Mesh[] Trees;
+    public Material[] materials = new Material[2];
 
     private MeshFilter meshFilter;
+    private MeshRenderer Mrend;
 
     public int Level;
     public int Exp;
@@ -31,6 +33,7 @@ public class Tree : MonoBehaviour
     void Start()
     {
         meshFilter = GetComponent<MeshFilter>();
+        Mrend = GetComponent<MeshRenderer>();
 
         leaf = FindObjectOfType<LeafUpgrade>();
     }
@@ -102,7 +105,9 @@ public class Tree : MonoBehaviour
                 if (MeshCount == 0)
                 {
                     meshFilter.sharedMesh = Trees[(Level / 10) - 1];
-                    leaf.leafUpgrade(Level);
+                    if (Level == 10)
+                        Mrend.materials = materials;
+                    //leaf.leafUpgrade(Level);
                 }
                 yield break;
             }
