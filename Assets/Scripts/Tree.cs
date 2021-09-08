@@ -8,6 +8,7 @@ public class Tree : MonoBehaviour
     [Header("나무 관련 사항")]
     public Mesh[] Trees;
     public Material[] materials = new Material[2];
+    public Material[] materials2 = new Material[2];
 
     private MeshFilter meshFilter;
     private MeshRenderer Mrend;
@@ -106,9 +107,17 @@ public class Tree : MonoBehaviour
                 if (MeshCount == 0)
                 {
                     meshFilter.sharedMesh = Trees[(Level / 10) - 1];
-                    if (Level == 10)
+                    if (Level == 40 || Level == 60 || Level == 80 || Level == 90)
+                        Mrend.materials = materials2;
+                    else
                         Mrend.materials = materials;
-                    //leaf.leafUpgrade(Level);
+
+                    if(Level==40)
+                        transform.rotation = Quaternion.Euler(-30, 180, 90);
+                    else if(Level==90)
+                        transform.rotation = Quaternion.Euler(-120, 180, 40);
+                    else
+                        transform.rotation = Quaternion.Euler(-90, 0, 0);
                 }
                 yield break;
             }
