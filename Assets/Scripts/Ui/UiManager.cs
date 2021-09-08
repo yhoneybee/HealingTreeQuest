@@ -13,6 +13,7 @@ public class UiManager : MonoBehaviour
 
     public List<UiObj> UiObjs = new List<UiObj>();
     public List<RectTransform> TutorialTargets = new List<RectTransform>();
+    [Multiline(4)]
     public List<string> TutorialInfo = new List<string>();
     public Image TutorialSelectImg;
     public Image ClickBlockingImg;
@@ -227,33 +228,43 @@ public class UiManager : MonoBehaviour
             print(i);
             UIInfo.text = "";
 
-            var rt = TutorialSelectImg.GetComponent<RectTransform>();
-
-            UIInfo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, rt.position.y + rt.rect.height / 2 + UIInfo.GetComponent<RectTransform>().rect.height / 2);
-
-            rt.sizeDelta = TutorialTargets[i].sizeDelta;
-            rt.anchorMin = TutorialTargets[i].anchorMin;
-            rt.anchorMax = TutorialTargets[i].anchorMax;
-            rt.pivot = TutorialTargets[i].pivot;
-            rt.position = TutorialTargets[i].position;
-
-            while (TutorialSelectImg.color.a < 0.3568628f - 0.05f)
+            if (TutorialTargets[i] != TutorialTargets[i - 1])
             {
-                TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0.3568628f), Time.deltaTime * 3);
-                yield return new WaitForSeconds(0.001f);
+                var rt = TutorialSelectImg.GetComponent<RectTransform>();
+
+                UIInfo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, rt.position.y + rt.rect.height / 2 + UIInfo.GetComponent<RectTransform>().rect.height / 2);
+
+                rt.sizeDelta = TutorialTargets[i].sizeDelta;
+                rt.anchorMin = TutorialTargets[i].anchorMin;
+                rt.anchorMax = TutorialTargets[i].anchorMax;
+                rt.pivot = TutorialTargets[i].pivot;
+                rt.position = TutorialTargets[i].position;
+
+                while (TutorialSelectImg.color.a < 0.3568628f - 0.05f)
+                {
+                    TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0.3568628f), Time.deltaTime * 3);
+                    yield return new WaitForSeconds(0.001f);
+                }
             }
+
             UIInfo.text = TutorialInfo[i];
             TutorialSelectImg.color = new Color(1, 1, 1, 0.3568628f);
 
             if (Input.GetMouseButtonDown(0))
             {
                 UIInfo.text = "";
-                while (TutorialSelectImg.color.a > 0.05f)
+                if (i < TutorialTargets.Count)
                 {
-                    TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0), Time.deltaTime * 3);
-                    yield return new WaitForSeconds(0.001f);
+                    if (TutorialTargets[i] != TutorialTargets[i + 1])
+                    {
+                        while (TutorialSelectImg.color.a > 0.05f)
+                        {
+                            TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0), Time.deltaTime * 3);
+                            yield return new WaitForSeconds(0.001f);
+                        }
+                        TutorialSelectImg.color = new Color(1, 1, 1, 0);
+                    }
                 }
-                TutorialSelectImg.color = new Color(1, 1, 1, 0);
                 i++;
             }
             else
