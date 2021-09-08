@@ -326,7 +326,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniGameIndex: 3
   scoreText: {fileID: 1011569167}
-  bestScoreText: {fileID: 2117693804}
 --- !u!1 &201997182
 GameObject:
   m_ObjectHideFlags: 0
@@ -5207,7 +5206,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 6000
+  m_Text: 0
 --- !u!222 &2117693805
 CanvasRenderer:
   m_ObjectHideFlags: 0

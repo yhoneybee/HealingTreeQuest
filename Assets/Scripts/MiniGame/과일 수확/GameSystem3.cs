@@ -17,6 +17,10 @@ public class GameSystem3 : MonoBehaviour
     [SerializeField] GameObject fadeB;
     GameObject[] fruit;
 
+    Text targetScore;
+
+    int clearScore = 8000;
+
     void Start()
     {
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
@@ -25,6 +29,8 @@ public class GameSystem3 : MonoBehaviour
         uiSystem = Tools<UISystem>.GetTool("UISystem");
 
         moveBar = Tools<Slider>.GetTool("MoveBar");
+        targetScore = Tools<Text>.GetTool("TargetScore");
+        targetScore.text = clearScore.ToString();
 
         fruit = Resources.LoadAll<GameObject>("Prefabs/MiniGame/과일 수확");
 
@@ -42,7 +48,7 @@ public class GameSystem3 : MonoBehaviour
         {
             if (timerSystem.timeUp)
             {
-                bool gameClear = scoreSystem.GetScore() >= 8000;
+                bool gameClear = scoreSystem.GetScore() >= clearScore;
 
                 int[] scoreChart = scoreSystem.GetScoreChart(2);
                 directorSystem.isGameEnd = true;

@@ -19,12 +19,18 @@ public class GameSystem4 : MonoBehaviour
 
     Trash[] trashs;
 
+    Text targetScore;
+
+    int clearScore = 6000;
     void Start()
     {
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
         uiSystem = Tools<UISystem>.GetTool("UISystem");
+
+        targetScore = Tools<Text>.GetTool("TargetScore");
+        targetScore.text = clearScore.ToString();
 
         trashs = Resources.LoadAll<Trash>("Prefabs/MiniGame/쓰레기 분리수거");
 
@@ -60,7 +66,7 @@ public class GameSystem4 : MonoBehaviour
 
             if (timerSystem.timeUp)
             {
-                bool gameClear = scoreSystem.GetScore() >= 6000;
+                bool gameClear = scoreSystem.GetScore() >= clearScore;
 
                 int[] scoreChart = scoreSystem.GetScoreChart(3);
                 directorSystem.isGameEnd = true;

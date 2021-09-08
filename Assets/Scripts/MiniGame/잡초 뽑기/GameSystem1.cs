@@ -20,8 +20,12 @@ public class GameSystem1 : MonoBehaviour
     public UISystem uiSystem { get; set; }
     TimerSystem timeSystem;
 
+    Text targetScore;
+
     float spawnTime = 1f;
     bool gameFinish = false;
+
+    int clearScore = 15000;
 
     void Start()
     {
@@ -33,6 +37,9 @@ public class GameSystem1 : MonoBehaviour
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         w_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/¿‚√ ");
         f_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/≤…");
+
+        targetScore = Tools<Text>.GetTool("TargetScore");
+        targetScore.text = clearScore.ToString();
 
         directorSystem.visualSystem.TutorialOfIndex = new VisualSystem.Tutorials[directorSystem.visualSystem.tutorialTexts.Length];
         directorSystem.visualSystem.TutorialOfIndex[2] = () => { fadeObj.SetActive(true); directorSystem.visualSystem.FadeIn(fadeObj, 0.5f); };
@@ -99,7 +106,7 @@ public class GameSystem1 : MonoBehaviour
             {
                 gameFinish = true;
 
-                bool gameClear = scoreSystem.GetScore() >= 15000;
+                bool gameClear = scoreSystem.GetScore() >= clearScore;
 
                 directorSystem.isGameEnd = true;
                 int[] scoreChart = scoreSystem.GetScoreChart(0);
