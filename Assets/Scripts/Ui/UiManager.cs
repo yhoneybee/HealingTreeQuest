@@ -69,7 +69,11 @@ public class UiManager : MonoBehaviour
     }
     private void Start()
     {
-        //StartCoroutine(ETutorialStart());
+        if (!PlayerPrefs.HasKey("First"))
+        {
+            StartCoroutine(ETutorialStart());
+            PlayerPrefs.SetInt("First", 1);
+        }
     }
     private void Update()
     {
@@ -199,7 +203,19 @@ public class UiManager : MonoBehaviour
     }
     IEnumerator ETutorialStart()
     {
+        ClickBlockingImg.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(1);
+
+        var UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        UIInfo.text = $"지금부터 튜토리얼을 시작합니다";
+
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0)) break;
+            else yield return null;
+        }
 
         for (int i = 0; i < TutorialTargets.Count;)
         {
@@ -212,29 +228,41 @@ public class UiManager : MonoBehaviour
             rt.pivot = TutorialTargets[i].pivot;
             rt.position = TutorialTargets[i].position;
 
-            while (TutorialSelectImg.color.a < 0.45f)
+            while (TutorialSelectImg.color.a < 0.3568628f - 0.05f)
             {
-                TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 0, 0, 0.5f), Time.deltaTime * 3);
+                TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0.3568628f), Time.deltaTime * 3);
                 yield return new WaitForSeconds(0.001f);
             }
-            ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TutorialInfo[i];
-            TutorialSelectImg.color = new Color(1, 0, 0, 0.5f);
+            UIInfo.text = TutorialInfo[i];
+            TutorialSelectImg.color = new Color(1, 1, 1, 0.3568628f);
 
             if (Input.GetMouseButtonDown(0))
             {
-                ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+                UIInfo.text = "";
                 while (TutorialSelectImg.color.a > 0.05f)
                 {
-                    TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 0, 0, 0), Time.deltaTime * 3);
+                    TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0), Time.deltaTime * 3);
                     yield return new WaitForSeconds(0.001f);
                 }
-                TutorialSelectImg.color = new Color(1, 0, 0, 0);
+                TutorialSelectImg.color = new Color(1, 1, 1, 0);
                 i++;
             }
             else
             {
                 yield return null;
             }
+        }
+
+        yield return new WaitForSeconds(1);
+
+        UIInfo.text = $"수고하셨습니다! 튜토리얼을 종료합니다, 즐겁게 즐겨주세요~!";
+
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0))
+                break;
+            else
+                yield return null;
         }
 
         ClickBlockingImg.gameObject.SetActive(false);
