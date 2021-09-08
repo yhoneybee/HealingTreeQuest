@@ -78,10 +78,10 @@ public class DDOLObj : MonoBehaviour
             }
         }
 
-        ScoreReset();
+        GameReset();
     }
 
-    void ScoreReset()
+    void GameReset()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -93,6 +93,8 @@ public class DDOLObj : MonoBehaviour
                 PlayerPrefs.SetInt($"{i}_Second", 0);
                 PlayerPrefs.SetInt($"{i}_Third", 0);
             }
+
+            PlayerPrefs.DeleteKey("First");
         }
     }
 

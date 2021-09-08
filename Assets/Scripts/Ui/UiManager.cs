@@ -209,7 +209,7 @@ public class UiManager : MonoBehaviour
 
         var UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        UIInfo.text = $"지금부터 튜토리얼을 시작합니다";
+        UIInfo.text = $"Healing Tree Quest에 오신 것을 환영합니다! 지금부터 튜토리얼을 시작합니다.";
 
         while (true)
         {
