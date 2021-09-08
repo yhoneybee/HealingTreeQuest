@@ -58,6 +58,7 @@ public class Tree : MonoBehaviour
             {
                 GameObject obj = Instantiate(MeshChange_Particle, gameObject.transform);
                 obj.transform.position = Vector3.zero;
+                obj.transform.localScale = particle_Scale / 2 * new Vector3(1, 1, 1);
                 obj.GetComponent<TreeUpgrade_Particle>().notMove = true;
             }
 
