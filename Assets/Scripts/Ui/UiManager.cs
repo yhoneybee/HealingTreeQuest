@@ -69,14 +69,13 @@ public class UiManager : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(ETutorialStart());
+        //StartCoroutine(ETutorialStart());
     }
     private void Update()
     {
         CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z);
 
-        Distance = Mathf.Lerp(Distance, 140 < Wood.localScale.x && Wood.localScale.x < 290 ? (Wood.localScale.x - 140) / 40 * 5 + 10 : (290 < Wood.localScale.x ? (Wood.localScale.x - 140) / 40 * 13 + 10 : 10), Time.deltaTime * 3);
-
+        Distance = Mathf.Lerp(Distance, Wood.localScale.x * (FindObjectOfType<Tree>().Level + 1 * 10) / 140, Time.deltaTime * 3);
         CamTf.Translate(new Vector3(0, 0, -Distance));
 
         if (Preview)
