@@ -209,18 +209,27 @@ public class UiManager : MonoBehaviour
 
         var UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        UIInfo.text = $"Healing Tree Quest에 오신 것을 환영합니다! 지금부터 튜토리얼을 시작합니다.";
+        UIInfo.text = $"Healing Tree Quest에 오신 것을 환영합니다! 터치하시면 튜토리얼을 시작합니다!";
 
         while (true)
         {
-            if (Input.GetMouseButtonDown(0)) break;
+            if (Input.GetMouseButtonDown(0))
+            {
+                UIInfo.text = "";
+                break;
+            }
             else yield return null;
         }
+
 
         for (int i = 0; i < TutorialTargets.Count;)
         {
             print(i);
+            UIInfo.text = "";
+
             var rt = TutorialSelectImg.GetComponent<RectTransform>();
+
+            UIInfo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, rt.position.y + rt.rect.height / 2 + UIInfo.GetComponent<RectTransform>().rect.height / 2);
 
             rt.sizeDelta = TutorialTargets[i].sizeDelta;
             rt.anchorMin = TutorialTargets[i].anchorMin;
