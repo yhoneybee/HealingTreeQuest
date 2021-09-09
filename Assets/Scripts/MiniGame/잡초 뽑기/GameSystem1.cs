@@ -59,7 +59,7 @@ public class GameSystem1 : MonoBehaviour
         };
         directorSystem.visualSystem.TutorialOfIndex[6] = () => { flowerUI.SetActive(false); };
 
-        directorSystem.visualSystem.AfterTutorial = () => { timeSystem.TimerStart(5); StartCoroutine(RandomSpawn()); };
+        directorSystem.visualSystem.AfterTutorial = () => { timeSystem.TimerStart(60); StartCoroutine(RandomSpawn()); };
     }
 
     IEnumerator RandomSpawn()
