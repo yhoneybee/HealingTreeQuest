@@ -95,7 +95,7 @@ public class Tree : MonoBehaviour
 
     public IEnumerator TreeAnimation()
     {
-        Vector3 targetScale = transform.localScale + new Vector3(20, 20, 20); // 목표 크기 설정
+        Vector3 targetScale = transform.localScale + new Vector3(0.5f, 0.5f, 0.5f); // 목표 크기 설정
         while (true)
         {
             if (Vector3.Distance(transform.localScale, targetScale) <= 1f)
