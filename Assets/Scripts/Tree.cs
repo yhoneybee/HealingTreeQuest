@@ -106,16 +106,38 @@ public class Tree : MonoBehaviour
 
                 if (MeshCount == 0)
                 {
+                    switch(Level)
+                    {
+                        case 10:
+                            transform.localScale = new Vector3(40, 40, 40);
+                            break;
+                        case 40:
+                            transform.localScale = new Vector3(90, 90, 90);
+                            break;
+                        case 60:
+                            transform.localScale = new Vector3(350, 350, 350);
+                            break;
+                        case 70:
+                            transform.localScale = new Vector3(200, 200, 200);
+                            break;
+                        case 80:
+                            transform.localScale = new Vector3(900, 900, 900);
+                            break;
+                        case 90:
+                            transform.localScale = new Vector3(400, 400, 400);
+                            break;
+                    }
+
                     meshFilter.sharedMesh = Trees[(Level / 10) - 1];
-                    if (Level == 40 || Level == 60 || Level == 80 || Level == 90)
+                    if (Level == 40 || Level == 60 || Level == 80)
                         Mrend.materials = materials2;
                     else
                         Mrend.materials = materials;
 
-                    if(Level==40)
+                    if (Level == 40)
                         transform.rotation = Quaternion.Euler(-30, 180, 90);
-                    else if(Level==90)
-                        transform.rotation = Quaternion.Euler(-120, 180, 40);
+                    else if (Level == 80)
+                        transform.rotation = Quaternion.Euler(-120, -40, 35);
                     else
                         transform.rotation = Quaternion.Euler(-90, 0, 0);
                 }
