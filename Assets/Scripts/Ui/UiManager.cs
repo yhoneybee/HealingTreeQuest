@@ -111,10 +111,10 @@ public class UiManager : MonoBehaviour
                 Distance = Mathf.Lerp(Distance, 10 + (level / 2), Time.deltaTime * 3);
                 break;
             case int i when 50 <= i && i <= 59:
-                Distance = Mathf.Lerp(Distance, 15 + (level / 2), Time.deltaTime * 3);
+                Distance = Mathf.Lerp(Distance, 20 + (level / 2), Time.deltaTime * 3);
                 break;
             case int i when 60 <= i && i <= 69:
-                Distance = Mathf.Lerp(Distance, 20 + (level / 2), Time.deltaTime * 3);
+                Distance = Mathf.Lerp(Distance, 25 + (level / 2), Time.deltaTime * 3);
                 break;
             case int i when 70 <= i && i <= 89:
                 Distance = Mathf.Lerp(Distance, 110 + (level / 2), Time.deltaTime * 3);
