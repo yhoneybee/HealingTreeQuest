@@ -16,7 +16,7 @@ public class UISystem : MonoBehaviour
 
     void Start()
     {
-        volume.value = SoundManager.Instance.Volume;
+        volume.value = SoundManager.Instance.TotalVolume;
     }
     public void ReTry()
     {
