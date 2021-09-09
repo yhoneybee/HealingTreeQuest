@@ -43,15 +43,15 @@ public class UISystem : MonoBehaviour
         if (isMuted)
         {
             saveValue = volume.value;
-            volume.value = SoundManager.Instance.Volume = 0;
+            volume.value = SoundManager.Instance.TotalVolume = 0;
         }
 
         else
-            volume.value = SoundManager.Instance.Volume = saveValue;
+            volume.value = SoundManager.Instance.TotalVolume = saveValue;
     }
     public void SetVolume()
     {
-        SoundManager.Instance.Volume = volume.value;
+        SoundManager.Instance.TotalVolume = volume.value;
     }
 
 
