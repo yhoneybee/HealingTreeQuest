@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 public enum SoundType
@@ -16,6 +17,10 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; } = null;
 
     public AudioSource[] audioSources = new AudioSource[(int)SoundType.END];
+
+    [SerializeField] Slider TotalSlider;
+    [SerializeField] Button MuteSwitchBtn;
+
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
 
     private float bgm_volume = 0.5f;
@@ -32,6 +37,7 @@ public class SoundManager : MonoBehaviour
     }
 
     public float TotalVolume { get; set; } = 0.5f;
+    float temp_volume = 0;
 
     private void Awake()
     {
@@ -59,7 +65,24 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
+    private void Start()
+    {
+        TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
+        MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
+    }
 
+    public void SwitchMute()
+    {
+        if (TotalVolume == 0)
+        {
+            TotalSlider.value = temp_volume;
+        }
+        else
+        {
+            temp_volume = TotalSlider.value;
+            TotalSlider.value = 0;
+        }
+    }
     public void StopAllSound()
     {
         foreach (var item in audioSources)
@@ -70,7 +93,6 @@ public class SoundManager : MonoBehaviour
 
         audioClips.Clear();
     }
-
     public void Play(AudioClip audioClip, SoundType soundType = SoundType.EFFECT)
     {
         if (!audioClip)
