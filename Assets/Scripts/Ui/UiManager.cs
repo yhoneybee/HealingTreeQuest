@@ -41,6 +41,7 @@ public class UiManager : MonoBehaviour
     public float Distance = 10;
     float max_x = 0;
     float touch_distance = 0;
+    public float Title_distance;
 
     private bool custom_mode = false;
     public bool CustomMode
@@ -77,7 +78,7 @@ public class UiManager : MonoBehaviour
     }
     private void Update()
     {
-        CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z);
+        CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z- Title_distance);
 
         Distance = Mathf.Lerp(Distance, Wood.localScale.x * (FindObjectOfType<Tree>().Level + 1 * 10) / 140, Time.deltaTime * 3);
         CamTf.Translate(new Vector3(0, 0, -Distance));
