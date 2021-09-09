@@ -14,6 +14,8 @@ public class VisualSystem : MonoBehaviour
     }
     [SerializeField]
     private ResultWindow[] resultWindow;
+    [SerializeField] Sprite clearBG;
+    [SerializeField] Sprite failBG;
 
     public bool isTutorial = true;
     public delegate void Tutorials();
@@ -59,25 +61,25 @@ public class VisualSystem : MonoBehaviour
     }
     public void ResultAnimation(int score, int[] scoreChart, bool gameClear)
     {
-        resultWindow[0].title[0].transform.parent.gameObject.SetActive(true);
         List<GameObject> titles = resultWindow[0].title;
         List<GameObject> backgrounds = resultWindow[0].background;
         List<GameObject> contents = resultWindow[0].content;
 
         if (gameClear)
         {
-            contents[0].GetComponent<Button>().onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
+            contents[1].GetComponent<Button>().onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
+            backgrounds[0].GetComponent<Image>().sprite = clearBG;
         }
         else
         {
-            contents[0].GetComponent<Button>().onClick.AddListener(() =>
+            contents[1].GetComponent<Button>().onClick.AddListener(() =>
             { UnityEngine.SceneManagement.SceneManager.LoadScene("Ingame"); });
+            backgrounds[0].GetComponent<Image>().sprite = failBG;
         }
 
-        contents[1].GetComponent<Text>().text =
-            $"Score : {score}\nBest: {scoreChart[0]}\n\n1 : {scoreChart[0]}\n2 : {scoreChart[1]}\n3 : {scoreChart[2]}";
+        contents[0].GetComponent<Text>().text =
+            $"{score}\n {scoreChart[0]}\n\n{scoreChart[0]}\n{scoreChart[1]}\n{scoreChart[2]}";
 
-        if (!gameClear) titles[0].GetComponentInChildren<Text>().text = "Game Over...";
         for (int i = 0; i < titles.Count; i++)
         {
             ObjMove(titles[i], new Vector2(0, 510));
@@ -88,10 +90,10 @@ public class VisualSystem : MonoBehaviour
             ObjMove(backgrounds[i], Vector2.zero);
         }
 
-        if (!gameClear) contents[2].GetComponentInChildren<Text>().text = "Quest Failed...";
         for (int i = 0; i < contents.Count; i++)
         {
-            FadeIn(resultWindow[0].content[i], 1);
+            contents[i].SetActive(true);
+            FadeIn(contents[i], 1);
         }
     }
 

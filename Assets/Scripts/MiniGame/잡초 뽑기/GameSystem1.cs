@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class GameSystem1 : MonoBehaviour
 {
     Sprite[] w_sprites;
-    Sprite[] f_sprites;
+    [SerializeField] Sprite[] f_sprites1;
+    [SerializeField] Sprite[] f_sprites2;
 
     GameObject[] spawnPoints;
     public GameObject fadeObj;
@@ -36,7 +37,6 @@ public class GameSystem1 : MonoBehaviour
 
         spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         w_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/¿‚√ ");
-        f_sprites = Resources.LoadAll<Sprite>("Sprites/MiniGame/¿‚√  ªÃ±‚/≤…");
 
         targetScore = Tools<Text>.GetTool("TargetScore");
         targetScore.text = clearScore.ToString();
@@ -59,7 +59,7 @@ public class GameSystem1 : MonoBehaviour
         };
         directorSystem.visualSystem.TutorialOfIndex[6] = () => { flowerUI.SetActive(false); };
 
-        directorSystem.visualSystem.AfterTutorial = () => { timeSystem.TimerStart(60); StartCoroutine(RandomSpawn()); };
+        directorSystem.visualSystem.AfterTutorial = () => { timeSystem.TimerStart(5); StartCoroutine(RandomSpawn()); };
     }
 
     IEnumerator RandomSpawn()
@@ -92,7 +92,7 @@ public class GameSystem1 : MonoBehaviour
                 int randomValue = Random.Range(0, 5);
                 if (randomValue == 4)
                 {
-                    weed.sprites = f_sprites;
+                    weed.sprites = Random.Range(0, 2) == 0 ? f_sprites1 : f_sprites2;
                     weed.isFlower = true;
                 }
                 else
