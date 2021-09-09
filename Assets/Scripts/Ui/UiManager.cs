@@ -28,6 +28,7 @@ public class UiManager : MonoBehaviour
     Coroutine circleAnim;
     Coroutine textAnim;
     Coroutine CRotate = null;
+    Coroutine CTutorial;
 
     public Vector3 MouseCenterPos => Cam.ScreenToViewportPoint(Input.mousePosition);
 
@@ -71,14 +72,23 @@ public class UiManager : MonoBehaviour
     }
     private void Start()
     {
-        //if (!PlayerPrefs.HasKey("First"))
+/*        //if (!PlayerPrefs.HasKey("First"))
         {
             StartCoroutine(ETutorialStart());
             PlayerPrefs.SetInt("First", 1);
-        }
+        }*/
     }
     private void Update()
     {
+        if(Title_distance <= 0.1f && CTutorial == null)
+        {
+            //if (!PlayerPrefs.HasKey("First"))
+            {
+                CTutorial = StartCoroutine(ETutorialStart());
+                PlayerPrefs.SetInt("First", 1);
+            }
+        }
+
         CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z- Title_distance);
 
         Distance = Mathf.Lerp(Distance, Wood.localScale.x * (FindObjectOfType<Tree>().Level + 1 * 10) / 140, Time.deltaTime * 3);
