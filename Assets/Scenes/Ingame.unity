@@ -11086,7 +11086,7 @@ MonoBehaviour:
   - {fileID: 1190251388}
   TutorialTargets:
   - {fileID: 2022238526}
-  - {fileID: 2022238526}
+  - {fileID: 0}
   - {fileID: 1287482583}
   - {fileID: 1429440353}
   - {fileID: 815106567}
@@ -11096,10 +11096,10 @@ MonoBehaviour:
   - {fileID: 1385731862}
   - {fileID: 8508200394426821238}
   - {fileID: 1295592418}
-  - {fileID: 1295592418}
+  - {fileID: 0}
   - {fileID: 1344281886}
   - {fileID: 421783875}
-  - {fileID: 421783875}
+  - {fileID: 0}
   - {fileID: 1190251384}
   TutorialInfo:
   - "\uC774\uAC83\uC740 UI\uB97C \uAD00\uB9AC\uD560 \uC218 \uC788\uB294\n\uC77C\uC885\uC758

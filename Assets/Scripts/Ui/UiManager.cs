@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,7 +70,7 @@ public class UiManager : MonoBehaviour
     }
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("First"))
+        //if (!PlayerPrefs.HasKey("First"))
         {
             StartCoroutine(ETutorialStart());
             PlayerPrefs.SetInt("First", 1);
@@ -210,7 +210,7 @@ public class UiManager : MonoBehaviour
 
         var UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        UIInfo.text = $"Healing Tree Quest¿¡ ¿À½Å °ÍÀ» È¯¿µÇÕ´Ï´Ù! ÅÍÄ¡ÇÏ½Ã¸é Æ©Åä¸®¾óÀ» ½ÃÀÛÇÕ´Ï´Ù!";
+        UIInfo.text = $"Healing Tree Questì— ì˜¤ì‹  ê²ƒì„ í™˜ì˜í•©ë‹ˆë‹¤! í„°ì¹˜í•˜ì‹œë©´ íŠœí† ë¦¬ì–¼ì„ ì‹œì‘í•©ë‹ˆë‹¤!";
 
         while (true)
         {
@@ -222,50 +222,46 @@ public class UiManager : MonoBehaviour
             else yield return null;
         }
 
-
         for (int i = 0; i < TutorialTargets.Count;)
         {
-            print(i);
             UIInfo.text = "";
 
-            if (TutorialTargets[i] != TutorialTargets[i - 1])
+            var rt = TutorialSelectImg.GetComponent<RectTransform>();
+
+            UIInfo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, rt.position.y + rt.rect.height / 2 + UIInfo.GetComponent<RectTransform>().rect.height / 2);
+
+            if (TutorialTargets[i])
             {
-                var rt = TutorialSelectImg.GetComponent<RectTransform>();
-
-                UIInfo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, rt.position.y + rt.rect.height / 2 + UIInfo.GetComponent<RectTransform>().rect.height / 2);
-
                 rt.sizeDelta = TutorialTargets[i].sizeDelta;
                 rt.anchorMin = TutorialTargets[i].anchorMin;
                 rt.anchorMax = TutorialTargets[i].anchorMax;
                 rt.pivot = TutorialTargets[i].pivot;
                 rt.position = TutorialTargets[i].position;
-
-                while (TutorialSelectImg.color.a < 0.3568628f - 0.05f)
-                {
-                    TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0.3568628f), Time.deltaTime * 3);
-                    yield return new WaitForSeconds(0.001f);
-                }
             }
 
-            UIInfo.text = TutorialInfo[i];
+            while (TutorialSelectImg.color.a < 0.3568628f - 0.05f)
+            {
+                TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0.3568628f), Time.deltaTime * 3);
+                yield return new WaitForSeconds(0.001f);
+            }
             TutorialSelectImg.color = new Color(1, 1, 1, 0.3568628f);
+
+            UIInfo.text = TutorialInfo[i];
 
             if (Input.GetMouseButtonDown(0))
             {
                 UIInfo.text = "";
-                if (i < TutorialTargets.Count)
+                if (TutorialTargets[i + 1 < TutorialTargets.Count ? i + 1 : i])
                 {
-                    if (TutorialTargets[i] != TutorialTargets[i + 1])
+                    while (TutorialSelectImg.color.a > 0.05f)
                     {
-                        while (TutorialSelectImg.color.a > 0.05f)
-                        {
-                            TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0), Time.deltaTime * 3);
-                            yield return new WaitForSeconds(0.001f);
-                        }
-                        TutorialSelectImg.color = new Color(1, 1, 1, 0);
+                        TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0), Time.deltaTime * 3);
+                        yield return new WaitForSeconds(0.001f);
                     }
+                    TutorialSelectImg.color = new Color(1, 1, 1, 0);
                 }
                 i++;
+                yield return new WaitForSeconds(0.5f);
             }
             else
             {
@@ -275,14 +271,12 @@ public class UiManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        UIInfo.text = $"¼ö°íÇÏ¼Ì½À´Ï´Ù! Æ©Åä¸®¾óÀ» Á¾·áÇÕ´Ï´Ù, Áñ°Ì°Ô Áñ°ÜÁÖ¼¼¿ä~!";
+        UIInfo.text = $"ìˆ˜ê³ í•˜ì…¨ìŠµë‹ˆë‹¤! íŠœí† ë¦¬ì–¼ì„ ì¢…ë£Œí•©ë‹ˆë‹¤, ì¦ê²ê²Œ ì¦ê²¨ì£¼ì„¸ìš”~!";
 
         while (true)
         {
-            if (Input.GetMouseButtonDown(0))
-                break;
-            else
-                yield return null;
+            if (Input.GetMouseButtonDown(0)) break;
+            else yield return null;
         }
 
         ClickBlockingImg.gameObject.SetActive(false);
