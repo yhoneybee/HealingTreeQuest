@@ -27,7 +27,7 @@ public class UISystem : MonoBehaviour
 
     public void SetVolume(Slider slider)
     {
-        SoundManager.Instance.Volume = slider.value;
+        SoundManager.Instance.TotalVolume = slider.value;
     }
 
 

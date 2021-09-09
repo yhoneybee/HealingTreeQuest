@@ -13,10 +13,25 @@ public enum SoundType
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager Instance { get; private set; } = null;
+
     public AudioSource[] audioSources = new AudioSource[(int)SoundType.END];
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
 
-    public static SoundManager Instance { get; private set; } = null;
+    private float bgm_volume = 0.5f;
+    public float BgmVolume
+    {
+        get { return bgm_volume * TotalVolume; }
+        set { bgm_volume = value; audioSources[((int)SoundType.BGM)].volume = BgmVolume; }
+    }
+    private float sfx_volume;
+    public float SfxVolume
+    {
+        get { return sfx_volume * TotalVolume; }
+        set { sfx_volume = value; audioSources[((int)SoundType.EFFECT)].volume = SfxVolume; }
+    }
+
+    public float TotalVolume { get; set; } = 0.5f;
 
     private void Awake()
     {
