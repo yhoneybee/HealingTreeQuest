@@ -77,6 +77,7 @@ public class UiManager : MonoBehaviour
     }
     private void Start()
     {
+        StartCoroutine(ETypeingEffect(Donate, "구매 금액의 20%가 기부되었습니다!"));
         UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         UIInfoRt = UIInfo.GetComponent<RectTransform>();
         SelectRt = TutorialSelectImg.GetComponent<RectTransform>();
@@ -297,6 +298,17 @@ public class UiManager : MonoBehaviour
         }
 
         ClickBlockingImg.gameObject.SetActive(false);
+
+        yield return null;
+    }
+    IEnumerator ETypeingEffect(TextMeshProUGUI gui, string text)
+    {
+        for (int i = 0; i < text.Length; i++)
+        {
+            gui.text = text.Substring(0, i + 1);
+            yield return new WaitForSeconds(0.05f);
+        }
+        gui.text = "";
 
         yield return null;
     }
