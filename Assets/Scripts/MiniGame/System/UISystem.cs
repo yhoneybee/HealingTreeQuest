@@ -6,8 +6,18 @@ using UnityEngine.UI;
 public class UISystem : MonoBehaviour
 {
     [SerializeField] Text plusText;
+    [SerializeField] Slider volume;
+    [SerializeField] Sprite[] speakers;
 
     Coroutine textAnim;
+
+    float saveValue = 0;
+    bool isMuted = false;
+
+    void Start()
+    {
+        volume.value = SoundManager.Instance.Volume;
+    }
     public void ReTry()
     {
         Time.timeScale = 1;
@@ -25,9 +35,23 @@ public class UISystem : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("Ingame");
     }
 
-    public void SetVolume(Slider slider)
+    public void MuteOnOff()
     {
-        SoundManager.Instance.TotalVolume = slider.value;
+        isMuted = !isMuted;
+        volume.transform.GetChild(1).GetComponent<Image>().sprite = isMuted ? speakers[1] : speakers[0];
+
+        if (isMuted)
+        {
+            saveValue = volume.value;
+            volume.value = SoundManager.Instance.Volume = 0;
+        }
+
+        else
+            volume.value = SoundManager.Instance.Volume = saveValue;
+    }
+    public void SetVolume()
+    {
+        SoundManager.Instance.Volume = volume.value;
     }
 
 

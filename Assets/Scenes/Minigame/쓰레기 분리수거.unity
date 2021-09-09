@@ -3026,7 +3026,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1352511836}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1959434024}
+        m_TargetAssemblyTypeName: UISystem, Assembly-CSharp
+        m_MethodName: MuteOnOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1352511836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3156,7 +3168,19 @@ MonoBehaviour:
   m_Value: 0.464
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1959434024}
+        m_TargetAssemblyTypeName: UISystem, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1390922239
 GameObject:
   m_ObjectHideFlags: 0
@@ -4752,6 +4776,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plusText: {fileID: 1077426841}
+  volume: {fileID: 1389293218}
+  speakers:
+  - {fileID: 21300000, guid: a7e148bc4064c5f4a9b38782eace030e, type: 3}
+  - {fileID: 21300000, guid: d7d57b038b80b544bb3f9557dd8cea40, type: 3}
 --- !u!1 &1972889607
 GameObject:
   m_ObjectHideFlags: 0
