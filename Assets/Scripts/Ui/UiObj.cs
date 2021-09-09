@@ -193,7 +193,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 button.RectTransform.anchoredPosition = new Vector2(0, button.RectTransform.anchoredPosition.y);
                 if (OriginSprite && ChangeSprite)
                 {
-                    button.GetComponent<Image>().sprite = OriginSprite;
+                    button.GetComponent<Image>().sprite = button.OriginSprite;
                     Image.sprite = OriginSprite;
                 }
             }
@@ -205,7 +205,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
                 button.RectTransform.anchoredPosition = new Vector2(0, button.RectTransform.anchoredPosition.y);
                 if (OriginSprite && ChangeSprite)
                 {
-                    button.GetComponent<Image>().sprite = ChangeSprite;
+                    button.GetComponent<Image>().sprite = button.ChangeSprite;
                     Image.sprite = ChangeSprite;
                 }
             }

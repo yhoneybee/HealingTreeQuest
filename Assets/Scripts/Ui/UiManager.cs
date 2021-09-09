@@ -20,6 +20,7 @@ public class UiManager : MonoBehaviour
     public RectTransform Canvas;
     public UiObj Menu;
 
+    [SerializeField] TextMeshProUGUI Donate;
     [SerializeField] Image previewImg;
     [SerializeField] Sprite[] previewSprites;
     [SerializeField] RectTransform circleTr;
@@ -29,6 +30,10 @@ public class UiManager : MonoBehaviour
     Coroutine textAnim;
     Coroutine CRotate = null;
     Coroutine CTutorial;
+
+    TextMeshProUGUI UIInfo;
+    RectTransform UIInfoRt;
+    RectTransform SelectRt;
 
     public Vector3 MouseCenterPos => Cam.ScreenToViewportPoint(Input.mousePosition);
 
@@ -72,15 +77,18 @@ public class UiManager : MonoBehaviour
     }
     private void Start()
     {
-/*        //if (!PlayerPrefs.HasKey("First"))
-        {
-            StartCoroutine(ETutorialStart());
-            PlayerPrefs.SetInt("First", 1);
-        }*/
+        UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        UIInfoRt = UIInfo.GetComponent<RectTransform>();
+        SelectRt = TutorialSelectImg.GetComponent<RectTransform>();
+        /*        //if (!PlayerPrefs.HasKey("First"))
+                {
+                    StartCoroutine(ETutorialStart());
+                    PlayerPrefs.SetInt("First", 1);
+                }*/
     }
     private void Update()
     {
-        if(Title_distance <= 0.1f && CTutorial == null)
+        if (Title_distance <= 0.1f && CTutorial == null)
         {
             //if (!PlayerPrefs.HasKey("First"))
             {
@@ -89,7 +97,9 @@ public class UiManager : MonoBehaviour
             }
         }
 
-        CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z- Title_distance);
+        UIInfoRt.anchoredPosition = new Vector2(0, SelectRt.position.y + SelectRt.rect.height / 2 + UIInfoRt.rect.height / 2);
+
+        CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z - Title_distance);
 
         Distance = Mathf.Lerp(Distance, Wood.localScale.x * (FindObjectOfType<Tree>().Level + 1 * 10) / 140, Time.deltaTime * 3);
         CamTf.Translate(new Vector3(0, 0, -Distance));
@@ -219,7 +229,7 @@ public class UiManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        var UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        var rt = TutorialSelectImg.GetComponent<RectTransform>();
 
         UIInfo.text = $"Healing Tree Quest에 오신 것을 환영합니다! \n터치하시면 튜토리얼을 시작합니다!";
 
@@ -237,10 +247,6 @@ public class UiManager : MonoBehaviour
         {
             UIInfo.text = "";
 
-            var rt = TutorialSelectImg.GetComponent<RectTransform>();
-
-            UIInfo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, rt.position.y + rt.rect.height / 2 + UIInfo.GetComponent<RectTransform>().rect.height / 2);
-
             if (TutorialTargets[i])
             {
                 rt.sizeDelta = TutorialTargets[i].sizeDelta;
@@ -250,6 +256,8 @@ public class UiManager : MonoBehaviour
                 rt.position = TutorialTargets[i].position;
             }
 
+            UIInfo.text = TutorialInfo[i];
+
             while (TutorialSelectImg.color.a < 0.3568628f - 0.05f)
             {
                 TutorialSelectImg.color = Color.Lerp(TutorialSelectImg.color, new Color(1, 1, 1, 0.3568628f), Time.deltaTime * 3);
@@ -257,11 +265,9 @@ public class UiManager : MonoBehaviour
             }
             TutorialSelectImg.color = new Color(1, 1, 1, 0.3568628f);
 
-            UIInfo.text = TutorialInfo[i];
 
             if (Input.GetMouseButtonDown(0))
             {
-                UIInfo.text = "";
                 if (TutorialTargets[i + 1 < TutorialTargets.Count ? i + 1 : i])
                 {
                     while (TutorialSelectImg.color.a > 0.05f)
