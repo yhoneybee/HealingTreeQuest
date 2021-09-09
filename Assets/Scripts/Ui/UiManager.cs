@@ -210,7 +210,7 @@ public class UiManager : MonoBehaviour
 
         var UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        UIInfo.text = $"Healing Tree Quest에 오신 것을 환영합니다! 터치하시면 튜토리얼을 시작합니다!";
+        UIInfo.text = $"Healing Tree Quest에 오신 것을 환영합니다! \n터치하시면 튜토리얼을 시작합니다!";
 
         while (true)
         {
@@ -271,7 +271,7 @@ public class UiManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        UIInfo.text = $"수고하셨습니다! 튜토리얼을 종료합니다, 즐겁게 즐겨주세요~!";
+        UIInfo.text = $"튜토리얼을 종료합니다, 즐겁게 즐겨주세요~!";
 
         while (true)
         {
