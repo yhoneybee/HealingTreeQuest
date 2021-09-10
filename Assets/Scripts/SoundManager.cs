@@ -18,12 +18,6 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource[] audioSources = new AudioSource[(int)SoundType.END];
 
-    [SerializeField] Slider TotalSlider;
-    [SerializeField] Button MuteSwitchBtn;
-
-    [SerializeField] Sprite On;
-    [SerializeField] Sprite Off;
-
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
 
     private float bgm_volume = 0.5f;
@@ -86,10 +80,10 @@ public class SoundManager : MonoBehaviour
     {
         TotalVolume = 1;
         temp_volume = 1;
-        if (!TotalSlider)
-            TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
-        if (MuteSwitchBtn)
-            MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
+        if (!UiManager.Instance.TotalSlider)
+            UiManager.Instance.TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
+        if (UiManager.Instance.MuteSwitchBtn)
+            UiManager.Instance.MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
 
         Play("Bgm", SoundType.BGM);
 
@@ -112,14 +106,14 @@ public class SoundManager : MonoBehaviour
         if (temp_volume == 0)
         {
             temp_volume = 1;
-            MuteSwitchBtn.GetComponent<Image>().sprite = On;
+            UiManager.Instance.MuteSwitchBtn.GetComponent<Image>().sprite = UiManager.Instance.On;
             foreach (var item in audioSources)
                 item.mute = false;
         }
         else
         {
             temp_volume = 0;
-            MuteSwitchBtn.GetComponent<Image>().sprite = Off;
+            UiManager.Instance.MuteSwitchBtn.GetComponent<Image>().sprite = UiManager.Instance.Off;
             foreach (var item in audioSources)
                 item.mute = true;
         }

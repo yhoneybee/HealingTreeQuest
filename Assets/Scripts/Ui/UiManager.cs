@@ -23,6 +23,10 @@ public class UiManager : MonoBehaviour
     public RectTransform Canvas;
     public Button PreviewButton;
     public UiObj Menu;
+    public Slider TotalSlider;
+    public Button MuteSwitchBtn;
+    public Sprite On;
+    public Sprite Off;
 
     [SerializeField] TextMeshProUGUI Donate;
     [SerializeField] TMP_InputField NameInputField;
@@ -149,21 +153,15 @@ public class UiManager : MonoBehaviour
 
                     xy_axis = new Vector2(-dir.x * 100, dir.y * 100);
 
-                    if (Mathf.Abs(max_x) < Mathf.Abs(xy_axis.x))
-                    {
-                        max_x = xy_axis.x;
-                        print(max_x);
-                    }
+                    if (Mathf.Abs(max_x) < Mathf.Abs(xy_axis.x)) max_x = xy_axis.x;
 
                     CamTf.transform.position = new Vector3(Wood.position.x, 4.5f, Wood.position.z);
 
                     CamTf.Rotate(Vector3.up, xy_axis.x, Space.World);
                     CamTf.Rotate(Vector3.right, xy_axis.y);
 
-                    if (CamTf.localEulerAngles.x > 300)
-                        CamTf.localEulerAngles = new Vector3(0, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
-                    else if (CamTf.localEulerAngles.x > 30)
-                        CamTf.localEulerAngles = new Vector3(30, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
+                    if (CamTf.localEulerAngles.x > 300) CamTf.localEulerAngles = new Vector3(0, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
+                    else if (CamTf.localEulerAngles.x > 30) CamTf.localEulerAngles = new Vector3(30, CamTf.localEulerAngles.y, CamTf.localEulerAngles.z);
 
                     CamTf.Translate(new Vector3(0, 0, -Distance));
 
@@ -173,10 +171,10 @@ public class UiManager : MonoBehaviour
                 {
                     touch_2 = Input.GetTouch(1).position;
 
-                    if (Vector2.Distance(touch_1, touch_2) < touch_distance && /*Cam.fieldOfView - 3 > 30 &&*/ Cam.fieldOfView + 3 < 130)
-                        Cam.fieldOfView += 3;
-                    else if (Vector2.Distance(touch_1, touch_2) > touch_distance && Cam.fieldOfView - 3 > 30 /*&& Cam.fieldOfView + 3 < 130*/)
+                    if (Vector2.Distance(touch_1, touch_2) < touch_distance && Cam.fieldOfView - 3 > 30 /*&& Cam.fieldOfView + 3 < 130*/)
                         Cam.fieldOfView -= 3;
+                    else if (Vector2.Distance(touch_1, touch_2) > touch_distance && /*Cam.fieldOfView - 3 > 30 &&*/ Cam.fieldOfView + 3 < 130)
+                        Cam.fieldOfView += 3;
 
                     touch_distance = Vector2.Distance(touch_1, touch_2);
                 }
@@ -195,7 +193,7 @@ public class UiManager : MonoBehaviour
     }
     public void TypeingEffect()
     {
-        StartCoroutine(ETypeingEffect(Donate, "구매 금액의 50%가 기부되었습니다!"));
+        StartCoroutine(ETypeingEffect(Donate, "구매 금액의 50%가 기부되었습니다!", true));
     }
     public void SwitchSettingActive(bool active)
     {
@@ -369,7 +367,7 @@ public class UiManager : MonoBehaviour
 
         yield return null;
     }
-    IEnumerator ETypeingEffect(TextMeshProUGUI gui, string text)
+    IEnumerator ETypeingEffect(TextMeshProUGUI gui, string text, bool loop)
     {
         gui.gameObject.SetActive(true);
 
@@ -411,7 +409,7 @@ public class UiManager : MonoBehaviour
 
         var tmp = NameInputField.placeholder.GetComponent<TextMeshProUGUI>();
 
-        StartCoroutine(ETypeingEffect(tmp, "기부 명단에 등록될\n이름을 입력하세요"));
+        StartCoroutine(ETypeingEffect(tmp, "기부 명단에 등록될\n이름을 입력하세요", false));
 
         yield return null;
     }
