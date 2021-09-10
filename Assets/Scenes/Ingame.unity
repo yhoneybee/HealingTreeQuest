@@ -4307,6 +4307,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 815106567}
     m_Modifications:
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 54cda3d7aced80f48a80985e08b9b589, type: 3}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1954420147944638409, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
       propertyPath: m_Name
       value: DeilyQuest (1)
@@ -12163,7 +12179,6 @@ MonoBehaviour:
   Canvas: {fileID: 571354068}
   PreviewButton: {fileID: 421783877}
   Menu: {fileID: 4021463}
-  SettingBg: {fileID: 567820810}
   Donate: {fileID: 2134181788}
   NameInputField: {fileID: 1936257017}
   SettingBg: {fileID: 567820810}
@@ -12397,7 +12412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1771879855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12467,6 +12482,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 815106567}
     m_Modifications:
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 83e6e9666cbbba44f9bdf9d6fc0eb331, type: 3}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1954420147944638409, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
       propertyPath: m_Name
       value: DeilyQuest (2)
@@ -14442,6 +14473,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 815106567}
     m_Modifications:
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2a3b9ff764577de46bfcc3cf3005e3c9, type: 3}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 32197332988797953, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1954420147944638409, guid: 211ce7facfb8f1548aae27a61814ccbb, type: 3}
       propertyPath: m_Name
       value: DeilyQuest
