@@ -20,6 +20,7 @@ public class UiManager : MonoBehaviour
     public Image TutorialSelectImg;
     public Image ClickBlockingImg;
     public RectTransform Canvas;
+    public Button PreviewButton;
     public UiObj Menu;
 
     [SerializeField] RectTransform SettingBg;

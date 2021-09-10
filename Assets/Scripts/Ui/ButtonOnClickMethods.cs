@@ -31,6 +31,7 @@ public class ButtonOnClickMethods : MonoBehaviour
             var button = item.GetComponent<Button>();
             if (button && button.name != "Custom") button.enabled = UI.CustomMode;
         }
+        UI.PreviewButton.enabled = UI.CustomMode;
         UI.CustomMode = !UI.CustomMode;
         PannelOpenCoru = CustomPannel(UI.CustomMode);
         StartCoroutine(PannelOpenCoru);

@@ -219,7 +219,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         CMoving = StartCoroutine(EMoving());
 
         if (Dragging != null && Dragging.parent == UI.Canvas && Dragging != UI.Menu.RectTransform)
-            Dragging.SetAsLastSibling();
+            Dragging.SetSiblingIndex(1);
 
         Image.raycastTarget = true;
         Dragging = null;
@@ -252,6 +252,7 @@ public class UiObj : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
             if (drag && !drag.GridLayoutGroup && drag.Moveable && GridLayoutGroup && !Hide && drag.Compositeable)
             {
                 Dragging.SetParent(UI.Canvas.transform);
+                Dragging.SetSiblingIndex(1);
 
                 if (CScalingForChild != null) StopCoroutine(CScalingForChild);
                 CScalingForChild = StartCoroutine(EScalingForChild(GetComponent<RectTransform>().childCount));

@@ -11879,6 +11879,7 @@ MonoBehaviour:
   Canvas: {fileID: 571354068}
   Menu: {fileID: 4021463}
   SettingBg: {fileID: 567820810}
+  PreviewButton: {fileID: 421783877}
   Donate: {fileID: 2134181788}
   previewImg: {fileID: 421783878}
   previewSprites:
