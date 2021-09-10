@@ -92,7 +92,7 @@ public class UiManager : MonoBehaviour
     {
         if (Title_distance <= 0.1f && CTutorial == null)
         {
-            //if (!PlayerPrefs.HasKey("First"))
+            if (!PlayerPrefs.HasKey("First"))
             {
                 CTutorial = StartCoroutine(ETutorialStart());
                 PlayerPrefs.SetInt("First", 1);
