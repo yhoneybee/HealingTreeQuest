@@ -72,6 +72,11 @@ public class SoundManager : MonoBehaviour
     {
         TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
         MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
+
+        foreach (var item in FindObjectsOfType<Button>())
+        {
+            item.onClick.AddListener(() => {  });
+        }
     }
 
     public void SwitchMute()
