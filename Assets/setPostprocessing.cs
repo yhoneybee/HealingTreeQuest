@@ -53,6 +53,7 @@ public class setPostprocessing : MonoBehaviour
             {
                 TitleCanvas.SetActive(false);
                 Canvas.SetActive(true);
+                UI.Title_distance = 0;
                 break;
             }
 
