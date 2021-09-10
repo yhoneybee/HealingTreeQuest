@@ -27,10 +27,19 @@ public class VisualSystem : MonoBehaviour
 
     void Start()
     {
+        if (PlayerPrefs.HasKey(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name))
+        {
+            GameObject.Find("Fade").SetActive(false);
+            isTutorial = false;
+            AfterTutorial();
+            return;
+        }
         FadeIn(GameObject.Find("Fade"), 0.5f);
 
         tutorialTexts[tutorialIndex].SetActive(true);
         FadeIn(tutorialTexts[tutorialIndex], 1);
+
+        PlayerPrefs.SetString(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, "isTutorialed");
     }
 
     void Update()
@@ -69,6 +78,7 @@ public class VisualSystem : MonoBehaviour
         {
             contents[1].GetComponent<Button>().onClick.AddListener(() => { DDOLObj.Instance.GameClear(); });
             backgrounds[0].GetComponent<Image>().sprite = clearBG;
+            SoundManager.Instance.Play("Clear", SoundType.EFFECT);
         }
         else
         {

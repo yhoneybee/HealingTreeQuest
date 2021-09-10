@@ -86,16 +86,19 @@ public class SoundManager : MonoBehaviour
     {
         TotalVolume = 1;
         temp_volume = 1;
-        TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
-        MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
+        if (!TotalSlider)
+            TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
+        if (MuteSwitchBtn)
+            MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
 
         Play("Bgm", SoundType.BGM);
 
-        foreach (var item in UiManager.Instance.Canvas.GetComponentsInChildren<Button>())
-        {
-            print(item.name);
-            item.onClick.AddListener(() => { Play("BtnClick", SoundType.EFFECT); });
-        }
+        if (UiManager.Instance)
+            foreach (var item in UiManager.Instance.Canvas.GetComponentsInChildren<Button>())
+            {
+                print(item.name);
+                item.onClick.AddListener(() => { Play("BtnClick", SoundType.EFFECT); });
+            }
     }
 
     public void SwitchMute()

@@ -77,6 +77,7 @@ public class UISystem : MonoBehaviour
             return;
         }
         volume.transform.GetChild(1).GetComponent<Image>().sprite = speakers[0];
+        SoundManager.Instance.TotalVolume = volume.value;
     }
 
 
