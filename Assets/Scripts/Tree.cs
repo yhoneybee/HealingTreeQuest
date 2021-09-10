@@ -106,7 +106,7 @@ public class Tree : MonoBehaviour
 
                 if (MeshCount == 0)
                 {
-                    switch(Level)
+                    switch (Level)
                     {
                         case 10:
                             transform.localScale = new Vector3(40, 40, 40);
@@ -128,7 +128,15 @@ public class Tree : MonoBehaviour
                             break;
                     }
 
-                    meshFilter.sharedMesh = Trees[(Level / 10) - 1];
+                    try
+                    {
+                        meshFilter.sharedMesh = Trees[(Level / 10) - 1];
+                    }
+                    catch (System.IndexOutOfRangeException e)
+                    {
+                        Debug.Log("최대 외형 도달!");
+                    }
+
                     if (Level == 40 || Level == 60 || Level == 80)
                         Mrend.materials = materials2;
                     else
