@@ -24,7 +24,7 @@ public class Basket : MonoBehaviour
         if (collision.CompareTag("Fruit"))
         {
             Fruit fruit = collision.GetComponent<Fruit>();
-            gameSystem.directorSystem.visualSystem.SizeEffect(gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.9f, 0.9f));
+            gameSystem.directorSystem.visualSystem.SizeEffect(gameObject, new Vector2(0.4f, 0.4f), new Vector2(1f, 1f));
             gameSystem.scoreSystem.ScorePlus(fruit.Score);
             gameSystem.uiSystem.TextAnim($"+ {fruit.Score}");
             StartCoroutine(DestroyFruit(collision.gameObject));
