@@ -26,6 +26,11 @@ public class ButtonOnClickMethods : MonoBehaviour
     public void SwitchCustomMode()
     {
         StopAllCoroutines();
+        foreach (var item in UI.UiObjs)
+        {
+            var button = item.GetComponent<Button>();
+            if (button && button.name != "Custom") button.enabled = UI.CustomMode;
+        }
         UI.CustomMode = !UI.CustomMode;
         PannelOpenCoru = CustomPannel(UI.CustomMode);
         StartCoroutine(PannelOpenCoru);

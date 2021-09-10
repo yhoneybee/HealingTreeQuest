@@ -21,6 +21,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] Slider TotalSlider;
     [SerializeField] Button MuteSwitchBtn;
 
+    [SerializeField] Sprite On;
+    [SerializeField] Sprite Off;
+
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
 
     private float bgm_volume = 0.5f;
@@ -76,11 +79,17 @@ public class SoundManager : MonoBehaviour
         if (TotalVolume == 0)
         {
             TotalSlider.value = temp_volume;
+            MuteSwitchBtn.GetComponent<Image>().sprite = On;
+            foreach (var item in audioSources)
+                item.mute = false;
         }
         else
         {
             temp_volume = TotalSlider.value;
             TotalSlider.value = 0;
+            MuteSwitchBtn.GetComponent<Image>().sprite = Off;
+            foreach (var item in audioSources)
+                item.mute = true;
         }
     }
     public void StopAllSound()
