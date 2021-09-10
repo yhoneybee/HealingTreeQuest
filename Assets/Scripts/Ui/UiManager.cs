@@ -23,8 +23,9 @@ public class UiManager : MonoBehaviour
     public Button PreviewButton;
     public UiObj Menu;
 
-    [SerializeField] RectTransform SettingBg;
     [SerializeField] TextMeshProUGUI Donate;
+    [SerializeField] TMP_InputField NameInputField;
+    [SerializeField] RectTransform SettingBg;
     [SerializeField] Image previewImg;
     [SerializeField] Sprite[] previewSprites;
     [SerializeField] RectTransform circleTr;
@@ -81,10 +82,10 @@ public class UiManager : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(ETypeingEffect(Donate, "구매 금액의 20%가 기부되었습니다!"));
         UIInfo = ClickBlockingImg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         UIInfoRt = UIInfo.GetComponent<RectTransform>();
         SelectRt = TutorialSelectImg.GetComponent<RectTransform>();
+        //StartCoroutine(ENameInputField());
         /*        //if (!PlayerPrefs.HasKey("First"))
                 {
                     StartCoroutine(ETutorialStart());
@@ -187,6 +188,14 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    public void OnNameEditEnd()
+    {
+        NameInputField.gameObject.SetActive(false);
+    }
+    public void TypeingEffect()
+    {
+        StartCoroutine(ETypeingEffect(Donate, "구매 금액의 50%가 기부되었습니다!"));
+    }
     public void SwitchSettingActive(bool active)
     {
         SettingBg.parent.gameObject.SetActive(active);
@@ -357,12 +366,45 @@ public class UiManager : MonoBehaviour
     }
     IEnumerator ETypeingEffect(TextMeshProUGUI gui, string text)
     {
+        gui.gameObject.SetActive(true);
+
         for (int i = 0; i < text.Length; i++)
         {
             gui.text = text.Substring(0, i + 1);
             yield return new WaitForSeconds(0.05f);
         }
+
+        yield return new WaitForSeconds(3);
+
+        while (gui.color.a > 0.05f)
+        {
+            gui.color = Color.Lerp(gui.color, Color.clear, Time.deltaTime * 3);
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        gui.color = Color.clear;
+
         gui.text = "";
+
+        gui.gameObject.SetActive(false);
+
+        yield return null;
+
+        StartCoroutine(ENameInputField());
+    }
+    IEnumerator ENameInputField()
+    {
+        var img = NameInputField.GetComponent<Image>();
+
+        while (img.color.a < 0.95f)
+        {
+            img.color = Color.Lerp(img.color, Color.white, Time.deltaTime);
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        var tmp = NameInputField.placeholder.GetComponent<TextMeshProUGUI>();
+
+        StartCoroutine(ETypeingEffect(tmp, "기부 명단에 등록될\n이름을 입력하세요"));
 
         yield return null;
     }

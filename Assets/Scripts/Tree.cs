@@ -135,6 +135,7 @@ public class Tree : MonoBehaviour
                     }
                     catch (System.IndexOutOfRangeException e)
                     {
+                        UiManager.Instance.TypeingEffect();
                         Debug.Log("최대 외형 도달!");
                     }
 
