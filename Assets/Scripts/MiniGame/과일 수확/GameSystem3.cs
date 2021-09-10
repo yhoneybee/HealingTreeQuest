@@ -89,9 +89,10 @@ public class GameSystem3 : MonoBehaviour
     {
         if (collision.CompareTag("Fruit"))
         {
-            scoreSystem.ScoreMinus(50);
-            uiSystem.TextAnim("- 50");
-            StartCoroutine(DestroyFruit(collision.gameObject));
+            Fruit fruit = collision.GetComponent<Fruit>();
+            scoreSystem.ScoreMinus(fruit.Score);
+            uiSystem.TextAnim($"- {fruit.Score}");
+            StartCoroutine(DestroyFruit(fruit.gameObject));
         }
     }
 
