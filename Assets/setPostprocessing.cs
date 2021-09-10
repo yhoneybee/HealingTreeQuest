@@ -8,22 +8,48 @@ public class setPostprocessing : MonoBehaviour
 {
     [SerializeField] GameObject Canvas;
     [SerializeField] Image img;
+    [SerializeField] Text txt;
     [SerializeField] GameObject TitleCanvas;
     public PostProcessVolume ppVolume;
 
     public bool isTouch;
+    IEnumerator UpdateCoru;
 
     private void Awake()
     {
         ppVolume = GetComponent<PostProcessVolume>();
+        UpdateCoru = TxtEffect();
+        StartCoroutine(UpdateCoru);
     }
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && !isTouch)
         {
             isTouch = true;
+            StopCoroutine(UpdateCoru);
             StartCoroutine("setScreen");
             StartCoroutine("setPosition");
+        }
+    }
+
+    IEnumerator TxtEffect()
+    {
+        bool isUp = false;
+        while (true)
+        {
+            if (!isUp)
+            {
+                txt.color -= new Color(0, 0, 0, 0.01f);
+                if (txt.color.a <= 0.5f)
+                    isUp = true;
+            }
+            else
+            {
+                txt.color += new Color(0, 0, 0, 0.01f);
+                if (txt.color.a >= 1)
+                    isUp = false;
+            }
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
@@ -33,6 +59,7 @@ public class setPostprocessing : MonoBehaviour
         {
             ppVolume.weight -= 0.01f;
             img.color -= new Color(0, 0, 0, 0.01f);
+            txt.color -= new Color(0, 0, 0, 0.01f);
             if (ppVolume.weight <= 0)
             {
                 break;

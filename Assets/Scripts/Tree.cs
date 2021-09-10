@@ -88,8 +88,8 @@ public class Tree : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Exp += 3000;
-            UiManager.Instance.TextAnim(3000);
+            Exp += 10000;
+            UiManager.Instance.TextAnim(10000);
         }
     }
 
@@ -118,7 +118,7 @@ public class Tree : MonoBehaviour
                             transform.localScale = new Vector3(350, 350, 350);
                             break;
                         case 70:
-                            transform.localScale = new Vector3(200, 200, 200);
+                            transform.localScale = new Vector3(100, 100, 100);
                             break;
                         case 80:
                             transform.localScale = new Vector3(900, 900, 900);
