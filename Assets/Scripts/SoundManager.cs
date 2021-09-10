@@ -70,12 +70,14 @@ public class SoundManager : MonoBehaviour
     }
     private void Start()
     {
-        TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
-        MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
+        if (TotalSlider)
+            TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
+        if (MuteSwitchBtn)
+            MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
 
         foreach (var item in FindObjectsOfType<Button>())
         {
-            item.onClick.AddListener(() => {  });
+            item.onClick.AddListener(() => { });
         }
     }
 

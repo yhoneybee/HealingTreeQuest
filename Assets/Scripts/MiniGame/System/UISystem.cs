@@ -53,21 +53,30 @@ public class UISystem : MonoBehaviour
     public void MuteOnOff()
     {
         isMuted = !isMuted;
-        volume.transform.GetChild(1).GetComponent<Image>().sprite = isMuted ? speakers[1] : speakers[0];
+
+        Image image = volume.transform.GetChild(1).GetComponent<Image>();
 
         if (isMuted)
         {
             saveValue = volume.value;
             volume.value = SoundManager.Instance.TotalVolume = 0;
+            image.sprite = speakers[1];
         }
 
         else
+        {
             volume.value = SoundManager.Instance.TotalVolume = saveValue;
+            image.sprite = speakers[0];
+        }
     }
     public void SetVolume()
     {
+        if (isMuted)
+        {
+            volume.value = 0;
+            return;
+        }
         volume.transform.GetChild(1).GetComponent<Image>().sprite = speakers[0];
-        SoundManager.Instance.TotalVolume = volume.value;
     }
 
 

@@ -38,12 +38,14 @@ public class ScoreSystem : MonoBehaviour
 
     public void ScorePlus(int score)
     {
+        SoundManager.Instance.Play("ScoreMinus", SoundType.EFFECT);
         this.score += score;
         SetScoreText();
     }
 
     public void ScoreMinus(int score)
     {
+        SoundManager.Instance.Play("ScorePlus", SoundType.EFFECT);
         this.score -= score;
         SetScoreText();
     }
