@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class isPannel_Open : MonoBehaviour
 {
-    [SerializeField] Button[] buttons = new Button[2];
-
+    public UiManager UI => UiManager.Instance;
     public void enable(bool isenable)
     {
-        foreach (Button item in buttons)
+        foreach (var item in UI.UiObjs)
         {
-            item.enabled = isenable;
+            var button = item.GetComponent<Button>();
+            if (button) button.enabled = isenable;
         }
+        UI.PreviewButton.enabled = isenable;
     }
 }
