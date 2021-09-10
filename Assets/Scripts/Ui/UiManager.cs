@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UiManager : MonoBehaviour
 {
@@ -15,9 +16,11 @@ public class UiManager : MonoBehaviour
     public List<RectTransform> TutorialTargets = new List<RectTransform>();
     [Multiline(4)]
     public List<string> TutorialInfo = new List<string>();
+    public List<RectTransform> Actives = new List<RectTransform>();
     public Image TutorialSelectImg;
     public Image ClickBlockingImg;
     public RectTransform Canvas;
+    public Button PreviewButton;
     public UiObj Menu;
 
     [SerializeField] RectTransform SettingBg;
@@ -92,7 +95,7 @@ public class UiManager : MonoBehaviour
     {
         if (Title_distance <= 0.1f && CTutorial == null)
         {
-            if (!PlayerPrefs.HasKey("First"))
+            //if (!PlayerPrefs.HasKey("First"))
             {
                 CTutorial = StartCoroutine(ETutorialStart());
                 PlayerPrefs.SetInt("First", 1);
@@ -254,12 +257,12 @@ public class UiManager : MonoBehaviour
     {
         ClickBlockingImg.gameObject.SetActive(true);
         Color color = ClickBlockingImg.color;
-        while(true)
+        while (true)
         {
             ClickBlockingImg.color = Color.Lerp(ClickBlockingImg.color, color + new Color(0, 0, 0, 0.5f), Time.deltaTime * 3);
             yield return new WaitForSeconds(0.0001f);
 
-            if(ClickBlockingImg.color.a >= 0.49f)
+            if (ClickBlockingImg.color.a >= 0.49f)
             {
                 ClickBlockingImg.color = color + new Color(0, 0, 0, 0.5f);
                 break;
@@ -285,6 +288,14 @@ public class UiManager : MonoBehaviour
         for (int i = 0; i < TutorialTargets.Count;)
         {
             UIInfo.text = "";
+
+
+            if (Actives[i] && !Actives[i].gameObject.activeSelf)
+            {
+                Actives[i].gameObject.SetActive(true);
+                if (i < Actives.Count - 1)
+                    Actives[i] = null;
+            }
 
             if (TutorialTargets[i])
             {
@@ -315,6 +326,11 @@ public class UiManager : MonoBehaviour
                         yield return new WaitForSeconds(0.001f);
                     }
                     TutorialSelectImg.color = new Color(1, 1, 1, 0);
+
+                    if (Actives[i] && Actives[i].gameObject.activeSelf)
+                    {
+                        Actives[i].gameObject.SetActive(false);
+                    }
                 }
                 i++;
                 yield return new WaitForSeconds(0.5f);

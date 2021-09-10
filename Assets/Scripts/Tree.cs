@@ -42,7 +42,8 @@ public class Tree : MonoBehaviour
     void Update()
     {
         //meshFilter.sharedMesh = Trees[0];
-        levelSlider.value = (float)Exp / MaxExp;
+        levelSlider.value = Mathf.Lerp(levelSlider.value, (float)Exp / MaxExp, Time.deltaTime * 3);
+        if (Level >= 100) return;
         if (Exp >= MaxExp)
         {
             Level++;

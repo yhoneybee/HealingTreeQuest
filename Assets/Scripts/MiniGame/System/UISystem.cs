@@ -12,11 +12,26 @@ public class UISystem : MonoBehaviour
     Coroutine textAnim;
 
     float saveValue = 0;
+
+    public bool IsUIOpened { get; set; } = false;
     bool isMuted = false;
 
     void Start()
     {
         volume.value = SoundManager.Instance.TotalVolume;
+    }
+    public void ActiveOn(GameObject obj)
+    {
+        if (IsUIOpened)
+            return;
+
+        obj.SetActive(true);
+        IsUIOpened = true;
+    }
+    public void ActiveOff(GameObject obj)
+    {
+        obj.SetActive(false);
+        IsUIOpened = false;
     }
     public void ReTry()
     {

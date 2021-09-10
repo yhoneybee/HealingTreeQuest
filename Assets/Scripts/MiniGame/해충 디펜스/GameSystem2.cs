@@ -18,6 +18,7 @@ public class GameSystem2 : MonoBehaviour
     public ScoreSystem scoreSystem;
     [HideInInspector]
     public DirectorSystem directorSystem;
+    UISystem uiSystem;
     TimerSystem timerSystem;
 
     public EnemyPool enemyPool;
@@ -32,6 +33,7 @@ public class GameSystem2 : MonoBehaviour
         scoreSystem = Tools<ScoreSystem>.GetTool("ScoreSystem");
         timerSystem = Tools<TimerSystem>.GetTool("TimerSystem");
         directorSystem = Tools<DirectorSystem>.GetTool("DirectorSystem");
+        uiSystem = Tools<UISystem>.GetTool("UISystem");
 
         enemyPool = Tools<EnemyPool>.GetTool("EnemyPool");
 
@@ -93,6 +95,7 @@ public class GameSystem2 : MonoBehaviour
             {
                 int[] scoreChart = scoreSystem.GetScoreChart(1);
                 directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, true);
+                uiSystem.IsUIOpened = true;
                 yield break;
             }
             else if (timerSystem.GetTime() <= 20)

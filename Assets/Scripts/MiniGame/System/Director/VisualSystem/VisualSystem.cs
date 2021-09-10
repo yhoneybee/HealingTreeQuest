@@ -204,7 +204,7 @@ public class VisualSystem : MonoBehaviour
                 obj.transform.localScale = targetScale1;
                 break;
             }
-            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, targetScale1, 0.6f);
+            obj.transform.localScale = Vector2.Lerp(obj.transform.localScale, targetScale1, 0.3f);
             yield return new WaitForSeconds(0.005f);
         }
 
