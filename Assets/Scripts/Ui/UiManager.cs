@@ -214,6 +214,10 @@ public class UiManager : MonoBehaviour
         if (textAnim != null) StopCoroutine(textAnim);
         textAnim = StartCoroutine(_TextAnim(value));
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
     IEnumerator ERotate()
     {
