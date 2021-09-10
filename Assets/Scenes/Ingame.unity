@@ -11810,7 +11810,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 1287482583}
   - {fileID: 1429440353}
-  - {fileID: 815106567}
+  - {fileID: 1931401420}
   - {fileID: 1411981258}
   - {fileID: 726404536}
   - {fileID: 1819016701}
@@ -11823,6 +11823,7 @@ MonoBehaviour:
   - {fileID: 421783875}
   - {fileID: 0}
   - {fileID: 1190251384}
+  - {fileID: 567820810}
   TutorialInfo:
   - "\uC774\uAC83\uC740 UI\uB97C \uAD00\uB9AC\uD560 \uC218 \uC788\uB294\n\uC77C\uC885\uC758
     \uD3F4\uB354\uC785\uB2C8\uB2E4."
@@ -11849,6 +11850,26 @@ MonoBehaviour:
   - "\uB098\uBB34\uB97C \uB20C\uB7EC\uBCF4\uAC70\uB098,\n\uD655\uB300 / \uCD95\uC18C\uB97C
     \uD560 \uC218 \uC788\uC5B4\uC694."
   - "\uC774\uAC83\uC740 \uC124\uC815 \uBC84\uD2BC\uC785\uB2C8\uB2E4!"
+  - "\uC5EC\uAE30\uC11C\uB294 \uC18C\uB9AC\uB97C \uC124\uC815\uD560 \uC218 \uC788\uC5B4\uC694."
+  Actives:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 1931401420}
+  - {fileID: 0}
+  - {fileID: 1931401420}
+  - {fileID: 0}
+  - {fileID: 1385731862}
+  - {fileID: 1385731862}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 58363517}
   TutorialSelectImg: {fileID: 968998666}
   ClickBlockingImg: {fileID: 639555536}
   Canvas: {fileID: 571354068}
@@ -13085,7 +13106,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 65}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 800, y: 1300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1931401421
 MonoBehaviour:
