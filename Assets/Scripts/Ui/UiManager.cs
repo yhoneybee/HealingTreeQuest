@@ -96,7 +96,7 @@ public class UiManager : MonoBehaviour
     {
         if (Title_distance <= 0.1f && CTutorial == null)
         {
-            //if (!PlayerPrefs.HasKey("First"))
+            if (!PlayerPrefs.HasKey("First"))
             {
                 CTutorial = StartCoroutine(ETutorialStart());
                 PlayerPrefs.SetInt("First", 1);
@@ -398,6 +398,8 @@ public class UiManager : MonoBehaviour
     }
     IEnumerator ENameInputField()
     {
+        NameInputField.gameObject.SetActive(true);
+
         var img = NameInputField.GetComponent<Image>();
 
         while (img.color.a < 0.95f)
