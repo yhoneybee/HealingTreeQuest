@@ -32,14 +32,28 @@ public class SoundManager : MonoBehaviour
         get { return bgm_volume * TotalVolume; }
         set { bgm_volume = value; audioSources[((int)SoundType.BGM)].volume = BgmVolume; }
     }
-    private float sfx_volume;
+    private float sfx_volume = 0.5f;
     public float SfxVolume
     {
         get { return sfx_volume * TotalVolume; }
         set { sfx_volume = value; audioSources[((int)SoundType.EFFECT)].volume = SfxVolume; }
     }
 
-    public float TotalVolume { get; set; } = 0.5f;
+    //public float TotalVolume { get; set; } = 0.5f;
+    private float total_volume;
+
+    public float TotalVolume
+    {
+        get { return total_volume; }
+        set
+        {
+            total_volume = value;
+
+            audioSources[((int)SoundType.BGM)].volume = BgmVolume;
+            audioSources[((int)SoundType.EFFECT)].volume = SfxVolume;
+        }
+    }
+
     float temp_volume = 0;
 
     private void Awake()
@@ -70,28 +84,32 @@ public class SoundManager : MonoBehaviour
     }
     private void Start()
     {
+        TotalVolume = 1;
+        temp_volume = 1;
         TotalSlider.onValueChanged.AddListener((f) => { TotalVolume = f; });
         MuteSwitchBtn.onClick.AddListener(() => { SwitchMute(); });
 
-        foreach (var item in FindObjectsOfType<Button>())
+        Play("Bgm", SoundType.BGM);
+
+        foreach (var item in UiManager.Instance.Canvas.GetComponentsInChildren<Button>())
         {
-            item.onClick.AddListener(() => {  });
+            print(item.name);
+            item.onClick.AddListener(() => { Play("BtnClick", SoundType.EFFECT); });
         }
     }
 
     public void SwitchMute()
     {
-        if (TotalVolume == 0)
+        if (temp_volume == 0)
         {
-            TotalSlider.value = temp_volume;
+            temp_volume = 1;
             MuteSwitchBtn.GetComponent<Image>().sprite = On;
             foreach (var item in audioSources)
                 item.mute = false;
         }
         else
         {
-            temp_volume = TotalSlider.value;
-            TotalSlider.value = 0;
+            temp_volume = 0;
             MuteSwitchBtn.GetComponent<Image>().sprite = Off;
             foreach (var item in audioSources)
                 item.mute = true;

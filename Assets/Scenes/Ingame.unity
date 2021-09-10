@@ -12163,7 +12163,6 @@ MonoBehaviour:
   Canvas: {fileID: 571354068}
   PreviewButton: {fileID: 421783877}
   Menu: {fileID: 4021463}
-  SettingBg: {fileID: 567820810}
   Donate: {fileID: 2134181788}
   NameInputField: {fileID: 1936257017}
   SettingBg: {fileID: 567820810}
@@ -12397,7 +12396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1771879855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13471,7 +13470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1936257016
 RectTransform:
   m_ObjectHideFlags: 0

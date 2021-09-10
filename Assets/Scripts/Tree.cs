@@ -47,6 +47,7 @@ public class Tree : MonoBehaviour
         if (Exp >= MaxExp)
         {
             Level++;
+            SoundManager.Instance.Play("Grow", SoundType.EFFECT);
             particle_Scale += 0.1f;
 
             int MeshCount = Level % 10;
@@ -87,7 +88,7 @@ public class Tree : MonoBehaviour
                 tree_Level_Image.sprite = level_Sprites[0];
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             Exp += 10000;
             UiManager.Instance.TextAnim(10000);
