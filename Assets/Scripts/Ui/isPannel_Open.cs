@@ -15,4 +15,6 @@ public class isPannel_Open : MonoBehaviour
         }
         UI.PreviewButton.enabled = isenable;
     }
+
+    public void UIClickSound() => SoundManager.Instance.Play("BtnClick");
 }
