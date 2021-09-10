@@ -53,6 +53,7 @@ public class GameSystem3 : MonoBehaviour
                 int[] scoreChart = scoreSystem.GetScoreChart(2);
                 directorSystem.isGameEnd = true;
                 directorSystem.visualSystem.ResultAnimation(scoreSystem.GetScore(), scoreChart, gameClear);
+                uiSystem.IsUIOpened = true;
 
                 GameObject[] fruits = GameObject.FindGameObjectsWithTag("Fruit");
                 foreach (GameObject fruit in fruits)
