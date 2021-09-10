@@ -248,6 +248,18 @@ public class UiManager : MonoBehaviour
     IEnumerator ETutorialStart()
     {
         ClickBlockingImg.gameObject.SetActive(true);
+        Color color = ClickBlockingImg.color;
+        while(true)
+        {
+            ClickBlockingImg.color = Color.Lerp(ClickBlockingImg.color, color + new Color(0, 0, 0, 0.5f), Time.deltaTime * 3);
+            yield return new WaitForSeconds(0.0001f);
+
+            if(ClickBlockingImg.color.a >= 0.49f)
+            {
+                ClickBlockingImg.color = color + new Color(0, 0, 0, 0.5f);
+                break;
+            }
+        }
 
         yield return new WaitForSeconds(1);
 

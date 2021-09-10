@@ -43,20 +43,20 @@ public class setPostprocessing : MonoBehaviour
 
     IEnumerator setPosition()
     {
-        float second = 0.01f;
-        
+        UiManager UI = UiManager.Instance;
+
+
         while (true)
         {
-            UiManager.Instance.Title_distance -= (0.1f);
-            second += 0.0007f;
-            if (UiManager.Instance.Title_distance <= 0)
+            UI.Title_distance = Mathf.Lerp(UI.Title_distance, 0, Time.deltaTime * 3);
+            if (UI.Title_distance <= 0.1f)
             {
                 TitleCanvas.SetActive(false);
                 Canvas.SetActive(true);
                 break;
             }
 
-            yield return new WaitForSeconds(second);
+            yield return new WaitForSeconds(0.01f);
         }
     }
 }
