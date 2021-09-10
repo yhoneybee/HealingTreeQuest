@@ -20,6 +20,7 @@ public class UiManager : MonoBehaviour
     public RectTransform Canvas;
     public UiObj Menu;
 
+    [SerializeField] RectTransform SettingBg;
     [SerializeField] TextMeshProUGUI Donate;
     [SerializeField] Image previewImg;
     [SerializeField] Sprite[] previewSprites;
@@ -183,6 +184,10 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    public void SwitchSettingActive(bool active)
+    {
+        SettingBg.parent.gameObject.SetActive(active);
+    }
     public void SwitchRaycastTargetMode(bool value)
     {
         UiObj child;
