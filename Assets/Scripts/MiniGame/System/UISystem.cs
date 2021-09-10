@@ -8,6 +8,7 @@ public class UISystem : MonoBehaviour
     [SerializeField] Text plusText;
     [SerializeField] Slider volume;
     [SerializeField] Sprite[] speakers;
+    [SerializeField] List<RectTransform> HideButtonParents;
 
     Coroutine textAnim;
 
@@ -19,6 +20,11 @@ public class UISystem : MonoBehaviour
     void Start()
     {
         volume.value = SoundManager.Instance.TotalVolume;
+
+        foreach (RectTransform rTr in HideButtonParents)
+        {
+            SoundManager.Instance.SetButtonsSound(rTr.GetComponentsInChildren<Button>());
+        }
     }
     public void ActiveOn(GameObject obj)
     {

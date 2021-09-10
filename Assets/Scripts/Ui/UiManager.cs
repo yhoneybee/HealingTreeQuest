@@ -19,6 +19,7 @@ public class UiManager : MonoBehaviour
     public List<RectTransform> Actives = new List<RectTransform>();
     public Image TutorialSelectImg;
     public Image ClickBlockingImg;
+    public List<RectTransform> HideButtonParents;
     public RectTransform Canvas;
     public Button PreviewButton;
     public UiObj Menu;

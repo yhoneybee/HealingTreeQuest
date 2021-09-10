@@ -94,13 +94,19 @@ public class SoundManager : MonoBehaviour
         Play("Bgm", SoundType.BGM);
 
         if (UiManager.Instance)
-            foreach (var item in UiManager.Instance.Canvas.GetComponentsInChildren<Button>())
-            {
-                print(item.name);
-                item.onClick.AddListener(() => { Play("BtnClick", SoundType.EFFECT); });
-            }
+            SetButtonsSound(UiManager.Instance.Canvas.GetComponentsInChildren<Button>());
+        foreach (RectTransform obj in UiManager.Instance.HideButtonParents)
+        {
+            SetButtonsSound(obj.GetComponentsInChildren<Button>());
+        }
     }
-
+    public void SetButtonsSound(Button[] buttons)
+    {
+        foreach (Button button in buttons)
+        {
+            button.onClick.AddListener(() => { Play("BtnClick", SoundType.EFFECT); });
+        }
+    }
     public void SwitchMute()
     {
         if (temp_volume == 0)
