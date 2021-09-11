@@ -17,14 +17,23 @@ public class setPostprocessing : MonoBehaviour
 
     private void Awake()
     {
+        if (DDOLObj.Instance.tempObj)
+        {
+            Canvas.SetActive(true);
+            TitleCanvas.SetActive(false);
+            Destroy(gameObject);
+            return;
+        }
         ppVolume = GetComponent<PostProcessVolume>();
         UpdateCoru = TxtEffect();
         StartCoroutine(UpdateCoru);
     }
     void Update()
     {
+        if (DDOLObj.Instance.tempObj) return;
         if (Input.GetMouseButtonDown(0) && !isTouch)
         {
+            DDOLObj.Instance.tempObj = DDOLObj.Instance;
             isTouch = true;
             StopCoroutine(UpdateCoru);
             StartCoroutine("setScreen");

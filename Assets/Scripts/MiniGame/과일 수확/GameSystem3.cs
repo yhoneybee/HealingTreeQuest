@@ -19,7 +19,7 @@ public class GameSystem3 : MonoBehaviour
 
     Text targetScore;
 
-    int clearScore = 8000;
+    int clearScore = 7000;
 
     void Start()
     {

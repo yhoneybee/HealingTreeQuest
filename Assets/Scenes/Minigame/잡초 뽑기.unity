@@ -2063,6 +2063,7 @@ MonoBehaviour:
   speakers:
   - {fileID: 21300000, guid: a7e148bc4064c5f4a9b38782eace030e, type: 3}
   - {fileID: 21300000, guid: d7d57b038b80b544bb3f9557dd8cea40, type: 3}
+  HideButtonParents: []
 --- !u!1 &493415164
 GameObject:
   m_ObjectHideFlags: 0
@@ -3283,7 +3284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 950e5d322cab64f429c456d07e5284e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1018051688ce40f42bb5760898989726, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

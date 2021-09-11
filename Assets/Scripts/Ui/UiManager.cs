@@ -171,9 +171,9 @@ public class UiManager : MonoBehaviour
                 {
                     touch_2 = Input.GetTouch(1).position;
 
-                    if (Vector2.Distance(touch_1, touch_2) < touch_distance /*&& Cam.fieldOfView - 3 > 30*/ && Cam.fieldOfView + 3 < 130)
+                    if (Vector2.Distance(touch_1, touch_2) < touch_distance && Cam.fieldOfView - 3 > 30 /*&& Cam.fieldOfView + 3 < 130*/)
                         Cam.fieldOfView -= 3;
-                    else if (Vector2.Distance(touch_1, touch_2) > touch_distance && Cam.fieldOfView - 3 > 30 /*&& Cam.fieldOfView + 3 < 130*/)
+                    else if (Vector2.Distance(touch_1, touch_2) > touch_distance /*&& Cam.fieldOfView - 3 > 30*/ && Cam.fieldOfView + 3 < 130)
                         Cam.fieldOfView += 3;
 
                     touch_distance = Vector2.Distance(touch_1, touch_2);

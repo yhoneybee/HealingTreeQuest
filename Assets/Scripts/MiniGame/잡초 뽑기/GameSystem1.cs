@@ -26,7 +26,7 @@ public class GameSystem1 : MonoBehaviour
     float spawnTime = 1f;
     bool gameFinish = false;
 
-    int clearScore = 15000;
+    int clearScore = 13000;
 
     void Start()
     {
@@ -106,7 +106,7 @@ public class GameSystem1 : MonoBehaviour
             {
                 gameFinish = true;
 
-                bool gameClear = scoreSystem.GetScore() >= clearScore;
+                bool gameClear = true;//scoreSystem.GetScore() >= clearScore;
 
                 directorSystem.isGameEnd = true;
                 int[] scoreChart = scoreSystem.GetScoreChart(0);

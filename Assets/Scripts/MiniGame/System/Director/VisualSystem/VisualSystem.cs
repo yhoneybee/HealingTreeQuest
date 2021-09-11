@@ -31,7 +31,6 @@ public class VisualSystem : MonoBehaviour
         {
             GameObject.Find("Fade").SetActive(false);
             isTutorial = false;
-            AfterTutorial();
             return;
         }
         FadeIn(GameObject.Find("Fade"), 0.5f);
@@ -44,6 +43,11 @@ public class VisualSystem : MonoBehaviour
 
     void Update()
     {
+        if (!isTutorial && AfterTutorial != null)
+        {
+            AfterTutorial();
+            AfterTutorial = null;
+        }
         if (isTutorial)
             Tutorial();
     }
@@ -57,7 +61,6 @@ public class VisualSystem : MonoBehaviour
             {
                 isTutorial = false;
                 FadeOut(GameObject.Find("Fade"), 0);
-                AfterTutorial();
                 return;
             }
             if (TutorialOfIndex != null)

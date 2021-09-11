@@ -24,8 +24,9 @@ public class DDOLObj : MonoBehaviour
 {
     public static DDOLObj Instance { get; private set; } = null;
     public int[] ClearList = new int[3];
-    public int SelectMiniGame;
+    public int SelectMiniGame { get; set; }
     public int miniGameCount = 4;
+    public UnityEngine.Object tempObj = null;
     DateTime time;
 
     public delegate void Init();
@@ -95,6 +96,9 @@ public class DDOLObj : MonoBehaviour
             }
 
             PlayerPrefs.DeleteKey("First");
+            PlayerPrefs.DeleteKey("과일 수확");
+            PlayerPrefs.DeleteKey("잡초 뽑기");
+            PlayerPrefs.DeleteKey("쓰레기 분리수거");
         }
     }
 
