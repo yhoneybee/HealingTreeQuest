@@ -144,9 +144,9 @@ public class UiManager : MonoBehaviour
             }
             else if (Input.GetMouseButton(0))
             {
-                if (Input.touchCount == 1)
+                if (true || Input.touchCount == 1)
                 {
-                    touch_1 = Input.GetTouch(0).position;
+                    //touch_1 = Input.GetTouch(0).position;
 
                     Now = MouseCenterPos;
                     Vector3 dir = Prev - Now;
@@ -184,6 +184,8 @@ public class UiManager : MonoBehaviour
                 if (CRotate != null) StopCoroutine(CRotate);
                 CRotate = StartCoroutine(ERotate());
             }
+
+            Cam.fieldOfView += Input.GetAxis("Mouse ScrollWheel") * 10;
         }
     }
 

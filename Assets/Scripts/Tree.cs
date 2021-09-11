@@ -95,6 +95,11 @@ public class Tree : MonoBehaviour
         }
     }
 
+    public void LevelUp()
+    {
+        Exp += MaxExp;
+    }
+
     public IEnumerator TreeAnimation()
     {
         Vector3 targetScale = transform.localScale + new Vector3(0.5f, 0.5f, 0.5f); // 목표 크기 설정
